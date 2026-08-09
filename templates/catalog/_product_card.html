@@ -1,6 +1,5 @@
 {% load i18n %}
-{% comment %} wrap in a link once the product detail page (stage 5) exists {% endcomment %}
-<div class="product-card">
+<a class="product-card" href="{% url 'catalog:product_detail' product.slug %}">
     <div class="product-card__image sport-tint-{{ product.sport }}">
         {% trans "Photo coming soon" %}
     </div>
@@ -20,4 +19,4 @@
     {% if product.total_stock == 0 %}
         <div class="product-card__stock product-card__stock--out">{% trans "Out of stock" %}</div>
     {% endif %}
-</div>
+</a>

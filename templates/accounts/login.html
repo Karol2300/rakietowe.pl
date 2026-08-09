@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Log in" %} — {% trans "Racket Sports Shop" %}{% endblock %}
+
+{% block content %}
+<div class="auth-form">
+    <h1>{% trans "Log in" %}</h1>
+    <form method="post">
+        {% csrf_token %}
+        {% if form.errors %}
+            <p class="form-error">{% trans "Please enter a correct email and password." %}</p>
+        {% endif %}
+        {% for field in form %}
+            <div class="form-field">
+                <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                {{ field }}
+            </div>
+        {% endfor %}
+        <input type="hidden" name="next" value="{{ next }}">
+        <button type="submit" class="button">{% trans "Log in" %}</button>
+    </form>
+</div>
+{% endblock %}

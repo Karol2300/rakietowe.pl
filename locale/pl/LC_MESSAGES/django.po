@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: racket-shop 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-09 18:34+0200\n"
+"POT-Creation-Date: 2026-08-09 18:56+0200\n"
 "PO-Revision-Date: 2026-08-09 18:34+0200\n"
 "Last-Translator: \n"
 "Language-Team: Polish\n"
@@ -127,11 +127,22 @@ msgstr "DPD"
 msgid "UPS"
 msgstr "UPS"
 
-#: .\templates\base.html:7 .\templates\base.html:14 .\templates\base.html:65
+#: .\templates\accounts\login.html:4 .\templates\accounts\login.html:8
+#: .\templates\accounts\login.html:21 .\templates\base.html:65
+msgid "Log in"
+msgstr "Zaloguj się"
+
+#: .\templates\accounts\login.html:4 .\templates\base.html:7
+#: .\templates\base.html:14 .\templates\base.html:84
 #: .\templates\catalog\category_detail.html:4
+#: .\templates\catalog\product_detail.html:4
 #: .\templates\catalog\search_results.html:4
 msgid "Racket Sports Shop"
 msgstr "Sklep Sportów Rakietowych"
+
+#: .\templates\accounts\login.html:12
+msgid "Please enter a correct email and password."
+msgstr "Podaj poprawny adres e-mail i hasło."
 
 #: .\templates\base.html:34
 msgid "Search products…"
@@ -145,15 +156,23 @@ msgstr "Szukaj"
 msgid "Language"
 msgstr "Język"
 
-#: .\templates\catalog\_product_card.html:6
+#: .\templates\base.html:62
+msgid "Log out"
+msgstr "Wyloguj się"
+
+#: .\templates\catalog\_product_card.html:4
+#: .\templates\catalog\product_detail.html:16
 msgid "Photo coming soon"
 msgstr "Zdjęcie wkrótce"
 
-#: .\templates\catalog\_product_card.html:22
+#: .\templates\catalog\_product_card.html:20
+#: .\templates\catalog\product_detail.html:44
+#: .\templates\catalog\product_detail.html:49
 msgid "Out of stock"
 msgstr "Brak w magazynie"
 
 #: .\templates\catalog\category_detail.html:10
+#: .\templates\catalog\product_detail.html:8
 msgid "Home"
 msgstr "Strona główna"
 
@@ -173,11 +192,11 @@ msgstr "Min"
 msgid "Max"
 msgstr "Maks"
 
-#: .\templates\catalog\category_detail.html:67
+#: .\templates\catalog\category_detail.html:69
 msgid "Apply filters"
 msgstr "Zastosuj filtry"
 
-#: .\templates\catalog\category_detail.html:73
+#: .\templates\catalog\category_detail.html:75
 #, python-format
 msgid "%(counter)s product"
 msgid_plural "%(counter)s products"
@@ -186,23 +205,84 @@ msgstr[1] "%(counter)s produkty"
 msgstr[2] "%(counter)s produktów"
 msgstr[3] "%(counter)s produktów"
 
-#: .\templates\catalog\category_detail.html:80
+#: .\templates\catalog\category_detail.html:82
 msgid "Sort by"
 msgstr "Sortuj według"
 
-#: .\templates\catalog\category_detail.html:99
+#: .\templates\catalog\category_detail.html:101
 #: .\templates\catalog\search_results.html:22
 msgid "Previous"
 msgstr "Poprzednia"
 
-#: .\templates\catalog\category_detail.html:109
+#: .\templates\catalog\category_detail.html:111
 #: .\templates\catalog\search_results.html:32
 msgid "Next"
 msgstr "Następna"
 
-#: .\templates\catalog\category_detail.html:114
+#: .\templates\catalog\category_detail.html:116
 msgid "No products match your filters."
 msgstr "Żadne produkty nie pasują do wybranych filtrów."
+
+#: .\templates\catalog\product_detail.html:29
+msgid "No reviews yet"
+msgstr "Brak recenzji"
+
+#: .\templates\catalog\product_detail.html:43
+#: .\templates\catalog\product_detail.html:47
+msgid "In stock"
+msgstr "Dostępny"
+
+#: .\templates\catalog\product_detail.html:73
+msgid "Cart is wired up in a later stage"
+msgstr "Koszyk zostanie podłączony w kolejnym etapie"
+
+#: .\templates\catalog\product_detail.html:74
+msgid "Add to cart"
+msgstr "Dodaj do koszyka"
+
+#: .\templates\catalog\product_detail.html:76
+msgid "Wishlist is wired up in a later stage"
+msgstr "Lista życzeń zostanie podłączona w kolejnym etapie"
+
+#: .\templates\catalog\product_detail.html:77
+msgid "Add to wishlist"
+msgstr "Dodaj do listy życzeń"
+
+#: .\templates\catalog\product_detail.html:103
+msgid "You might also like"
+msgstr "Może Ci się spodobać"
+
+#: .\templates\catalog\product_detail.html:117
+msgid "Customer reviews"
+msgstr "Recenzje klientów"
+
+#: .\templates\catalog\product_detail.html:127
+msgid "Verified purchase"
+msgstr "Zweryfikowany zakup"
+
+#: .\templates\catalog\product_detail.html:135
+msgid "No reviews yet - be the first to review this product."
+msgstr "Brak recenzji - bądź pierwszą osobą, która oceni ten produkt."
+
+#: .\templates\catalog\product_detail.html:141
+msgid "Update your review"
+msgstr "Zaktualizuj swoją recenzję"
+
+#: .\templates\catalog\product_detail.html:141
+msgid "Write a review"
+msgstr "Napisz recenzję"
+
+#: .\templates\catalog\product_detail.html:155
+msgid "Comment"
+msgstr "Komentarz"
+
+#: .\templates\catalog\product_detail.html:158
+msgid "Submit review"
+msgstr "Wyślij recenzję"
+
+#: .\templates\catalog\product_detail.html:161
+msgid "Log in to leave a review"
+msgstr "Zaloguj się, aby dodać recenzję"
 
 #: .\templates\catalog\search_results.html:4
 #, python-format
@@ -236,8 +316,8 @@ msgid ""
 "Tennis, squash, badminton, and table tennis equipment — rackets, paddles, "
 "shoes, and more from the brands players trust."
 msgstr ""
-"Sprzęt do tenisa, squasha, badmintona i tenisa stołowego — rakiety, "
-"paletki, buty i wiele więcej od marek, którym ufają zawodnicy."
+"Sprzęt do tenisa, squasha, badmintona i tenisa stołowego — rakiety, paletki, "
+"buty i wiele więcej od marek, którym ufają zawodnicy."
 
 #: .\templates\core\home.html:9
 msgid "Shop now"

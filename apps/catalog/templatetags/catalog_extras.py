@@ -27,3 +27,10 @@ def get_item(dictionary, key):
 def is_selected(selected_facets, key, value):
     values = selected_facets.get(key) or []
     return str(value) in [str(v) for v in values]
+
+
+@register.simple_tag
+def star_symbols(rating, max_stars=5):
+    """Render a rounded whole-star string, e.g. '★★★★☆', for display-only use."""
+    full = max(0, min(max_stars, round(float(rating or 0))))
+    return "★" * full + "☆" * (max_stars - full)

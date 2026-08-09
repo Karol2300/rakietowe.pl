@@ -53,10 +53,29 @@
                 {% endfor %}
             </select>
         </form>
+
+        <nav class="account-nav">
+            {% if user.is_authenticated %}
+                <span>{{ user.email }}</span>
+                <form action="{% url 'accounts:logout' %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit" class="link-button">{% trans "Log out" %}</button>
+                </form>
+            {% else %}
+                <a href="{% url 'accounts:login' %}?next={{ request.path }}">{% trans "Log in" %}</a>
+            {% endif %}
+        </nav>
     </div>
 </header>
 
 <main class="site-main">
+    {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+                <li class="messages__item messages__item--{{ message.tags }}">{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
     {% block content %}{% endblock %}
 </main>
 

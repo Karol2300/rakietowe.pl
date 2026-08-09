@@ -1,0 +1,170 @@
+{% extends "base.html" %}
+{% load i18n static catalog_extras %}
+
+{% block title %}{{ product.name }} — {% trans "Racket Sports Shop" %}{% endblock %}
+
+{% block content %}
+<div class="breadcrumbs">
+    <a href="{% url 'core:home' %}">{% trans "Home" %}</a>
+    › <a href="{% url 'catalog:category_detail' product.category.slug %}">{{ product.category.name }}</a>
+    › {{ product.name }}
+</div>
+
+<div class="product-detail">
+    <div class="product-gallery">
+        <div class="product-gallery__main sport-tint-{{ product.sport }}">
+            {% trans "Photo coming soon" %}
+        </div>
+    </div>
+
+    <div class="product-info">
+        <div class="product-info__brand">{{ product.brand.name|default:"" }}</div>
+        <h1>{{ product.name }}</h1>
+
+        <div class="rating-summary">
+            <span class="stars">{% star_symbols product.average_rating %}</span>
+            {% if product.review_count %}
+                <span>{{ product.average_rating }} ({{ product.review_count }})</span>
+            {% else %}
+                <span>{% trans "No reviews yet" %}</span>
+            {% endif %}
+        </div>
+
+        <div class="product-info__price" id="price-display">
+            {% if product.is_on_sale %}
+                <span class="product-card__price-original">{{ product.price_pln }} zł</span>
+            {% endif %}
+            <span class="{% if product.is_on_sale %}product-card__price--sale{% endif %}" id="price-current">{{ default_variant.current_price|default:product.price_pln }} zł</span>
+        </div>
+
+        <div
+            class="product-info__stock"
+            id="stock-display"
+            data-in-stock-label="{% trans 'In stock' %}"
+            data-out-of-stock-label="{% trans 'Out of stock' %}"
+        >
+            {% if default_variant and default_variant.in_stock %}
+                <span class="product-info__stock--in">{% trans "In stock" %}</span>
+            {% else %}
+                <span class="product-info__stock--out">{% trans "Out of stock" %}</span>
+            {% endif %}
+        </div>
+
+        {% if variant_dimension %}
+            <div class="variant-selector" data-variant-selector>
+                <div class="variant-selector__label">{{ variant_dimension }}</div>
+                <div class="variant-options">
+                    {% for variant in variants %}
+                        <input
+                            type="radio"
+                            name="variant"
+                            id="variant-{{ variant.id }}"
+                            value="{{ variant.id }}"
+                            {% if variant == default_variant %}checked{% endif %}
+                            {% if not variant.in_stock %}disabled{% endif %}
+                        >
+                        <label for="variant-{{ variant.id }}">{{ variant.attributes|get_item:variant_dimension }}</label>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endif %}
+
+        <div class="product-actions">
+            <button type="button" class="button" id="add-to-cart-button" title="{% trans 'Cart is wired up in a later stage' %}">
+                {% trans "Add to cart" %}
+            </button>
+            <button type="button" class="button button--secondary" title="{% trans 'Wishlist is wired up in a later stage' %}">
+                {% trans "Add to wishlist" %}
+            </button>
+        </div>
+
+        {% if product.description %}
+            <p>{{ product.description }}</p>
+        {% endif %}
+
+        {% if product.specs %}
+            <table class="specs-table">
+                <tbody>
+                    {% for key, value in product.specs.items %}
+                        <tr>
+                            <th>{{ key }}</th>
+                            <td>{{ value }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% endif %}
+    </div>
+</div>
+
+{% if related_products %}
+    <section class="related-products">
+        <div class="section-heading">
+            <h2>{% trans "You might also like" %}</h2>
+        </div>
+        <div class="product-grid">
+            {% for related in related_products %}
+                {% with product=related %}
+                    {% include "catalog/_product_card.html" %}
+                {% endwith %}
+            {% endfor %}
+        </div>
+    </section>
+{% endif %}
+
+<section class="reviews-section" id="reviews">
+    <div class="section-heading">
+        <h2>{% trans "Customer reviews" %}</h2>
+    </div>
+
+    {% for review in reviews %}
+        <div class="review">
+            <span class="stars">{% star_symbols review.rating %}</span>
+            <div class="review__meta">
+                <strong>{{ review.user.first_name|default:review.user.email }}</strong>
+                <span>{{ review.created_at|date:"j M Y" }}</span>
+                {% if review.verified_purchase %}
+                    <span class="badge">{% trans "Verified purchase" %}</span>
+                {% endif %}
+            </div>
+            {% if review.comment %}
+                <p>{{ review.comment }}</p>
+            {% endif %}
+        </div>
+    {% empty %}
+        <p>{% trans "No reviews yet - be the first to review this product." %}</p>
+    {% endfor %}
+
+    {% if user.is_authenticated %}
+        <form method="post" action="{% url 'reviews:add_review' product.slug %}" class="review-form">
+            {% csrf_token %}
+            <h3>{% if user_review %}{% trans "Update your review" %}{% else %}{% trans "Write a review" %}{% endif %}</h3>
+            <div class="star-input">
+                {% for value in rating_choices %}
+                    <input
+                        type="radio"
+                        name="rating"
+                        id="rating-{{ value }}"
+                        value="{{ value }}"
+                        {% if user_review.rating == value %}checked{% endif %}
+                    >
+                    <label for="rating-{{ value }}" title="{{ value }}">★</label>
+                {% endfor %}
+            </div>
+            <div class="form-field">
+                <label for="id_comment">{% trans "Comment" %}</label>
+                {{ review_form.comment }}
+            </div>
+            <button type="submit" class="button">{% trans "Submit review" %}</button>
+        </form>
+    {% else %}
+        <p><a href="{% url 'accounts:login' %}?next={{ request.path }}#reviews">{% trans "Log in to leave a review" %}</a></p>
+    {% endif %}
+</section>
+
+<script type="application/json" id="variants-data">{{ variants_json|safe }}</script>
+{% endblock %}
+
+{% block extra_scripts %}
+<script src="{% static 'js/product-detail.js' %}" defer></script>
+{% endblock %}

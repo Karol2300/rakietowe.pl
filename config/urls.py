@@ -28,6 +28,8 @@ urlpatterns = [
 urlpatterns += i18n_patterns(
     path('', include('apps.core.urls')),
     path('', include('apps.catalog.urls')),
+    path('accounts/', include('apps.accounts.urls')),
+    path('', include('apps.reviews.urls')),
     prefix_default_language=True,
 )
 

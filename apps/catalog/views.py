@@ -1,3 +1,5 @@
+import json
+
 from django.core.paginator import Paginator
 from django.db.models import Q
 from django.http import JsonResponse
@@ -6,6 +8,8 @@ from django.urls import reverse
 
 from apps.catalog.models import Brand, Category, Product
 from apps.catalog.services import SORT_OPTIONS, annotate_effective_price, collect_facets
+from apps.reviews.forms import ReviewForm
+from apps.reviews.models import Review
 
 PAGE_SIZE = 24
 
@@ -91,6 +95,63 @@ def search(request):
         "result_count": products.count(),
     }
     return render(request, "catalog/search_results.html", context)
+
+
+def product_detail(request, slug):
+    product = get_object_or_404(
+        Product.objects.select_related("brand", "category").prefetch_related("variants", "images"),
+        slug=slug,
+        is_active=True,
+    )
+    variants = list(product.variants.filter(is_active=True))
+    variant_dimension = None
+    for variant in variants:
+        if variant.attributes:
+            variant_dimension = next(iter(variant.attributes))
+            break
+
+    default_variant = next((v for v in variants if v.in_stock), variants[0] if variants else None)
+
+    variants_json = json.dumps([
+        {
+            "id": v.id,
+            "attributes": v.attributes,
+            "stock": v.stock_quantity,
+            "price": str(v.current_price()),
+            "sku": v.sku,
+        }
+        for v in variants
+    ])
+
+    related_products = annotate_effective_price(
+        Product.objects.filter(category=product.category, is_active=True).exclude(id=product.id)
+    ).select_related("brand")[:4]
+    if len(related_products) < 4:
+        related_products = annotate_effective_price(
+            Product.objects.filter(sport=product.sport, is_active=True).exclude(id=product.id)
+        ).select_related("brand")[:4]
+
+    reviews = product.reviews.filter(is_visible=True).select_related("user").order_by("-created_at")
+
+    user_review = None
+    review_form = None
+    if request.user.is_authenticated:
+        user_review = Review.objects.filter(product=product, user=request.user).first()
+        review_form = ReviewForm(instance=user_review)
+
+    context = {
+        "product": product,
+        "variants": variants,
+        "variant_dimension": variant_dimension,
+        "default_variant": default_variant,
+        "variants_json": variants_json,
+        "related_products": related_products,
+        "reviews": reviews,
+        "user_review": user_review,
+        "review_form": review_form,
+        "rating_choices": [5, 4, 3, 2, 1],
+    }
+    return render(request, "catalog/product_detail.html", context)
 
 
 def search_suggestions(request):
