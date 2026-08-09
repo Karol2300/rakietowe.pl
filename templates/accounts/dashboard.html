@@ -1,0 +1,39 @@
+{% extends "accounts/account_base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "My account" %} — {% trans "Racket Sports Shop" %}{% endblock %}
+
+{% block account_content %}
+{% with display_name=user.first_name|default:user.email %}
+    <h1>{% blocktrans %}Hi {{ display_name }}{% endblocktrans %}</h1>
+{% endwith %}
+
+<h2>{% trans "Recent orders" %}</h2>
+{% if recent_orders %}
+    <table class="cart-table">
+        <thead>
+            <tr>
+                <th>{% trans "Order" %}</th>
+                <th>{% trans "Date" %}</th>
+                <th>{% trans "Status" %}</th>
+                <th>{% trans "Total" %}</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for order in recent_orders %}
+                <tr>
+                    <td>{{ order.order_number }}</td>
+                    <td>{{ order.created_at|date:"j M Y" }}</td>
+                    <td>{{ order.get_status_display }}</td>
+                    <td>{{ order.total }} {{ order.currency }}</td>
+                    <td><a href="{% url 'order_account:detail' order.order_number %}">{% trans "View" %}</a></td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <p><a href="{% url 'order_account:list' %}">{% trans "View all orders" %}</a></p>
+{% else %}
+    <p class="empty-state">{% trans "You haven't placed any orders yet." %}</p>
+{% endif %}
+{% endblock %}

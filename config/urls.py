@@ -33,6 +33,7 @@ urlpatterns += i18n_patterns(
     path('', include('apps.reviews.urls')),
     path('', include('apps.cart.urls')),
     path('checkout/', include('apps.orders.urls')),
+    path('account/orders/', include('apps.orders.account_urls')),
     prefix_default_language=True,
 )
 

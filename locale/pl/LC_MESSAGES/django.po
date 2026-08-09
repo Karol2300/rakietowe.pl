@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: racket-shop 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-09 20:47+0200\n"
+"POT-Creation-Date: 2026-08-09 21:36+0200\n"
 "PO-Revision-Date: 2026-08-09 18:34+0200\n"
 "Last-Translator: \n"
 "Language-Team: Polish\n"
@@ -29,6 +29,15 @@ msgstr "Hasła nie są zgodne."
 
 msgid "email address"
 msgstr "adres e-mail"
+
+msgid "Your profile has been updated."
+msgstr "Twój profil został zaktualizowany."
+
+msgid "Address saved."
+msgstr "Adres zapisany."
+
+msgid "Address removed."
+msgstr "Adres usunięty."
 
 msgid "Sorry, that item is out of stock."
 msgstr "Niestety, ten produkt jest niedostępny."
@@ -112,6 +121,13 @@ msgstr "Punkt odbioru InPost"
 
 msgid "Coupon code"
 msgstr "Kod kuponu"
+
+msgid "Loyalty points to redeem"
+msgstr "Punkty lojalnościowe do wykorzystania"
+
+#, python-format
+msgid "You only have %(available)s points available."
+msgstr "Masz dostępnych tylko %(available)s punktów."
 
 msgid "Please choose a parcel locker for InPost delivery."
 msgstr "Wybierz paczkomat InPost dla tej dostawy."
@@ -202,17 +218,143 @@ msgstr "DPD"
 msgid "UPS"
 msgstr "UPS"
 
-msgid "Log in"
-msgstr "Zaloguj się"
+msgid "Dashboard"
+msgstr "Panel"
+
+msgid "Order history"
+msgstr "Historia zamówień"
+
+msgid "Addresses"
+msgstr "Adresy"
+
+msgid "Loyalty points"
+msgstr "Punkty lojalnościowe"
+
+msgid "Wishlist"
+msgstr "Lista życzeń"
+
+msgid "Payment methods"
+msgstr "Metody płatności"
+
+msgid "Profile"
+msgstr "Profil"
+
+msgid "Change password"
+msgstr "Zmień hasło"
+
+msgid "Delete address"
+msgstr "Usuń adres"
 
 msgid "Racket Sports Shop"
 msgstr "Sklep Sportów Rakietowych"
+
+#, python-format
+msgid "Are you sure you want to delete \"%(address)s\"?"
+msgstr "Czy na pewno chcesz usunąć „%(address)s”?"
+
+msgid "Delete"
+msgstr "Usuń"
+
+msgid "Cancel"
+msgstr "Anuluj"
+
+msgid "Address"
+msgstr "Adres"
+
+msgid "Edit address"
+msgstr "Edytuj adres"
+
+msgid "Add address"
+msgstr "Dodaj adres"
+
+msgid "Save address"
+msgstr "Zapisz adres"
+
+msgid "Default"
+msgstr "Domyślny"
+
+msgid "Edit"
+msgstr "Edytuj"
+
+msgid "You haven't saved any addresses yet."
+msgstr "Nie masz jeszcze zapisanych adresów."
+
+msgid "My account"
+msgstr "Moje konto"
+
+#, python-format
+msgid "Hi %(display_name)s"
+msgstr "Witaj, %(display_name)s"
+
+msgid "Recent orders"
+msgstr "Ostatnie zamówienia"
+
+msgid "Order"
+msgstr "Zamówienie"
+
+msgid "Date"
+msgstr "Data"
+
+msgid "Status"
+msgstr "Status"
+
+msgid "Total"
+msgstr "Razem"
+
+msgid "View"
+msgstr "Zobacz"
+
+msgid "View all orders"
+msgstr "Zobacz wszystkie zamówienia"
+
+msgid "You haven't placed any orders yet."
+msgstr "Nie złożyłeś jeszcze żadnego zamówienia."
+
+msgid "Log in"
+msgstr "Zaloguj się"
 
 msgid "Please enter a correct email and password."
 msgstr "Podaj poprawny adres e-mail i hasło."
 
 msgid "New here? Create an account"
 msgstr "Nie masz konta? Załóż je"
+
+msgid "points"
+msgstr "punktów"
+
+msgid "Redeem your points as a discount at checkout."
+msgstr "Wykorzystaj swoje punkty jako rabat przy kasie."
+
+msgid "History"
+msgstr "Historia"
+
+msgid "Type"
+msgstr "Typ"
+
+msgid "Points"
+msgstr "Punkty"
+
+msgid "No points activity yet."
+msgstr "Brak aktywności punktowej."
+
+msgid "Password changed"
+msgstr "Hasło zmienione"
+
+msgid "Your password has been updated."
+msgstr "Twoje hasło zostało zaktualizowane."
+
+msgid ""
+"We never store your card details - only a reference to the payment provider "
+"you used, kept securely by PayU or Stripe themselves."
+msgstr ""
+"Nigdy nie przechowujemy danych Twojej karty - jedynie odniesienie do "
+"operatora płatności, bezpiecznie przechowywane przez PayU lub Stripe."
+
+msgid "You haven't completed a payment yet."
+msgstr "Nie dokonałeś jeszcze żadnej płatności."
+
+msgid "Save changes"
+msgstr "Zapisz zmiany"
 
 msgid "Create account"
 msgstr "Utwórz konto"
@@ -258,6 +400,9 @@ msgstr "Przejdź do kasy"
 
 msgid "Continue shopping"
 msgstr "Kontynuuj zakupy"
+
+msgid "Your wishlist is empty."
+msgstr "Twoja lista życzeń jest pusta."
 
 msgid "Photo coming soon"
 msgstr "Zdjęcie wkrótce"
@@ -392,6 +537,14 @@ msgstr "Podaj kod wybranego paczkomatu InPost (np. WAW01A)."
 msgid "Discount code"
 msgstr "Kod rabatowy"
 
+#, python-format
+msgid ""
+"Redeem points (you have %(available_points)s available, worth "
+"%(point_value)s zł each)"
+msgstr ""
+"Wykorzystaj punkty (masz dostępnych %(available_points)s, każdy wart "
+"%(point_value)s zł)"
+
 msgid "Place order"
 msgstr "Złóż zamówienie"
 
@@ -409,9 +562,6 @@ msgstr ""
 "Nie skonfigurowano rzeczywistych danych PayU/Stripe, więc ta lokalna "
 "symulacja zastępuje stronę operatora płatności. W wersji produkcyjnej ten "
 "krok odbywa się na stronie PayU lub Stripe."
-
-msgid "Order"
-msgstr "Zamówienie"
 
 msgid "Simulate successful payment"
 msgstr "Symuluj udaną płatność"
@@ -446,9 +596,6 @@ msgstr "Rabat"
 msgid "Shipping"
 msgstr "Wysyłka"
 
-msgid "Total"
-msgstr "Razem"
-
 msgid "Shipping to"
 msgstr "Wysyłka do"
 
@@ -460,6 +607,18 @@ msgstr "Pobierz fakturę"
 
 msgid "Request a return"
 msgstr "Zgłoś zwrot"
+
+msgid "Placed"
+msgstr "Złożone"
+
+msgid "Loyalty points redeemed"
+msgstr "Wykorzystane punkty lojalnościowe"
+
+msgid "Return requests"
+msgstr "Zgłoszenia zwrotu"
+
+msgid "Refund amount"
+msgstr "Kwota zwrotu"
 
 msgid "Pay for your order"
 msgstr "Zapłać za zamówienie"

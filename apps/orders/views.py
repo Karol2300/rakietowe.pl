@@ -1,5 +1,6 @@
 from decimal import Decimal
 
+from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.http import Http404, HttpResponse, HttpResponseBadRequest
@@ -12,6 +13,7 @@ from django.views.decorators.http import require_POST
 from apps.accounts.models import Address
 from apps.cart import services as cart_services
 from apps.coupons.models import Coupon
+from apps.loyalty.models import LoyaltyAccount
 from apps.shipping.models import ShippingMethod
 
 from .forms import CheckoutForm, ReturnRequestForm
@@ -60,11 +62,17 @@ def checkout(request):
             "shipping_phone": default_address.phone,
         }
 
+    available_points = 0
+    if request.user.is_authenticated:
+        loyalty_account = LoyaltyAccount.objects.filter(user=request.user).first()
+        available_points = loyalty_account.points_balance if loyalty_account else 0
+
     coupon = None
-    discount = 0
 
     if request.method == "POST":
-        form = CheckoutForm(request.POST, user_authenticated=request.user.is_authenticated)
+        form = CheckoutForm(
+            request.POST, user_authenticated=request.user.is_authenticated, available_points=available_points
+        )
         if form.is_valid():
             coupon_code = form.cleaned_data.get("coupon_code", "").strip()
             if coupon_code:
@@ -75,7 +83,15 @@ def checkout(request):
 
         if form.is_valid():
             shipping_method = form.cleaned_data["shipping_method"]
-            discount = _compute_discount(coupon, subtotal)
+            coupon_discount = _compute_discount(coupon, subtotal)
+
+            remaining = max(subtotal - coupon_discount, 0)
+            point_value = Decimal(str(settings.LOYALTY_POINT_VALUE_PLN))
+            max_useful_points = int(remaining / point_value) if point_value else 0
+            redeem_points = min(form.cleaned_data.get("redeem_points") or 0, max_useful_points, available_points)
+            loyalty_discount = (Decimal(redeem_points) * point_value).quantize(Decimal("0.01"))
+
+            discount = coupon_discount + loyalty_discount
             shipping_cost = shipping_method.cost_for(subtotal)
             total = max(0, subtotal - discount + shipping_cost)
 
@@ -85,6 +101,7 @@ def checkout(request):
                 currency="PLN",
                 subtotal=subtotal,
                 discount_amount=discount,
+                loyalty_points_redeemed=redeem_points,
                 shipping_cost=shipping_cost,
                 total=total,
                 coupon=coupon,
@@ -110,7 +127,9 @@ def checkout(request):
             cart.items.all().delete()
             return redirect("orders:payment_select", order_number=order.order_number)
     else:
-        form = CheckoutForm(initial=initial, user_authenticated=request.user.is_authenticated)
+        form = CheckoutForm(
+            initial=initial, user_authenticated=request.user.is_authenticated, available_points=available_points
+        )
 
     inpost_method = ShippingMethod.objects.filter(requires_locker_selection=True).first()
 
@@ -119,6 +138,8 @@ def checkout(request):
         "items": items,
         "subtotal": subtotal,
         "inpost_method_id": inpost_method.id if inpost_method else "",
+        "available_points": available_points,
+        "point_value": settings.LOYALTY_POINT_VALUE_PLN,
     }
     return render(request, "orders/checkout.html", context)
 
@@ -203,7 +224,7 @@ def request_return(request, order_number):
     order = get_object_or_404(Order, order_number=order_number, user=request.user)
     if order.status not in (Order.Status.PAID, Order.Status.SHIPPED, Order.Status.DELIVERED):
         messages.error(request, _("This order isn't eligible for a return yet."))
-        return redirect("orders:payment_return", order_number=order.order_number)
+        return redirect("order_account:detail", order_number=order.order_number)
 
     if request.method == "POST":
         form = ReturnRequestForm(request.POST, order=order)
@@ -213,7 +234,7 @@ def request_return(request, order_number):
             return_request.user = request.user
             return_request.save()
             messages.success(request, _("Your return request has been submitted."))
-            return redirect("orders:payment_return", order_number=order.order_number)
+            return redirect("order_account:detail", order_number=order.order_number)
     else:
         form = ReturnRequestForm(order=order)
 
@@ -228,3 +249,21 @@ def download_invoice(request, order_number):
     if not hasattr(order, "invoice") or not order.invoice.pdf_file:
         raise Http404
     return redirect(order.invoice.pdf_file.url)
+
+
+@login_required
+def order_history(request):
+    orders = Order.objects.filter(user=request.user).order_by("-created_at")
+    return render(request, "orders/order_history.html", {"orders": orders})
+
+
+@login_required
+def order_detail(request, order_number):
+    order = get_object_or_404(
+        Order.objects.prefetch_related("items", "return_requests"), order_number=order_number, user=request.user
+    )
+    context = {
+        "order": order,
+        "status_eligible_for_return": [Order.Status.PAID, Order.Status.SHIPPED, Order.Status.DELIVERED],
+    }
+    return render(request, "orders/order_detail.html", context)

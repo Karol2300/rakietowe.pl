@@ -1,0 +1,73 @@
+{% extends "accounts/account_base.html" %}
+{% load i18n %}
+
+{% block title %}{{ order.order_number }} — {% trans "Racket Sports Shop" %}{% endblock %}
+
+{% block account_content %}
+<div class="breadcrumbs">
+    <a href="{% url 'order_account:list' %}">{% trans "Order history" %}</a> › {{ order.order_number }}
+</div>
+<h1>{% trans "Order" %} {{ order.order_number }}</h1>
+<p>{% trans "Status" %}: {{ order.get_status_display }} &middot; {% trans "Placed" %} {{ order.created_at|date:"j M Y" }}</p>
+
+<table class="cart-table">
+    <tbody>
+        {% for item in order.items.all %}
+            <tr>
+                <td>{{ item.product_name }} × {{ item.quantity }}</td>
+                <td>{{ item.line_total }} {{ order.currency }}</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<p>{% trans "Subtotal" %}: {{ order.subtotal }} {{ order.currency }}</p>
+{% if order.discount_amount %}<p>{% trans "Discount" %}: -{{ order.discount_amount }} {{ order.currency }}</p>{% endif %}
+{% if order.loyalty_points_redeemed %}<p>{% trans "Loyalty points redeemed" %}: {{ order.loyalty_points_redeemed }}</p>{% endif %}
+<p>{% trans "Shipping" %} ({{ order.shipping_method.name }}): {{ order.shipping_cost }} {{ order.currency }}</p>
+<p><strong>{% trans "Total" %}: {{ order.total }} {{ order.currency }}</strong></p>
+<p>
+    {% trans "Shipping to" %}: {{ order.shipping_full_name }}, {{ order.shipping_street }},
+    {{ order.shipping_postal_code }} {{ order.shipping_city }}, {{ order.shipping_country }}
+</p>
+{% if order.tracking_number %}
+    <p>{% trans "Tracking number" %}: {{ order.tracking_number }} ({{ order.get_carrier_display }})</p>
+{% endif %}
+
+<div class="order-actions">
+    {% if order.payment_status == "paid" %}
+        <a class="button button--secondary" href="{% url 'orders:download_invoice' order.order_number %}">
+            {% trans "Download invoice" %}
+        </a>
+    {% endif %}
+    {% if order.status in status_eligible_for_return %}
+        <a class="button button--secondary" href="{% url 'orders:request_return' order.order_number %}">
+            {% trans "Request a return" %}
+        </a>
+    {% endif %}
+</div>
+
+{% if order.return_requests.all %}
+    <h2>{% trans "Return requests" %}</h2>
+    <table class="cart-table">
+        <thead>
+            <tr>
+                <th>{% trans "Item" %}</th>
+                <th>{% trans "Quantity" %}</th>
+                <th>{% trans "Status" %}</th>
+                <th>{% trans "Refund amount" %}</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for rr in order.return_requests.all %}
+                <tr>
+                    <td>{{ rr.item.product_name }}</td>
+                    <td>{{ rr.quantity }}</td>
+                    <td>{{ rr.get_status_display }}</td>
+                    <td>{% if rr.refund_amount %}{{ rr.refund_amount }} {{ order.currency }}{% endif %}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endif %}
+{% endblock %}

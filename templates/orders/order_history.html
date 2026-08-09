@@ -1,0 +1,35 @@
+{% extends "accounts/account_base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Order history" %} — {% trans "Racket Sports Shop" %}{% endblock %}
+
+{% block account_content %}
+<h1>{% trans "Order history" %}</h1>
+
+{% if orders %}
+    <table class="cart-table">
+        <thead>
+            <tr>
+                <th>{% trans "Order" %}</th>
+                <th>{% trans "Date" %}</th>
+                <th>{% trans "Status" %}</th>
+                <th>{% trans "Total" %}</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for order in orders %}
+                <tr>
+                    <td>{{ order.order_number }}</td>
+                    <td>{{ order.created_at|date:"j M Y" }}</td>
+                    <td>{{ order.get_status_display }}</td>
+                    <td>{{ order.total }} {{ order.currency }}</td>
+                    <td><a href="{% url 'order_account:detail' order.order_number %}">{% trans "View" %}</a></td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <p class="empty-state">{% trans "You haven't placed any orders yet." %}</p>
+{% endif %}
+{% endblock %}

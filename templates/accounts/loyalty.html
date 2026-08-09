@@ -1,0 +1,40 @@
+{% extends "accounts/account_base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Loyalty points" %} — {% trans "Racket Sports Shop" %}{% endblock %}
+
+{% block account_content %}
+<h1>{% trans "Loyalty points" %}</h1>
+<div class="loyalty-balance">{{ account.points_balance }} {% trans "points" %}</div>
+<p>{% trans "Redeem your points as a discount at checkout." %}</p>
+
+<h2>{% trans "History" %}</h2>
+{% if transactions %}
+    <table class="cart-table">
+        <thead>
+            <tr>
+                <th>{% trans "Date" %}</th>
+                <th>{% trans "Type" %}</th>
+                <th>{% trans "Points" %}</th>
+                <th>{% trans "Order" %}</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for tx in transactions %}
+                <tr>
+                    <td>{{ tx.created_at|date:"j M Y" }}</td>
+                    <td>{{ tx.get_kind_display }}</td>
+                    <td>{{ tx.points }}</td>
+                    <td>
+                        {% if tx.order %}
+                            <a href="{% url 'order_account:detail' tx.order.order_number %}">{{ tx.order.order_number }}</a>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <p class="empty-state">{% trans "No points activity yet." %}</p>
+{% endif %}
+{% endblock %}

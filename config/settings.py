@@ -145,6 +145,7 @@ DEFAULT_FROM_EMAIL = env("DEFAULT_FROM_EMAIL", default="no-reply@racket-shop.exa
 BASE_CURRENCY = "PLN"
 SUPPORTED_CURRENCIES = ["PLN", "EUR", "USD"]
 LOYALTY_POINTS_PER_PLN = env.float("LOYALTY_POINTS_PER_PLN", default=0.1)  # 1 point per 10 PLN spent
+LOYALTY_POINT_VALUE_PLN = env.float("LOYALTY_POINT_VALUE_PLN", default=0.05)  # 20 points = 1 PLN discount
 
 SITE_URL = env("SITE_URL", default="http://localhost:8000")
 

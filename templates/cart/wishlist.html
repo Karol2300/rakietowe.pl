@@ -1,0 +1,18 @@
+{% extends "accounts/account_base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Wishlist" %} — {% trans "Racket Sports Shop" %}{% endblock %}
+
+{% block account_content %}
+<h1>{% trans "Wishlist" %}</h1>
+
+{% if products %}
+    <div class="product-grid">
+        {% for product in products %}
+            {% include "catalog/_product_card.html" %}
+        {% endfor %}
+    </div>
+{% else %}
+    <p class="empty-state">{% trans "Your wishlist is empty." %} <a href="{% url 'core:home' %}">{% trans "Continue shopping" %}</a></p>
+{% endif %}
+{% endblock %}

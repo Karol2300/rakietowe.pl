@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+<div class="account-layout">
+    <nav class="account-sidebar">
+        <a href="{% url 'accounts:dashboard' %}">{% trans "Dashboard" %}</a>
+        <a href="{% url 'order_account:list' %}">{% trans "Order history" %}</a>
+        <a href="{% url 'accounts:address_list' %}">{% trans "Addresses" %}</a>
+        <a href="{% url 'accounts:loyalty' %}">{% trans "Loyalty points" %}</a>
+        <a href="{% url 'cart:wishlist' %}">{% trans "Wishlist" %}</a>
+        <a href="{% url 'accounts:payment_methods' %}">{% trans "Payment methods" %}</a>
+        <a href="{% url 'accounts:profile' %}">{% trans "Profile" %}</a>
+        <a href="{% url 'accounts:password_change' %}">{% trans "Change password" %}</a>
+    </nav>
+    <div class="account-content">
+        {% block account_content %}{% endblock %}
+    </div>
+</div>
+{% endblock %}

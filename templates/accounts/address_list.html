@@ -1,0 +1,30 @@
+{% extends "accounts/account_base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Addresses" %} — {% trans "Racket Sports Shop" %}{% endblock %}
+
+{% block account_content %}
+<h1>{% trans "Addresses" %}</h1>
+
+{% for address in addresses %}
+    <div class="address-card">
+        <strong>{{ address.label|default:address.full_name }}</strong>
+        {% if address.is_default %}<span class="badge">{% trans "Default" %}</span>{% endif %}
+        <p>
+            {{ address.full_name }}<br>
+            {{ address.street }}<br>
+            {{ address.postal_code }} {{ address.city }}<br>
+            {{ address.country }}
+            {% if address.phone %}<br>{{ address.phone }}{% endif %}
+        </p>
+        <div class="address-card__actions">
+            <a href="{% url 'accounts:address_edit' address.id %}">{% trans "Edit" %}</a>
+            <a href="{% url 'accounts:address_delete' address.id %}">{% trans "Delete" %}</a>
+        </div>
+    </div>
+{% empty %}
+    <p class="empty-state">{% trans "You haven't saved any addresses yet." %}</p>
+{% endfor %}
+
+<a class="button" href="{% url 'accounts:address_add' %}">{% trans "Add address" %}</a>
+{% endblock %}

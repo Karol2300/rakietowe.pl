@@ -5,7 +5,7 @@ from django.contrib.auth import password_validation
 from django.utils.text import slugify
 from django.utils.translation import gettext_lazy as _
 
-from .models import User
+from .models import Address, User
 
 
 class RegistrationForm(forms.ModelForm):
@@ -37,3 +37,21 @@ class RegistrationForm(forms.ModelForm):
         if commit:
             user.save()
         return user
+
+
+class ProfileForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ["first_name", "last_name", "email"]
+
+    def clean_email(self):
+        email = self.cleaned_data["email"].lower()
+        if User.objects.filter(email=email).exclude(pk=self.instance.pk).exists():
+            raise forms.ValidationError(_("An account with this email already exists."))
+        return email
+
+
+class AddressForm(forms.ModelForm):
+    class Meta:
+        model = Address
+        fields = ["label", "full_name", "street", "city", "postal_code", "country", "phone", "is_default"]

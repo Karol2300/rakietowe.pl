@@ -1,0 +1,14 @@
+{% extends "accounts/account_base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Delete address" %} — {% trans "Racket Sports Shop" %}{% endblock %}
+
+{% block account_content %}
+<h1>{% trans "Delete address" %}</h1>
+<p>{% blocktrans %}Are you sure you want to delete "{{ address }}"?{% endblocktrans %}</p>
+<form method="post">
+    {% csrf_token %}
+    <button type="submit" class="button">{% trans "Delete" %}</button>
+    <a class="button button--secondary" href="{% url 'accounts:address_list' %}">{% trans "Cancel" %}</a>
+</form>
+{% endblock %}

@@ -1,0 +1,19 @@
+{% extends "accounts/account_base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Payment methods" %} — {% trans "Racket Sports Shop" %}{% endblock %}
+
+{% block account_content %}
+<h1>{% trans "Payment methods" %}</h1>
+<p>{% trans "We never store your card details - only a reference to the payment provider you used, kept securely by PayU or Stripe themselves." %}</p>
+
+{% if providers %}
+    <ul>
+        {% for provider in providers %}
+            <li>{% if provider == "payu" %}PayU{% elif provider == "stripe" %}Stripe{% else %}{{ provider }}{% endif %}</li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p class="empty-state">{% trans "You haven't completed a payment yet." %}</p>
+{% endif %}
+{% endblock %}

@@ -32,6 +32,22 @@ def award_loyalty_points(order):
     )
 
 
+def redeem_loyalty_points(order):
+    if not order.user or not order.loyalty_points_redeemed:
+        return
+    account, _ = LoyaltyAccount.objects.get_or_create(user=order.user)
+    # Clamp to the current balance in case it changed between checkout and
+    # payment confirmation (mirrors the stock re-validation above).
+    spent = min(order.loyalty_points_redeemed, account.points_balance)
+    if spent <= 0:
+        return
+    account.points_balance -= spent
+    account.save(update_fields=["points_balance"])
+    LoyaltyTransaction.objects.create(
+        account=account, order=order, kind=LoyaltyTransaction.Kind.REDEEMED, points=-spent
+    )
+
+
 @transaction.atomic
 def fulfill_paid_order(order):
     """Called once a payment provider confirms payment. Idempotent: safe to
@@ -57,6 +73,7 @@ def fulfill_paid_order(order):
         order.coupon.save(update_fields=["times_used"])
 
     award_loyalty_points(order)
+    redeem_loyalty_points(order)
     generate_invoice(order)
     send_order_confirmation_email(order)
     return order

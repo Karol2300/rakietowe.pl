@@ -1,0 +1,23 @@
+{% extends "accounts/account_base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Address" %} — {% trans "Racket Sports Shop" %}{% endblock %}
+
+{% block account_content %}
+<h1>{% if address %}{% trans "Edit address" %}{% else %}{% trans "Add address" %}{% endif %}</h1>
+<form method="post" class="auth-form">
+    {% csrf_token %}
+    {% for field in form %}
+        <div class="form-field">
+            {% if field.field.widget.input_type == "checkbox" %}
+                <label>{{ field }} {{ field.label }}</label>
+            {% else %}
+                <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                {{ field }}
+            {% endif %}
+            {% for error in field.errors %}<span class="form-error">{{ error }}</span>{% endfor %}
+        </div>
+    {% endfor %}
+    <button type="submit" class="button">{% trans "Save address" %}</button>
+</form>
+{% endblock %}

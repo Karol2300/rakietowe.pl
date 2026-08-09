@@ -863,6 +863,57 @@ button, input, select {
     margin-top: 1.5rem;
 }
 
+/* Account layout */
+
+.account-layout {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 3rem;
+    align-items: start;
+}
+
+.account-sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    border-right: 1px solid var(--color-border);
+    padding-right: 1.5rem;
+}
+
+.account-sidebar a {
+    padding: 0.5rem 0.6rem;
+    border-radius: 4px;
+    font-size: 0.9rem;
+}
+
+.account-sidebar a:hover {
+    background: #f4f6f5;
+}
+
+.account-content {
+    min-width: 0;
+}
+
+.address-card {
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    padding: 1rem 1.25rem;
+    margin-bottom: 1rem;
+}
+
+.address-card__actions {
+    display: flex;
+    gap: 0.75rem;
+    margin-top: 0.5rem;
+    font-size: 0.85rem;
+}
+
+.loyalty-balance {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+}
+
 /* Mobile */
 
 @media (max-width: 860px) {
@@ -881,5 +932,18 @@ button, input, select {
 
     .checkout {
         grid-template-columns: 1fr;
+    }
+
+    .account-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .account-sidebar {
+        flex-direction: row;
+        flex-wrap: wrap;
+        border-right: none;
+        border-bottom: 1px solid var(--color-border);
+        padding-right: 0;
+        padding-bottom: 1rem;
     }
 }

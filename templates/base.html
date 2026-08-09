@@ -61,7 +61,7 @@
 
         <nav class="account-nav">
             {% if user.is_authenticated %}
-                <span>{{ user.email }}</span>
+                <a href="{% url 'accounts:dashboard' %}">{{ user.email }}</a>
                 <form action="{% url 'accounts:logout' %}" method="post">
                     {% csrf_token %}
                     <button type="submit" class="link-button">{% trans "Log out" %}</button>

@@ -6,6 +6,7 @@ from django.utils.translation import gettext as _
 from django.views.decorators.http import require_POST
 
 from apps.catalog.models import Product, ProductVariant
+from apps.catalog.services import annotate_effective_price
 
 from . import services
 from .models import CartItem, Wishlist, WishlistItem
@@ -75,7 +76,7 @@ def remove_cart_item(request, item_id):
 @require_POST
 def toggle_wishlist(request, slug):
     product = get_object_or_404(Product, slug=slug, is_active=True)
-    wishlist, _ = Wishlist.objects.get_or_create(user=request.user)
+    wishlist, _wishlist_created = Wishlist.objects.get_or_create(user=request.user)
     item, created = WishlistItem.objects.get_or_create(wishlist=wishlist, product=product)
     if not created:
         item.delete()
@@ -83,3 +84,13 @@ def toggle_wishlist(request, slug):
     else:
         messages.success(request, _("Added %(name)s to your wishlist.") % {"name": product.name})
     return redirect(reverse("catalog:product_detail", args=[slug]))
+
+
+@login_required
+def wishlist_detail(request):
+    wishlist, _wishlist_created = Wishlist.objects.get_or_create(user=request.user)
+    product_ids = wishlist.items.values_list("product_id", flat=True)
+    products = annotate_effective_price(
+        Product.objects.filter(id__in=product_ids).select_related("brand").prefetch_related("variants")
+    )
+    return render(request, "cart/wishlist.html", {"products": products})

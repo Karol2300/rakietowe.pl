@@ -34,11 +34,25 @@ class CheckoutForm(forms.Form):
     )
     inpost_locker_point_id = forms.CharField(label=_("InPost locker point"), max_length=50, required=False)
     coupon_code = forms.CharField(label=_("Coupon code"), max_length=32, required=False)
+    redeem_points = forms.IntegerField(label=_("Loyalty points to redeem"), min_value=0, required=False)
 
-    def __init__(self, *args, user_authenticated=False, **kwargs):
+    def __init__(self, *args, user_authenticated=False, available_points=0, **kwargs):
         super().__init__(*args, **kwargs)
+        self.available_points = available_points
         if user_authenticated:
             self.fields["guest_email"].widget = forms.HiddenInput()
+        if available_points:
+            self.fields["redeem_points"].widget.attrs["max"] = available_points
+        else:
+            self.fields["redeem_points"].widget = forms.HiddenInput()
+
+    def clean_redeem_points(self):
+        points = self.cleaned_data.get("redeem_points") or 0
+        if points > self.available_points:
+            raise forms.ValidationError(
+                _("You only have %(available)s points available.") % {"available": self.available_points}
+            )
+        return points
 
     def clean(self):
         cleaned = super().clean()

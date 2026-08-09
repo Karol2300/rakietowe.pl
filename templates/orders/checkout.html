@@ -57,6 +57,17 @@
             {% for error in form.coupon_code.errors %}<span class="form-error">{{ error }}</span>{% endfor %}
         </div>
 
+        {% if available_points %}
+            <h2>{% trans "Loyalty points" %}</h2>
+            <div class="form-field">
+                <label for="{{ form.redeem_points.id_for_label }}">
+                    {% blocktrans %}Redeem points (you have {{ available_points }} available, worth {{ point_value }} zł each){% endblocktrans %}
+                </label>
+                {{ form.redeem_points }}
+                {% for error in form.redeem_points.errors %}<span class="form-error">{{ error }}</span>{% endfor %}
+            </div>
+        {% endif %}
+
         <button type="submit" class="button">{% trans "Place order" %}</button>
     </form>
 
