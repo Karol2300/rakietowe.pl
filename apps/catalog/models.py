@@ -78,6 +78,12 @@ class Product(models.Model):
     sale_start = models.DateTimeField(null=True, blank=True)
     sale_end = models.DateTimeField(null=True, blank=True)
 
+    specs = models.JSONField(
+        default=dict,
+        blank=True,
+        help_text="Sport-specific spec table, e.g. {'weight_g': 300, 'head_size_sq_in': 100}",
+    )
+
     average_rating = models.DecimalField(max_digits=3, decimal_places=2, default=0)
     review_count = models.PositiveIntegerField(default=0)
 

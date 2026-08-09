@@ -3,6 +3,7 @@ Django==5.2.17
 django-environ==0.14.0
 django-js-asset==4.0.1
 django-mptt==0.18.0
+Faker==40.36.0
 pillow==12.3.0
 psycopg2-binary==2.9.12
 sqlparse==0.5.5
