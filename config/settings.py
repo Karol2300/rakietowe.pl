@@ -69,6 +69,7 @@ TEMPLATES = [
                 "django.contrib.messages.context_processors.messages",
                 "django.template.context_processors.i18n",
                 "apps.catalog.context_processors.sport_navigation",
+                "apps.cart.context_processors.cart_summary",
             ],
         },
     },
@@ -143,3 +144,19 @@ DEFAULT_FROM_EMAIL = env("DEFAULT_FROM_EMAIL", default="no-reply@racket-shop.exa
 
 BASE_CURRENCY = "PLN"
 SUPPORTED_CURRENCIES = ["PLN", "EUR", "USD"]
+LOYALTY_POINTS_PER_PLN = env.float("LOYALTY_POINTS_PER_PLN", default=0.1)  # 1 point per 10 PLN spent
+
+SITE_URL = env("SITE_URL", default="http://localhost:8000")
+
+# PayU (primary payment provider) - REST API v2.1. Leave blank to use the
+# local mock provider for development; see apps/orders/payments.py.
+PAYU_POS_ID = env("PAYU_POS_ID", default="")
+PAYU_CLIENT_ID = env("PAYU_CLIENT_ID", default="")
+PAYU_CLIENT_SECRET = env("PAYU_CLIENT_SECRET", default="")
+PAYU_SECOND_KEY = env("PAYU_SECOND_KEY", default="")
+PAYU_SANDBOX = env.bool("PAYU_SANDBOX", default=True)
+
+# Stripe (secondary payment provider, international customers)
+STRIPE_PUBLISHABLE_KEY = env("STRIPE_PUBLISHABLE_KEY", default="")
+STRIPE_SECRET_KEY = env("STRIPE_SECRET_KEY", default="")
+STRIPE_WEBHOOK_SECRET = env("STRIPE_WEBHOOK_SECRET", default="")

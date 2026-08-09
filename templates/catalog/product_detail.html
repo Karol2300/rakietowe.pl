@@ -50,33 +50,43 @@
             {% endif %}
         </div>
 
-        {% if variant_dimension %}
-            <div class="variant-selector" data-variant-selector>
-                <div class="variant-selector__label">{{ variant_dimension }}</div>
-                <div class="variant-options">
-                    {% for variant in variants %}
-                        <input
-                            type="radio"
-                            name="variant"
-                            id="variant-{{ variant.id }}"
-                            value="{{ variant.id }}"
-                            {% if variant == default_variant %}checked{% endif %}
-                            {% if not variant.in_stock %}disabled{% endif %}
-                        >
-                        <label for="variant-{{ variant.id }}">{{ variant.attributes|get_item:variant_dimension }}</label>
-                    {% endfor %}
+        <form method="post" action="{% url 'cart:add_to_cart' product.slug %}">
+            {% csrf_token %}
+            {% if variant_dimension %}
+                <div class="variant-selector" data-variant-selector>
+                    <div class="variant-selector__label">{{ variant_dimension }}</div>
+                    <div class="variant-options">
+                        {% for variant in variants %}
+                            <input
+                                type="radio"
+                                name="variant"
+                                id="variant-{{ variant.id }}"
+                                value="{{ variant.id }}"
+                                {% if variant == default_variant %}checked{% endif %}
+                                {% if not variant.in_stock %}disabled{% endif %}
+                            >
+                            <label for="variant-{{ variant.id }}">{{ variant.attributes|get_item:variant_dimension }}</label>
+                        {% endfor %}
+                    </div>
                 </div>
-            </div>
-        {% endif %}
+            {% elif default_variant %}
+                <input type="hidden" name="variant" value="{{ default_variant.id }}">
+            {% endif %}
 
-        <div class="product-actions">
-            <button type="button" class="button" id="add-to-cart-button" title="{% trans 'Cart is wired up in a later stage' %}">
-                {% trans "Add to cart" %}
-            </button>
-            <button type="button" class="button button--secondary" title="{% trans 'Wishlist is wired up in a later stage' %}">
+            <div class="product-actions">
+                <input type="number" name="quantity" value="1" min="1" class="qty-input" aria-label="{% trans 'Quantity' %}">
+                <button type="submit" class="button" id="add-to-cart-button" {% if not default_variant or not default_variant.in_stock %}disabled{% endif %}>
+                    {% trans "Add to cart" %}
+                </button>
+            </div>
+        </form>
+
+        <form method="post" action="{% url 'cart:toggle_wishlist' product.slug %}" class="product-actions">
+            {% csrf_token %}
+            <button type="submit" class="button button--secondary">
                 {% trans "Add to wishlist" %}
             </button>
-        </div>
+        </form>
 
         {% if product.description %}
             <p>{{ product.description }}</p>

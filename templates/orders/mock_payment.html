@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Simulated payment" %} — {% trans "Racket Sports Shop" %}{% endblock %}
+
+{% block content %}
+<div class="auth-form">
+    <h1>{% trans "Simulated payment" %}</h1>
+    <p>{% blocktrans %}No real PayU/Stripe credentials are configured, so this local mock stands in for the payment provider's page. In production this step happens on PayU's or Stripe's own site.{% endblocktrans %}</p>
+    <p>{% trans "Order" %} <strong>{{ order.order_number }}</strong> — {{ order.total }} {{ order.currency }}</p>
+
+    <form method="post" action="{% url 'orders:mock_confirm' order.order_number %}">
+        {% csrf_token %}
+        <input type="hidden" name="order_number" value="{{ order.order_number }}">
+        <button type="submit" class="button">{% trans "Simulate successful payment" %}</button>
+    </form>
+    <form method="post" action="{% url 'orders:mock_cancel' order.order_number %}">
+        {% csrf_token %}
+        <button type="submit" class="button button--secondary">{% trans "Simulate failed payment" %}</button>
+    </form>
+</div>
+{% endblock %}

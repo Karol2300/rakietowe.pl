@@ -23,6 +23,7 @@ from django.urls import include, path
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('i18n/', include('django.conf.urls.i18n')),
+    path('webhooks/', include('apps.orders.webhook_urls')),
 ]
 
 urlpatterns += i18n_patterns(
@@ -30,6 +31,8 @@ urlpatterns += i18n_patterns(
     path('', include('apps.catalog.urls')),
     path('accounts/', include('apps.accounts.urls')),
     path('', include('apps.reviews.urls')),
+    path('', include('apps.cart.urls')),
+    path('checkout/', include('apps.orders.urls')),
     prefix_default_language=True,
 )
 

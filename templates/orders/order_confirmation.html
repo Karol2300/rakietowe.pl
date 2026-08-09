@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Order confirmation" %} — {% trans "Racket Sports Shop" %}{% endblock %}
+
+{% block content %}
+{% if order.payment_status == "paid" %}
+    <h1>{% trans "Thank you! Your order is confirmed." %}</h1>
+    <p>{% blocktrans %}A confirmation email is on its way to you.{% endblocktrans %}</p>
+{% elif order.status == "cancelled" %}
+    <h1>{% trans "Payment was not completed" %}</h1>
+    <p>{% trans "Your order was cancelled. No charge was made." %}</p>
+{% else %}
+    <h1>{% trans "We're processing your payment" %}</h1>
+    <p>{% trans "This can take a moment - refresh this page shortly." %}</p>
+{% endif %}
+
+<div class="order-summary">
+    <h2>{% trans "Order" %} {{ order.order_number }}</h2>
+    <table class="cart-table">
+        <tbody>
+            {% for item in order.items.all %}
+                <tr>
+                    <td>{{ item.product_name }} × {{ item.quantity }}</td>
+                    <td>{{ item.line_total }} {{ order.currency }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <p>{% trans "Subtotal" %}: {{ order.subtotal }} {{ order.currency }}</p>
+    {% if order.discount_amount %}<p>{% trans "Discount" %}: -{{ order.discount_amount }} {{ order.currency }}</p>{% endif %}
+    <p>{% trans "Shipping" %} ({{ order.shipping_method.name }}): {{ order.shipping_cost }} {{ order.currency }}</p>
+    <p><strong>{% trans "Total" %}: {{ order.total }} {{ order.currency }}</strong></p>
+    <p>
+        {% trans "Shipping to" %}: {{ order.shipping_full_name }}, {{ order.shipping_street }},
+        {{ order.shipping_postal_code }} {{ order.shipping_city }}, {{ order.shipping_country }}
+    </p>
+</div>
+{% endblock %}

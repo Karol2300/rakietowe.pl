@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+{% load i18n static %}
+
+{% block title %}{% trans "Checkout" %} — {% trans "Racket Sports Shop" %}{% endblock %}
+
+{% block content %}
+<h1>{% trans "Checkout" %}</h1>
+
+<div class="checkout">
+    <form method="post" class="checkout__form">
+        {% csrf_token %}
+        {% if form.non_field_errors %}
+            <p class="form-error">{{ form.non_field_errors.0 }}</p>
+        {% endif %}
+
+        {% if not user.is_authenticated %}
+            <h2>{% trans "Contact" %}</h2>
+            <div class="form-field">
+                <label for="{{ form.guest_email.id_for_label }}">{{ form.guest_email.label }}</label>
+                {{ form.guest_email }}
+                {% for error in form.guest_email.errors %}<span class="form-error">{{ error }}</span>{% endfor %}
+            </div>
+        {% endif %}
+
+        <h2>{% trans "Shipping address" %}</h2>
+        {% for field in form %}
+            {% if field.name|slice:":9" == "shipping_" and field.name != "shipping_method" %}
+                <div class="form-field">
+                    <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                    {{ field }}
+                    {% for error in field.errors %}<span class="form-error">{{ error }}</span>{% endfor %}
+                </div>
+            {% endif %}
+        {% endfor %}
+
+        <h2>{% trans "Shipping method" %}</h2>
+        <div class="shipping-options" data-locker-method-id="{{ inpost_method_id }}">
+            {% for choice in form.shipping_method %}
+                <label class="shipping-option">
+                    {{ choice.tag }}
+                    <span>{{ choice.choice_label }}</span>
+                </label>
+            {% endfor %}
+        </div>
+        {% for error in form.shipping_method.errors %}<span class="form-error">{{ error }}</span>{% endfor %}
+
+        <div class="form-field" data-locker-field hidden>
+            <label for="{{ form.inpost_locker_point_id.id_for_label }}">{{ form.inpost_locker_point_id.label }}</label>
+            {{ form.inpost_locker_point_id }}
+            <span class="form-hint">{% trans "Enter your preferred InPost locker code (e.g. WAW01A)." %}</span>
+            {% for error in form.inpost_locker_point_id.errors %}<span class="form-error">{{ error }}</span>{% endfor %}
+        </div>
+
+        <h2>{% trans "Discount code" %}</h2>
+        <div class="form-field">
+            {{ form.coupon_code }}
+            {% for error in form.coupon_code.errors %}<span class="form-error">{{ error }}</span>{% endfor %}
+        </div>
+
+        <button type="submit" class="button">{% trans "Place order" %}</button>
+    </form>
+
+    <aside class="checkout__summary">
+        <h2>{% trans "Order summary" %}</h2>
+        {% for item in items %}
+            <div class="checkout__summary-line">
+                <span>{{ item.variant.product.name }} × {{ item.quantity }}</span>
+                <span>{{ item.line_total }} zł</span>
+            </div>
+        {% endfor %}
+        <div class="checkout__summary-line checkout__summary-line--total">
+            <span>{% trans "Subtotal" %}</span>
+            <span>{{ subtotal }} zł</span>
+        </div>
+    </aside>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script src="{% static 'js/checkout.js' %}" defer></script>
+{% endblock %}

@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Pay for your order" %} — {% trans "Racket Sports Shop" %}{% endblock %}
+
+{% block content %}
+<div class="auth-form">
+    <h1>{% trans "Pay for your order" %}</h1>
+    <p>{% trans "Order" %} <strong>{{ order.order_number }}</strong> — {{ order.total }} {{ order.currency }}</p>
+
+    <div class="payment-options">
+        <a class="button" href="{% url 'orders:payment_start' order.order_number 'payu' %}">
+            {% trans "Pay with PayU" %}
+        </a>
+        <a class="button button--secondary" href="{% url 'orders:payment_start' order.order_number 'stripe' %}">
+            {% trans "Pay with Stripe" %}
+        </a>
+    </div>
+</div>
+{% endblock %}

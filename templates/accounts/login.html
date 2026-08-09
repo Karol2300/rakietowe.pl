@@ -20,5 +20,6 @@
         <input type="hidden" name="next" value="{{ next }}">
         <button type="submit" class="button">{% trans "Log in" %}</button>
     </form>
+    <p><a href="{% url 'accounts:register' %}?next={{ next }}">{% trans "New here? Create an account" %}</a></p>
 </div>
 {% endblock %}

@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Your cart" %} — {% trans "Racket Sports Shop" %}{% endblock %}
+
+{% block content %}
+<h1>{% trans "Your cart" %}</h1>
+
+{% if items %}
+    <table class="cart-table">
+        <thead>
+            <tr>
+                <th>{% trans "Product" %}</th>
+                <th>{% trans "Price" %}</th>
+                <th>{% trans "Quantity" %}</th>
+                <th>{% trans "Subtotal" %}</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in items %}
+                <tr>
+                    <td>
+                        <a href="{% url 'catalog:product_detail' item.variant.product.slug %}">{{ item.variant.product.name }}</a>
+                        {% if item.variant.attributes %}
+                            <div class="cart-table__variant">
+                                {% for key, value in item.variant.attributes.items %}{{ key }}: {{ value }}{% endfor %}
+                            </div>
+                        {% endif %}
+                    </td>
+                    <td>{{ item.variant.current_price }} zł</td>
+                    <td>
+                        <form method="post" action="{% url 'cart:update_item' item.id %}" class="cart-table__qty-form">
+                            {% csrf_token %}
+                            <input type="number" name="quantity" value="{{ item.quantity }}" min="1" max="{{ item.variant.stock_quantity }}">
+                            <button type="submit" class="button--secondary button">{% trans "Update" %}</button>
+                        </form>
+                    </td>
+                    <td>{{ item.line_total }} zł</td>
+                    <td>
+                        <form method="post" action="{% url 'cart:remove_item' item.id %}">
+                            {% csrf_token %}
+                            <button type="submit" class="link-button">{% trans "Remove" %}</button>
+                        </form>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="cart-summary">
+        <div class="cart-summary__subtotal">{% trans "Subtotal" %}: <strong>{{ subtotal }} zł</strong></div>
+        <a href="{% url 'orders:checkout' %}" class="button">{% trans "Proceed to checkout" %}</a>
+    </div>
+{% else %}
+    <p class="empty-state">{% trans "Your cart is empty." %} <a href="{% url 'core:home' %}">{% trans "Continue shopping" %}</a></p>
+{% endif %}
+{% endblock %}

@@ -2,6 +2,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse
+from django.utils.translation import gettext as _
 from django.views.decorators.http import require_POST
 
 from apps.catalog.models import Product
@@ -36,8 +37,8 @@ def add_review(request, slug):
         ).exists()
         review.save()
         _recalculate_rating(product)
-        messages.success(request, "Thanks - your review has been posted.")
+        messages.success(request, _("Thanks - your review has been posted."))
     else:
-        messages.error(request, "Please choose a rating and try again.")
+        messages.error(request, _("Please choose a rating and try again."))
 
     return redirect(reverse("catalog:product_detail", args=[slug]) + "#reviews")

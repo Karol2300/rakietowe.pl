@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Create account" %} — {% trans "Racket Sports Shop" %}{% endblock %}
+
+{% block content %}
+<div class="auth-form">
+    <h1>{% trans "Create account" %}</h1>
+    <form method="post">
+        {% csrf_token %}
+        {% if form.non_field_errors %}
+            <p class="form-error">{{ form.non_field_errors.0 }}</p>
+        {% endif %}
+        {% for field in form %}
+            <div class="form-field">
+                <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                {{ field }}
+                {% for error in field.errors %}
+                    <span class="form-error">{{ error }}</span>
+                {% endfor %}
+            </div>
+        {% endfor %}
+        <input type="hidden" name="next" value="{{ request.GET.next }}">
+        <button type="submit" class="button">{% trans "Create account" %}</button>
+    </form>
+    <p><a href="{% url 'accounts:login' %}?next={{ request.GET.next }}">{% trans "Already have an account? Log in" %}</a></p>
+</div>
+{% endblock %}

@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: racket-shop 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-09 18:56+0200\n"
+"POT-Creation-Date: 2026-08-09 20:09+0200\n"
 "PO-Revision-Date: 2026-08-09 18:34+0200\n"
 "Last-Translator: \n"
 "Language-Team: Polish\n"
@@ -15,188 +15,259 @@ msgstr ""
 "%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && n"
 "%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);\n"
 
-#: .\apps\accounts\models.py:7
+msgid "Password"
+msgstr "Hasło"
+
+msgid "Confirm password"
+msgstr "Potwierdź hasło"
+
+msgid "An account with this email already exists."
+msgstr "Konto z tym adresem e-mail już istnieje."
+
+msgid "Passwords do not match."
+msgstr "Hasła nie są zgodne."
+
 msgid "email address"
 msgstr "adres e-mail"
 
-#: .\apps\catalog\models.py:11
+msgid "Sorry, that item is out of stock."
+msgstr "Niestety, ten produkt jest niedostępny."
+
+#, python-format
+msgid "Added %(name)s to your cart."
+msgstr "Dodano %(name)s do koszyka."
+
+#, python-format
+msgid "Removed %(name)s from your wishlist."
+msgstr "Usunięto %(name)s z listy życzeń."
+
+#, python-format
+msgid "Added %(name)s to your wishlist."
+msgstr "Dodano %(name)s do listy życzeń."
+
 msgid "Tennis"
 msgstr "Tenis"
 
-#: .\apps\catalog\models.py:12
 msgid "Squash"
 msgstr "Squash"
 
-#: .\apps\catalog\models.py:13
 msgid "Badminton"
 msgstr "Badminton"
 
-#: .\apps\catalog\models.py:14
 msgid "Table Tennis"
 msgstr "Tenis stołowy"
 
-#: .\apps\catalog\models.py:197
 msgid "Regular price"
 msgstr "Cena regularna"
 
-#: .\apps\catalog\models.py:198
 msgid "Sale price"
 msgstr "Cena promocyjna"
 
-#: .\apps\coupons\models.py:8
 msgid "Percentage"
 msgstr "Procentowy"
 
-#: .\apps\coupons\models.py:9
 msgid "Fixed amount"
 msgstr "Kwota stała"
 
-#: .\apps\loyalty\models.py:18
 msgid "Earned"
 msgstr "Zdobyte"
 
-#: .\apps\loyalty\models.py:19
 msgid "Redeemed"
 msgstr "Wykorzystane"
 
-#: .\apps\orders\models.py:12
+#, python-format
+msgid "%(min)s-%(max)s days"
+msgstr "%(min)s-%(max)s dni"
+
+#, python-format
+msgid ", free over %(threshold)s zł"
+msgstr ", gratis od %(threshold)s zł"
+
+msgid "Email"
+msgstr "E-mail"
+
+msgid "Full name"
+msgstr "Imię i nazwisko"
+
+msgid "Street address"
+msgstr "Ulica i numer"
+
+msgid "City"
+msgstr "Miasto"
+
+msgid "Postal code"
+msgstr "Kod pocztowy"
+
+msgid "Country"
+msgstr "Kraj"
+
+msgid "Phone"
+msgstr "Telefon"
+
+msgid "Shipping method"
+msgstr "Metoda dostawy"
+
+msgid "InPost locker point"
+msgstr "Punkt odbioru InPost"
+
+msgid "Coupon code"
+msgstr "Kod kuponu"
+
+msgid "Please choose a parcel locker for InPost delivery."
+msgstr "Wybierz paczkomat InPost dla tej dostawy."
+
 msgid "Pending"
 msgstr "Oczekujące"
 
-#: .\apps\orders\models.py:13 .\apps\orders\models.py:21
 msgid "Paid"
 msgstr "Opłacone"
 
-#: .\apps\orders\models.py:14
 msgid "Shipped"
 msgstr "Wysłane"
 
-#: .\apps\orders\models.py:15
 msgid "Delivered"
 msgstr "Dostarczone"
 
-#: .\apps\orders\models.py:16
 msgid "Cancelled"
 msgstr "Anulowane"
 
-#: .\apps\orders\models.py:17
 msgid "Returned"
 msgstr "Zwrócone"
 
-#: .\apps\orders\models.py:20
 msgid "Unpaid"
 msgstr "Nieopłacone"
 
-#: .\apps\orders\models.py:22 .\apps\orders\models.py:117
 msgid "Refunded"
 msgstr "Zwrócono środki"
 
-#: .\apps\orders\models.py:25
 msgid "PayU"
 msgstr "PayU"
 
-#: .\apps\orders\models.py:26
 msgid "Stripe"
 msgstr "Stripe"
 
-#: .\apps\orders\models.py:114
 msgid "Requested"
 msgstr "Zgłoszono"
 
-#: .\apps\orders\models.py:115
 msgid "Approved"
 msgstr "Zatwierdzono"
 
-#: .\apps\orders\models.py:116
 msgid "Rejected"
 msgstr "Odrzucono"
 
-#: .\apps\shipping\models.py:6
+msgid "Your cart is empty."
+msgstr "Twój koszyk jest pusty."
+
+#, python-format
+msgid "Only %(stock)s left of %(name)s - please update your cart."
+msgstr "Zostało tylko %(stock)s szt. produktu %(name)s - zaktualizuj koszyk."
+
+#, python-format
+msgid "Could not start payment: %(error)s"
+msgstr "Nie udało się rozpocząć płatności: %(error)s"
+
+msgid "Thanks - your review has been posted."
+msgstr "Dziękujemy - Twoja recenzja została opublikowana."
+
+msgid "Please choose a rating and try again."
+msgstr "Wybierz ocenę i spróbuj ponownie."
+
 msgid "InPost Parcel Locker"
 msgstr "Paczkomat InPost"
 
-#: .\apps\shipping\models.py:7
 msgid "DHL"
 msgstr "DHL"
 
-#: .\apps\shipping\models.py:8
 msgid "DPD"
 msgstr "DPD"
 
-#: .\apps\shipping\models.py:9
 msgid "UPS"
 msgstr "UPS"
 
-#: .\templates\accounts\login.html:4 .\templates\accounts\login.html:8
-#: .\templates\accounts\login.html:21 .\templates\base.html:65
 msgid "Log in"
 msgstr "Zaloguj się"
 
-#: .\templates\accounts\login.html:4 .\templates\base.html:7
-#: .\templates\base.html:14 .\templates\base.html:84
-#: .\templates\catalog\category_detail.html:4
-#: .\templates\catalog\product_detail.html:4
-#: .\templates\catalog\search_results.html:4
 msgid "Racket Sports Shop"
 msgstr "Sklep Sportów Rakietowych"
 
-#: .\templates\accounts\login.html:12
 msgid "Please enter a correct email and password."
 msgstr "Podaj poprawny adres e-mail i hasło."
 
-#: .\templates\base.html:34
+msgid "New here? Create an account"
+msgstr "Nie masz konta? Załóż je"
+
+msgid "Create account"
+msgstr "Utwórz konto"
+
+msgid "Already have an account? Log in"
+msgstr "Masz już konto? Zaloguj się"
+
 msgid "Search products…"
 msgstr "Szukaj produktów…"
 
-#: .\templates\base.html:39
 msgid "Search"
 msgstr "Szukaj"
 
-#: .\templates\base.html:46
 msgid "Language"
 msgstr "Język"
 
-#: .\templates\base.html:62
+msgid "Cart"
+msgstr "Koszyk"
+
 msgid "Log out"
 msgstr "Wyloguj się"
 
-#: .\templates\catalog\_product_card.html:4
-#: .\templates\catalog\product_detail.html:16
+msgid "Your cart"
+msgstr "Twój koszyk"
+
+msgid "Product"
+msgstr "Produkt"
+
+msgid "Price"
+msgstr "Cena"
+
+msgid "Quantity"
+msgstr "Ilość"
+
+msgid "Subtotal"
+msgstr "Suma częściowa"
+
+msgid "Update"
+msgstr "Aktualizuj"
+
+msgid "Remove"
+msgstr "Usuń"
+
+msgid "Proceed to checkout"
+msgstr "Przejdź do kasy"
+
+msgid "Continue shopping"
+msgstr "Kontynuuj zakupy"
+
 msgid "Photo coming soon"
 msgstr "Zdjęcie wkrótce"
 
-#: .\templates\catalog\_product_card.html:20
-#: .\templates\catalog\product_detail.html:44
-#: .\templates\catalog\product_detail.html:49
 msgid "Out of stock"
 msgstr "Brak w magazynie"
 
-#: .\templates\catalog\category_detail.html:10
-#: .\templates\catalog\product_detail.html:8
 msgid "Home"
 msgstr "Strona główna"
 
-#: .\templates\catalog\category_detail.html:22
 msgid "Brand"
 msgstr "Marka"
 
-#: .\templates\catalog\category_detail.html:33
 msgid "Price (PLN)"
 msgstr "Cena (PLN)"
 
-#: .\templates\catalog\category_detail.html:35
 msgid "Min"
 msgstr "Min"
 
-#: .\templates\catalog\category_detail.html:36
 msgid "Max"
 msgstr "Maks"
 
-#: .\templates\catalog\category_detail.html:69
 msgid "Apply filters"
 msgstr "Zastosuj filtry"
 
-#: .\templates\catalog\category_detail.html:75
 #, python-format
 msgid "%(counter)s product"
 msgid_plural "%(counter)s products"
@@ -205,96 +276,65 @@ msgstr[1] "%(counter)s produkty"
 msgstr[2] "%(counter)s produktów"
 msgstr[3] "%(counter)s produktów"
 
-#: .\templates\catalog\category_detail.html:82
 msgid "Sort by"
 msgstr "Sortuj według"
 
-#: .\templates\catalog\category_detail.html:101
-#: .\templates\catalog\search_results.html:22
 msgid "Previous"
 msgstr "Poprzednia"
 
-#: .\templates\catalog\category_detail.html:111
-#: .\templates\catalog\search_results.html:32
 msgid "Next"
 msgstr "Następna"
 
-#: .\templates\catalog\category_detail.html:116
 msgid "No products match your filters."
 msgstr "Żadne produkty nie pasują do wybranych filtrów."
 
-#: .\templates\catalog\product_detail.html:29
 msgid "No reviews yet"
 msgstr "Brak recenzji"
 
-#: .\templates\catalog\product_detail.html:43
-#: .\templates\catalog\product_detail.html:47
 msgid "In stock"
 msgstr "Dostępny"
 
-#: .\templates\catalog\product_detail.html:73
-msgid "Cart is wired up in a later stage"
-msgstr "Koszyk zostanie podłączony w kolejnym etapie"
-
-#: .\templates\catalog\product_detail.html:74
 msgid "Add to cart"
 msgstr "Dodaj do koszyka"
 
-#: .\templates\catalog\product_detail.html:76
-msgid "Wishlist is wired up in a later stage"
-msgstr "Lista życzeń zostanie podłączona w kolejnym etapie"
-
-#: .\templates\catalog\product_detail.html:77
 msgid "Add to wishlist"
 msgstr "Dodaj do listy życzeń"
 
-#: .\templates\catalog\product_detail.html:103
 msgid "You might also like"
 msgstr "Może Ci się spodobać"
 
-#: .\templates\catalog\product_detail.html:117
 msgid "Customer reviews"
 msgstr "Recenzje klientów"
 
-#: .\templates\catalog\product_detail.html:127
 msgid "Verified purchase"
 msgstr "Zweryfikowany zakup"
 
-#: .\templates\catalog\product_detail.html:135
 msgid "No reviews yet - be the first to review this product."
 msgstr "Brak recenzji - bądź pierwszą osobą, która oceni ten produkt."
 
-#: .\templates\catalog\product_detail.html:141
 msgid "Update your review"
 msgstr "Zaktualizuj swoją recenzję"
 
-#: .\templates\catalog\product_detail.html:141
 msgid "Write a review"
 msgstr "Napisz recenzję"
 
-#: .\templates\catalog\product_detail.html:155
 msgid "Comment"
 msgstr "Komentarz"
 
-#: .\templates\catalog\product_detail.html:158
 msgid "Submit review"
 msgstr "Wyślij recenzję"
 
-#: .\templates\catalog\product_detail.html:161
 msgid "Log in to leave a review"
 msgstr "Zaloguj się, aby dodać recenzję"
 
-#: .\templates\catalog\search_results.html:4
 #, python-format
 msgid "Search: %(query)s"
 msgstr "Szukaj: %(query)s"
 
-#: .\templates\catalog\search_results.html:8
 #, python-format
 msgid "Search results for “%(query)s”"
 msgstr "Wyniki wyszukiwania dla „%(query)s”"
 
-#: .\templates\catalog\search_results.html:9
 #, python-format
 msgid "%(counter)s result"
 msgid_plural "%(counter)s results"
@@ -303,15 +343,12 @@ msgstr[1] "%(counter)s wyniki"
 msgstr[2] "%(counter)s wyników"
 msgstr[3] "%(counter)s wyników"
 
-#: .\templates\catalog\search_results.html:37
 msgid "No products matched your search."
 msgstr "Nie znaleziono produktów pasujących do wyszukiwania."
 
-#: .\templates\core\home.html:6
 msgid "Everything you need, on every court."
 msgstr "Wszystko, czego potrzebujesz, na każdym korcie."
 
-#: .\templates\core\home.html:7
 msgid ""
 "Tennis, squash, badminton, and table tennis equipment — rackets, paddles, "
 "shoes, and more from the brands players trust."
@@ -319,10 +356,92 @@ msgstr ""
 "Sprzęt do tenisa, squasha, badmintona i tenisa stołowego — rakiety, paletki, "
 "buty i wiele więcej od marek, którym ufają zawodnicy."
 
-#: .\templates\core\home.html:9
 msgid "Shop now"
 msgstr "Kupuj teraz"
 
-#: .\templates\core\home.html:22
 msgid "Featured products"
 msgstr "Polecane produkty"
+
+msgid "Checkout"
+msgstr "Kasa"
+
+msgid "Contact"
+msgstr "Kontakt"
+
+msgid "Shipping address"
+msgstr "Adres dostawy"
+
+msgid "Enter your preferred InPost locker code (e.g. WAW01A)."
+msgstr "Podaj kod wybranego paczkomatu InPost (np. WAW01A)."
+
+msgid "Discount code"
+msgstr "Kod rabatowy"
+
+msgid "Place order"
+msgstr "Złóż zamówienie"
+
+msgid "Order summary"
+msgstr "Podsumowanie zamówienia"
+
+msgid "Simulated payment"
+msgstr "Symulowana płatność"
+
+msgid ""
+"No real PayU/Stripe credentials are configured, so this local mock stands in "
+"for the payment provider's page. In production this step happens on PayU's "
+"or Stripe's own site."
+msgstr ""
+"Nie skonfigurowano rzeczywistych danych PayU/Stripe, więc ta lokalna "
+"symulacja zastępuje stronę operatora płatności. W wersji produkcyjnej ten "
+"krok odbywa się na stronie PayU lub Stripe."
+
+msgid "Order"
+msgstr "Zamówienie"
+
+msgid "Simulate successful payment"
+msgstr "Symuluj udaną płatność"
+
+msgid "Simulate failed payment"
+msgstr "Symuluj nieudaną płatność"
+
+msgid "Order confirmation"
+msgstr "Potwierdzenie zamówienia"
+
+msgid "Thank you! Your order is confirmed."
+msgstr "Dziękujemy! Twoje zamówienie zostało potwierdzone."
+
+msgid "A confirmation email is on its way to you."
+msgstr "Wiadomość e-mail z potwierdzeniem jest już w drodze."
+
+msgid "Payment was not completed"
+msgstr "Płatność nie została zrealizowana"
+
+msgid "Your order was cancelled. No charge was made."
+msgstr "Twoje zamówienie zostało anulowane. Nie pobrano żadnej opłaty."
+
+msgid "We're processing your payment"
+msgstr "Przetwarzamy Twoją płatność"
+
+msgid "This can take a moment - refresh this page shortly."
+msgstr "To może chwilę potrwać - odśwież tę stronę za moment."
+
+msgid "Discount"
+msgstr "Rabat"
+
+msgid "Shipping"
+msgstr "Wysyłka"
+
+msgid "Total"
+msgstr "Razem"
+
+msgid "Shipping to"
+msgstr "Wysyłka do"
+
+msgid "Pay for your order"
+msgstr "Zapłać za zamówienie"
+
+msgid "Pay with PayU"
+msgstr "Zapłać przez PayU"
+
+msgid "Pay with Stripe"
+msgstr "Zapłać przez Stripe"

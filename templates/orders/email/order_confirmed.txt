@@ -1,0 +1,21 @@
+Hi{% if order.user %} {{ order.user.first_name }}{% endif %},
+
+Thanks for your order! We've received your payment for order {{ order.order_number }}.
+
+Items:
+{% for item in order.items.all %}- {{ item.product_name }} x{{ item.quantity }} - {{ item.unit_price }} {{ order.currency }}
+{% endfor %}
+Subtotal: {{ order.subtotal }} {{ order.currency }}
+Shipping: {{ order.shipping_cost }} {{ order.currency }}
+{% if order.discount_amount %}Discount: -{{ order.discount_amount }} {{ order.currency }}
+{% endif %}Total: {{ order.total }} {{ order.currency }}
+
+Shipping to:
+{{ order.shipping_full_name }}
+{{ order.shipping_street }}
+{{ order.shipping_postal_code }} {{ order.shipping_city }}
+{{ order.shipping_country }}
+
+We'll email you again once your order ships.
+
+Racket Sports Shop
