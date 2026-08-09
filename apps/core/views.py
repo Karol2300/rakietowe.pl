@@ -1,5 +1,5 @@
-from django.http import HttpResponse
+from django.shortcuts import render
 
 
 def home(request):
-    return HttpResponse("Racket Sports Shop - scaffold running.")
+    return render(request, "core/home.html")
