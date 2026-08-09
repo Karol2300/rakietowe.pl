@@ -2,7 +2,9 @@
     --color-text: #1a1a1a;
     --color-bg: #ffffff;
     --color-border: #e5e5e5;
+    --color-muted: #6b6b6b;
     --color-accent: #16643f;
+    --color-sale: #b5352b;
     --max-width: 1200px;
 }
 
@@ -23,6 +25,16 @@ a {
     text-decoration: none;
 }
 
+h1, h2, h3 {
+    line-height: 1.2;
+}
+
+button, input, select {
+    font: inherit;
+}
+
+/* Header */
+
 .site-header {
     border-bottom: 1px solid var(--color-border);
 }
@@ -33,18 +45,88 @@ a {
     padding: 1rem 1.5rem;
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    gap: 1.5rem;
+    flex-wrap: wrap;
+    gap: 1rem 1.5rem;
 }
 
 .site-header__logo {
     font-weight: 700;
     font-size: 1.1rem;
     letter-spacing: 0.02em;
+    white-space: nowrap;
 }
 
 .site-header__nav {
+    order: 3;
+    flex-basis: 100%;
+}
+
+.sport-nav {
+    list-style: none;
+    display: flex;
+    gap: 1.25rem;
+    margin: 0;
+    padding: 0;
+    font-size: 0.9rem;
+}
+
+.sport-nav a:hover {
+    color: var(--color-accent);
+}
+
+.search-form {
+    position: relative;
+    flex: 1 1 260px;
+    display: flex;
+    min-width: 180px;
+}
+
+.search-form input[type="search"] {
     flex: 1;
+    padding: 0.5rem 0.75rem;
+    border: 1px solid var(--color-border);
+    border-right: none;
+    border-radius: 4px 0 0 4px;
+}
+
+.search-form button {
+    padding: 0.5rem 0.9rem;
+    border: 1px solid var(--color-text);
+    background: var(--color-text);
+    color: var(--color-bg);
+    border-radius: 0 4px 4px 0;
+    cursor: pointer;
+}
+
+.search-suggestions {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: 4px;
+    margin-top: 0.25rem;
+    z-index: 20;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    max-height: 320px;
+    overflow-y: auto;
+}
+
+.search-suggestions__item {
+    display: block;
+    padding: 0.5rem 0.75rem;
+    font-size: 0.9rem;
+    border-bottom: 1px solid var(--color-border);
+}
+
+.search-suggestions__item:last-child {
+    border-bottom: none;
+}
+
+.search-suggestions__item:hover,
+.search-suggestions__item.is-active {
+    background: #f4f4f4;
 }
 
 .lang-switcher select {
@@ -54,6 +136,8 @@ a {
     background: var(--color-bg);
     font-size: 0.9rem;
 }
+
+/* Main */
 
 .site-main {
     max-width: var(--max-width);
@@ -72,5 +156,273 @@ a {
     margin: 0 auto;
     padding: 1.5rem;
     font-size: 0.85rem;
-    color: #666;
+    color: var(--color-muted);
+}
+
+/* Hero */
+
+.hero {
+    background: #f4f6f5;
+    border-radius: 8px;
+    padding: 3rem 2rem;
+    margin-bottom: 3rem;
+}
+
+.hero h1 {
+    font-size: 2rem;
+    margin: 0 0 0.5rem;
+}
+
+.hero p {
+    color: var(--color-muted);
+    max-width: 40rem;
+    margin: 0 0 1.5rem;
+}
+
+.hero .button {
+    display: inline-block;
+    background: var(--color-accent);
+    color: #fff;
+    padding: 0.65rem 1.25rem;
+    border-radius: 4px;
+    font-weight: 600;
+}
+
+/* Shop by sport */
+
+.sport-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+    margin-bottom: 3rem;
+}
+
+.sport-card {
+    display: block;
+    padding: 1.5rem 1rem;
+    text-align: center;
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    font-weight: 600;
+    transition: border-color 0.15s ease;
+}
+
+.sport-card:hover {
+    border-color: var(--color-accent);
+}
+
+/* Section headings */
+
+.section-heading {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: 1.25rem;
+}
+
+.section-heading h2 {
+    font-size: 1.35rem;
+    margin: 0;
+}
+
+/* Product grid & cards */
+
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 1.5rem;
+}
+
+.product-card {
+    display: block;
+}
+
+.product-card__image {
+    aspect-ratio: 1 / 1;
+    border-radius: 6px;
+    background: linear-gradient(135deg, var(--tint, #e8ece9), #ffffff);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-muted);
+    font-size: 0.8rem;
+    margin-bottom: 0.6rem;
+    overflow: hidden;
+    text-align: center;
+    padding: 1rem;
+}
+
+.sport-tint-tennis { --tint: #e4f0e1; }
+.sport-tint-squash { --tint: #e6e9f5; }
+.sport-tint-badminton { --tint: #fdece0; }
+.sport-tint-table_tennis { --tint: #fdeaf0; }
+
+.product-card__brand {
+    font-size: 0.75rem;
+    color: var(--color-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+.product-card__name {
+    font-size: 0.95rem;
+    font-weight: 600;
+    margin: 0.15rem 0 0.3rem;
+}
+
+.product-card__price {
+    font-weight: 700;
+}
+
+.product-card__price--sale {
+    color: var(--color-sale);
+}
+
+.product-card__price-original {
+    color: var(--color-muted);
+    text-decoration: line-through;
+    font-weight: 400;
+    margin-right: 0.4rem;
+}
+
+.product-card__rating {
+    font-size: 0.8rem;
+    color: var(--color-muted);
+}
+
+.product-card__stock {
+    font-size: 0.78rem;
+    margin-top: 0.2rem;
+}
+
+.product-card__stock--out {
+    color: var(--color-sale);
+}
+
+/* Listing layout */
+
+.listing {
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    gap: 2rem;
+    align-items: start;
+}
+
+.listing__header {
+    grid-column: 1 / -1;
+}
+
+.breadcrumbs {
+    font-size: 0.82rem;
+    color: var(--color-muted);
+    margin-bottom: 0.5rem;
+}
+
+.breadcrumbs a:hover {
+    color: var(--color-accent);
+}
+
+.listing__toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1.25rem;
+    font-size: 0.9rem;
+    color: var(--color-muted);
+}
+
+.filters {
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    padding: 1.25rem;
+}
+
+.filters fieldset {
+    border: none;
+    padding: 0;
+    margin: 0 0 1.25rem;
+}
+
+.filters legend {
+    font-weight: 600;
+    font-size: 0.85rem;
+    margin-bottom: 0.5rem;
+    padding: 0;
+}
+
+.filters label {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.85rem;
+    margin-bottom: 0.35rem;
+}
+
+.filters .price-range {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.filters .price-range input {
+    width: 100%;
+    padding: 0.35rem 0.5rem;
+    border: 1px solid var(--color-border);
+    border-radius: 4px;
+}
+
+.filters button[type="submit"] {
+    width: 100%;
+    padding: 0.55rem;
+    background: var(--color-text);
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.sort-select select {
+    padding: 0.4rem 0.6rem;
+    border: 1px solid var(--color-border);
+    border-radius: 4px;
+}
+
+.empty-state {
+    color: var(--color-muted);
+    padding: 3rem 0;
+    text-align: center;
+}
+
+/* Pagination */
+
+.pagination {
+    display: flex;
+    gap: 0.5rem;
+    justify-content: center;
+    margin-top: 2.5rem;
+    font-size: 0.9rem;
+}
+
+.pagination a,
+.pagination span {
+    padding: 0.4rem 0.75rem;
+    border: 1px solid var(--color-border);
+    border-radius: 4px;
+}
+
+.pagination .is-current {
+    background: var(--color-text);
+    color: #fff;
+    border-color: var(--color-text);
+}
+
+/* Mobile */
+
+@media (max-width: 860px) {
+    .sport-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .listing {
+        grid-template-columns: 1fr;
+    }
 }

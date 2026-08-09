@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% load i18n catalog_extras %}
+
+{% block title %}{% blocktrans %}Search: {{ query }}{% endblocktrans %} — {% trans "Racket Sports Shop" %}{% endblock %}
+
+{% block content %}
+    <div class="listing__header">
+        <h1>{% blocktrans %}Search results for “{{ query }}”{% endblocktrans %}</h1>
+        <p>{% blocktrans count counter=result_count %}{{ counter }} result{% plural %}{{ counter }} results{% endblocktrans %}</p>
+    </div>
+
+    {% if page_obj.object_list %}
+        <div class="product-grid">
+            {% for product in page_obj %}
+                {% include "catalog/_product_card.html" %}
+            {% endfor %}
+        </div>
+
+        {% if page_obj.paginator.num_pages > 1 %}
+            <nav class="pagination">
+                {% if page_obj.has_previous %}
+                    <a href="?{% query_transform page=page_obj.previous_page_number %}">{% trans "Previous" %}</a>
+                {% endif %}
+                {% for num in page_obj.paginator.page_range %}
+                    {% if num == page_obj.number %}
+                        <span class="is-current">{{ num }}</span>
+                    {% else %}
+                        <a href="?{% query_transform page=num %}">{{ num }}</a>
+                    {% endif %}
+                {% endfor %}
+                {% if page_obj.has_next %}
+                    <a href="?{% query_transform page=page_obj.next_page_number %}">{% trans "Next" %}</a>
+                {% endif %}
+            </nav>
+        {% endif %}
+    {% else %}
+        <p class="empty-state">{% trans "No products matched your search." %}</p>
+    {% endif %}
+{% endblock %}

@@ -2,6 +2,30 @@
 {% load i18n %}
 
 {% block content %}
-    <h1>{% trans "Racket Sports Shop" %}</h1>
-    <p>{% trans "Tennis, squash, badminton, and table tennis equipment." %}</p>
+    <section class="hero">
+        <h1>{% trans "Everything you need, on every court." %}</h1>
+        <p>{% trans "Tennis, squash, badminton, and table tennis equipment — rackets, paddles, shoes, and more from the brands players trust." %}</p>
+        {% if sport_nav_categories %}
+            <a class="button" href="{% url 'catalog:category_detail' sport_nav_categories.0.slug %}">{% trans "Shop now" %}</a>
+        {% endif %}
+    </section>
+
+    <section class="sport-grid">
+        {% for sport in sport_nav_categories %}
+            <a class="sport-card" href="{% url 'catalog:category_detail' sport.slug %}">{{ sport.name }}</a>
+        {% endfor %}
+    </section>
+
+    {% if featured_products %}
+        <section>
+            <div class="section-heading">
+                <h2>{% trans "Featured products" %}</h2>
+            </div>
+            <div class="product-grid">
+                {% for product in featured_products %}
+                    {% include "catalog/_product_card.html" %}
+                {% endfor %}
+            </div>
+        </section>
+    {% endif %}
 {% endblock %}

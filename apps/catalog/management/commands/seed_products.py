@@ -247,9 +247,9 @@ def variant_dimension_for(kind, sport):
     if kind == "bag":
         return "color", BAG_COLORS
     if kind == "shoe":
-        return "size", SHOE_SIZES
+        return "shoe_size", SHOE_SIZES
     if kind == "apparel":
-        return "size", APPAREL_SIZES
+        return "apparel_size", APPAREL_SIZES
     if kind == "shuttlecock":
         return "speed_rating", SHUTTLE_SPEEDS
     return None, None

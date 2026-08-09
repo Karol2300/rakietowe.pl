@@ -1,0 +1,23 @@
+{% load i18n %}
+{% comment %} wrap in a link once the product detail page (stage 5) exists {% endcomment %}
+<div class="product-card">
+    <div class="product-card__image sport-tint-{{ product.sport }}">
+        {% trans "Photo coming soon" %}
+    </div>
+    <div class="product-card__brand">{{ product.brand.name|default:"" }}</div>
+    <h3 class="product-card__name">{{ product.name }}</h3>
+    <div class="product-card__price">
+        {% if product.on_sale %}
+            <span class="product-card__price-original">{{ product.price_pln }} zł</span>
+            <span class="product-card__price--sale">{{ product.effective_price|default:product.sale_price_pln }} zł</span>
+        {% else %}
+            <span>{{ product.effective_price|default:product.price_pln }} zł</span>
+        {% endif %}
+    </div>
+    {% if product.review_count %}
+        <div class="product-card__rating">★ {{ product.average_rating }} ({{ product.review_count }})</div>
+    {% endif %}
+    {% if product.total_stock == 0 %}
+        <div class="product-card__stock product-card__stock--out">{% trans "Out of stock" %}</div>
+    {% endif %}
+</div>

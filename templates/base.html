@@ -14,8 +14,31 @@
         <a class="site-header__logo" href="{% url 'core:home' %}">{% trans "Racket Sports Shop" %}</a>
 
         <nav class="site-header__nav">
-            {% comment %} shop-by-sport nav is built out in stage 4 {% endcomment %}
+            <ul class="sport-nav">
+                {% for sport in sport_nav_categories %}
+                    <li><a href="{% url 'catalog:category_detail' sport.slug %}">{{ sport.name }}</a></li>
+                {% endfor %}
+            </ul>
         </nav>
+
+        <form
+            action="{% url 'catalog:search' %}"
+            method="get"
+            class="search-form"
+            data-search-form
+            data-suggestions-url="{% url 'catalog:search_suggestions' %}"
+        >
+            <input
+                type="search"
+                name="q"
+                placeholder="{% trans 'Search products…' %}"
+                value="{{ query|default:'' }}"
+                autocomplete="off"
+                data-search-input
+            >
+            <button type="submit" aria-label="{% trans 'Search' %}">{% trans "Search" %}</button>
+            <div class="search-suggestions" data-search-suggestions hidden></div>
+        </form>
 
         <form action="{% url 'set_language' %}" method="post" class="lang-switcher">
             {% csrf_token %}
@@ -42,5 +65,9 @@
         <p>&copy; {% now "Y" %} {% trans "Racket Sports Shop" %}</p>
     </div>
 </footer>
+
+<script src="{% static 'js/search.js' %}" defer></script>
+<script src="{% static 'js/filters.js' %}" defer></script>
+{% block extra_scripts %}{% endblock %}
 </body>
 </html>

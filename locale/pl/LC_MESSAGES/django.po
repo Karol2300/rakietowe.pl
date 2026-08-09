@@ -3,17 +3,17 @@ msgid ""
 msgstr ""
 "Project-Id-Version: racket-shop 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-09 18:00+0200\n"
-"PO-Revision-Date: 2026-08-09 18:00+0200\n"
+"POT-Creation-Date: 2026-08-09 18:34+0200\n"
+"PO-Revision-Date: 2026-08-09 18:34+0200\n"
 "Last-Translator: \n"
 "Language-Team: Polish\n"
 "Language: pl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && "
-"(n%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && "
-"n%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);\n"
+"Plural-Forms: nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && (n"
+"%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && n"
+"%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);\n"
 
 #: .\apps\accounts\models.py:7
 msgid "email address"
@@ -35,11 +35,11 @@ msgstr "Badminton"
 msgid "Table Tennis"
 msgstr "Tenis stołowy"
 
-#: .\apps\catalog\models.py:187
+#: .\apps\catalog\models.py:197
 msgid "Regular price"
 msgstr "Cena regularna"
 
-#: .\apps\catalog\models.py:188
+#: .\apps\catalog\models.py:198
 msgid "Sale price"
 msgstr "Cena promocyjna"
 
@@ -127,15 +127,122 @@ msgstr "DPD"
 msgid "UPS"
 msgstr "UPS"
 
-#: .\templates\base.html:7 .\templates\base.html:14 .\templates\base.html:43
-#: .\templates\core\home.html:5
+#: .\templates\base.html:7 .\templates\base.html:14 .\templates\base.html:65
+#: .\templates\catalog\category_detail.html:4
+#: .\templates\catalog\search_results.html:4
 msgid "Racket Sports Shop"
 msgstr "Sklep Sportów Rakietowych"
 
-#: .\templates\base.html:24
+#: .\templates\base.html:34
+msgid "Search products…"
+msgstr "Szukaj produktów…"
+
+#: .\templates\base.html:39
+msgid "Search"
+msgstr "Szukaj"
+
+#: .\templates\base.html:46
 msgid "Language"
 msgstr "Język"
 
+#: .\templates\catalog\_product_card.html:6
+msgid "Photo coming soon"
+msgstr "Zdjęcie wkrótce"
+
+#: .\templates\catalog\_product_card.html:22
+msgid "Out of stock"
+msgstr "Brak w magazynie"
+
+#: .\templates\catalog\category_detail.html:10
+msgid "Home"
+msgstr "Strona główna"
+
+#: .\templates\catalog\category_detail.html:22
+msgid "Brand"
+msgstr "Marka"
+
+#: .\templates\catalog\category_detail.html:33
+msgid "Price (PLN)"
+msgstr "Cena (PLN)"
+
+#: .\templates\catalog\category_detail.html:35
+msgid "Min"
+msgstr "Min"
+
+#: .\templates\catalog\category_detail.html:36
+msgid "Max"
+msgstr "Maks"
+
+#: .\templates\catalog\category_detail.html:67
+msgid "Apply filters"
+msgstr "Zastosuj filtry"
+
+#: .\templates\catalog\category_detail.html:73
+#, python-format
+msgid "%(counter)s product"
+msgid_plural "%(counter)s products"
+msgstr[0] "%(counter)s produkt"
+msgstr[1] "%(counter)s produkty"
+msgstr[2] "%(counter)s produktów"
+msgstr[3] "%(counter)s produktów"
+
+#: .\templates\catalog\category_detail.html:80
+msgid "Sort by"
+msgstr "Sortuj według"
+
+#: .\templates\catalog\category_detail.html:99
+#: .\templates\catalog\search_results.html:22
+msgid "Previous"
+msgstr "Poprzednia"
+
+#: .\templates\catalog\category_detail.html:109
+#: .\templates\catalog\search_results.html:32
+msgid "Next"
+msgstr "Następna"
+
+#: .\templates\catalog\category_detail.html:114
+msgid "No products match your filters."
+msgstr "Żadne produkty nie pasują do wybranych filtrów."
+
+#: .\templates\catalog\search_results.html:4
+#, python-format
+msgid "Search: %(query)s"
+msgstr "Szukaj: %(query)s"
+
+#: .\templates\catalog\search_results.html:8
+#, python-format
+msgid "Search results for “%(query)s”"
+msgstr "Wyniki wyszukiwania dla „%(query)s”"
+
+#: .\templates\catalog\search_results.html:9
+#, python-format
+msgid "%(counter)s result"
+msgid_plural "%(counter)s results"
+msgstr[0] "%(counter)s wynik"
+msgstr[1] "%(counter)s wyniki"
+msgstr[2] "%(counter)s wyników"
+msgstr[3] "%(counter)s wyników"
+
+#: .\templates\catalog\search_results.html:37
+msgid "No products matched your search."
+msgstr "Nie znaleziono produktów pasujących do wyszukiwania."
+
 #: .\templates\core\home.html:6
-msgid "Tennis, squash, badminton, and table tennis equipment."
-msgstr "Sprzęt do tenisa, squasha, badmintona i tenisa stołowego."
+msgid "Everything you need, on every court."
+msgstr "Wszystko, czego potrzebujesz, na każdym korcie."
+
+#: .\templates\core\home.html:7
+msgid ""
+"Tennis, squash, badminton, and table tennis equipment — rackets, paddles, "
+"shoes, and more from the brands players trust."
+msgstr ""
+"Sprzęt do tenisa, squasha, badmintona i tenisa stołowego — rakiety, "
+"paletki, buty i wiele więcej od marek, którym ufają zawodnicy."
+
+#: .\templates\core\home.html:9
+msgid "Shop now"
+msgstr "Kupuj teraz"
+
+#: .\templates\core\home.html:22
+msgid "Featured products"
+msgstr "Polecane produkty"

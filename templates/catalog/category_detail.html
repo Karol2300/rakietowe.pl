@@ -1,0 +1,120 @@
+{% extends "base.html" %}
+{% load i18n l10n catalog_extras %}
+
+{% block title %}{{ category.name }} — {% trans "Racket Sports Shop" %}{% endblock %}
+
+{% block content %}
+<div class="listing">
+    <div class="listing__header">
+        <div class="breadcrumbs">
+            <a href="{% url 'core:home' %}">{% trans "Home" %}</a>
+            {% for ancestor in category.get_ancestors %}
+                › <a href="{% url 'catalog:category_detail' ancestor.slug %}">{{ ancestor.name }}</a>
+            {% endfor %}
+            › {{ category.name }}
+        </div>
+        <h1>{{ category.name }}</h1>
+    </div>
+
+    <aside class="filters">
+        <form method="get" data-auto-submit>
+            <fieldset>
+                <legend>{% trans "Brand" %}</legend>
+                {% for brand in brands %}
+                    <label>
+                        <input type="checkbox" name="brand" value="{{ brand.slug }}"
+                               {% if brand.slug in selected_brands %}checked{% endif %}>
+                        {{ brand.name }}
+                    </label>
+                {% endfor %}
+            </fieldset>
+
+            <fieldset>
+                <legend>{% trans "Price (PLN)" %}</legend>
+                <div class="price-range">
+                    <input type="number" name="min_price" placeholder="{% trans 'Min' %}" value="{{ min_price|default:'' }}" min="0">
+                    <input type="number" name="max_price" placeholder="{% trans 'Max' %}" value="{{ max_price|default:'' }}" min="0">
+                </div>
+            </fieldset>
+
+            {% localize off %}
+            {% for key, values in spec_facets.items %}
+                <fieldset>
+                    <legend>{{ key }}</legend>
+                    {% for value in values %}
+                        {% is_selected selected_facets key value as checked %}
+                        <label>
+                            <input type="checkbox" name="{{ key }}" value="{{ value }}" {% if checked %}checked{% endif %}>
+                            {{ value }}
+                        </label>
+                    {% endfor %}
+                </fieldset>
+            {% endfor %}
+
+            {% for key, values in variant_facets.items %}
+                <fieldset>
+                    <legend>{{ key }}</legend>
+                    {% for value in values %}
+                        {% is_selected selected_facets key value as checked %}
+                        <label>
+                            <input type="checkbox" name="{{ key }}" value="{{ value }}" {% if checked %}checked{% endif %}>
+                            {{ value }}
+                        </label>
+                    {% endfor %}
+                </fieldset>
+            {% endfor %}
+            {% endlocalize %}
+
+            <input type="hidden" name="sort" value="{{ sort }}">
+            <button type="submit">{% trans "Apply filters" %}</button>
+        </form>
+    </aside>
+
+    <div class="listing__results">
+        <div class="listing__toolbar">
+            <span>{% blocktrans count counter=result_count %}{{ counter }} product{% plural %}{{ counter }} products{% endblocktrans %}</span>
+            <form method="get" class="sort-select" data-auto-submit>
+                {% for key, value in request.GET.items %}
+                    {% if key != "sort" and key != "page" %}
+                        <input type="hidden" name="{{ key }}" value="{{ value }}">
+                    {% endif %}
+                {% endfor %}
+                <label for="sort-select">{% trans "Sort by" %}</label>
+                <select name="sort" id="sort-select" onchange="this.form.submit()">
+                    {% for key, option in sort_options.items %}
+                        <option value="{{ key }}" {% if key == sort %}selected{% endif %}>{{ option.1 }}</option>
+                    {% endfor %}
+                </select>
+            </form>
+        </div>
+
+        {% if page_obj.object_list %}
+            <div class="product-grid">
+                {% for product in page_obj %}
+                    {% include "catalog/_product_card.html" %}
+                {% endfor %}
+            </div>
+
+            {% if page_obj.paginator.num_pages > 1 %}
+                <nav class="pagination">
+                    {% if page_obj.has_previous %}
+                        <a href="?{% query_transform page=page_obj.previous_page_number %}">{% trans "Previous" %}</a>
+                    {% endif %}
+                    {% for num in page_obj.paginator.page_range %}
+                        {% if num == page_obj.number %}
+                            <span class="is-current">{{ num }}</span>
+                        {% else %}
+                            <a href="?{% query_transform page=num %}">{{ num }}</a>
+                        {% endif %}
+                    {% endfor %}
+                    {% if page_obj.has_next %}
+                        <a href="?{% query_transform page=page_obj.next_page_number %}">{% trans "Next" %}</a>
+                    {% endif %}
+                </nav>
+            {% endif %}
+        {% else %}
+            <p class="empty-state">{% trans "No products match your filters." %}</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

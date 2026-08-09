@@ -127,6 +127,10 @@ class Product(models.Model):
         field = f"{'sale_price' if on_sale else 'price'}_{currency.lower()}"
         return getattr(self, field, None) or self.price_pln
 
+    @property
+    def total_stock(self):
+        return sum(v.stock_quantity for v in self.variants.all())
+
 
 class ProductImage(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name="images")
