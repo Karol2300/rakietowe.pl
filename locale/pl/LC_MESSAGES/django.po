@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: racket-shop 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-09 20:09+0200\n"
+"POT-Creation-Date: 2026-08-09 20:47+0200\n"
 "PO-Revision-Date: 2026-08-09 18:34+0200\n"
 "Last-Translator: \n"
 "Language-Team: Polish\n"
@@ -116,6 +116,15 @@ msgstr "Kod kuponu"
 msgid "Please choose a parcel locker for InPost delivery."
 msgstr "Wybierz paczkomat InPost dla tej dostawy."
 
+msgid "Item"
+msgstr "Produkt"
+
+msgid "Quantity"
+msgstr "Ilość"
+
+msgid "Reason for return"
+msgstr "Powód zwrotu"
+
 msgid "Pending"
 msgstr "Oczekujące"
 
@@ -162,9 +171,18 @@ msgstr "Twój koszyk jest pusty."
 msgid "Only %(stock)s left of %(name)s - please update your cart."
 msgstr "Zostało tylko %(stock)s szt. produktu %(name)s - zaktualizuj koszyk."
 
+msgid "This coupon code is invalid or has expired."
+msgstr "Ten kod kuponu jest nieprawidłowy lub wygasł."
+
 #, python-format
 msgid "Could not start payment: %(error)s"
 msgstr "Nie udało się rozpocząć płatności: %(error)s"
+
+msgid "This order isn't eligible for a return yet."
+msgstr "To zamówienie nie kwalifikuje się jeszcze do zwrotu."
+
+msgid "Your return request has been submitted."
+msgstr "Twoje zgłoszenie zwrotu zostało wysłane."
 
 msgid "Thanks - your review has been posted."
 msgstr "Dziękujemy - Twoja recenzja została opublikowana."
@@ -225,9 +243,6 @@ msgstr "Produkt"
 
 msgid "Price"
 msgstr "Cena"
-
-msgid "Quantity"
-msgstr "Ilość"
 
 msgid "Subtotal"
 msgstr "Suma częściowa"
@@ -437,6 +452,15 @@ msgstr "Razem"
 msgid "Shipping to"
 msgstr "Wysyłka do"
 
+msgid "Tracking number"
+msgstr "Numer przesyłki"
+
+msgid "Download invoice"
+msgstr "Pobierz fakturę"
+
+msgid "Request a return"
+msgstr "Zgłoś zwrot"
+
 msgid "Pay for your order"
 msgstr "Zapłać za zamówienie"
 
@@ -445,3 +469,6 @@ msgstr "Zapłać przez PayU"
 
 msgid "Pay with Stripe"
 msgstr "Zapłać przez Stripe"
+
+msgid "Submit return request"
+msgstr "Wyślij zgłoszenie zwrotu"

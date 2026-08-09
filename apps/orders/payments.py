@@ -34,6 +34,9 @@ class BasePaymentProvider:
     def confirm_from_webhook(self, request):
         raise NotImplementedError
 
+    def refund(self, order, amount):
+        raise NotImplementedError
+
 
 class PayUProvider(BasePaymentProvider):
     name = "payu"
@@ -110,6 +113,18 @@ class PayUProvider(BasePaymentProvider):
             return order
         return None
 
+    def refund(self, order, amount):
+        token = self._get_access_token()
+        response = requests.post(
+            f"{self.base_url}/api/v2_1/orders/{order.payment_reference}/refunds",
+            headers={"Authorization": f"Bearer {token}", "Content-Type": "application/json"},
+            data=json.dumps({"refund": {"description": f"Refund for {order.order_number}", "amount": str(int(amount * 100))}}),
+            timeout=10,
+        )
+        if response.status_code not in (200, 201):
+            raise PaymentError(f"PayU refund failed: {response.status_code} {response.text}")
+        return True
+
 
 class StripeProvider(BasePaymentProvider):
     name = "stripe"
@@ -162,6 +177,13 @@ class StripeProvider(BasePaymentProvider):
         order_number = event["data"]["object"].get("metadata", {}).get("order_number")
         return Order.objects.filter(order_number=order_number).first()
 
+    def refund(self, order, amount):
+        session = stripe.checkout.Session.retrieve(order.payment_reference)
+        if not session.payment_intent:
+            raise PaymentError("Stripe session has no completed payment to refund")
+        stripe.Refund.create(payment_intent=session.payment_intent, amount=int(amount * 100))
+        return True
+
 
 class MockProvider(BasePaymentProvider):
     """Local development stand-in used when no real PayU/Stripe credentials
@@ -179,6 +201,9 @@ class MockProvider(BasePaymentProvider):
     def confirm_from_webhook(self, request):
         order_number = request.POST.get("order_number")
         return Order.objects.filter(order_number=order_number).first()
+
+    def refund(self, order, amount):
+        return True
 
 
 def is_payu_configured():

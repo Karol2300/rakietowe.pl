@@ -160,3 +160,10 @@ PAYU_SANDBOX = env.bool("PAYU_SANDBOX", default=True)
 STRIPE_PUBLISHABLE_KEY = env("STRIPE_PUBLISHABLE_KEY", default="")
 STRIPE_SECRET_KEY = env("STRIPE_SECRET_KEY", default="")
 STRIPE_WEBHOOK_SECRET = env("STRIPE_WEBHOOK_SECRET", default="")
+
+# Seller details for VAT invoices - placeholder demo values, replace with the
+# real registered business details before going live.
+STORE_LEGAL_NAME = env("STORE_LEGAL_NAME", default="Racket Sports Shop Sp. z o.o.")
+STORE_VAT_ID = env("STORE_VAT_ID", default="PL0000000000")
+STORE_ADDRESS_LINE = env("STORE_ADDRESS_LINE", default="ul. Sportowa 1")
+STORE_CITY_LINE = env("STORE_CITY_LINE", default="00-001 Warszawa, Poland")

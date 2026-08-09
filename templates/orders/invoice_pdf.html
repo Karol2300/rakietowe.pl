@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<title>{{ invoice.invoice_number }}</title>
+<style>
+    @page { size: A4; margin: 2cm; }
+    body { font-family: "DejaVu Sans", Arial, sans-serif; font-size: 11pt; color: #1a1a1a; }
+    h1 { font-size: 16pt; margin-bottom: 0.2cm; }
+    .meta { color: #555; margin-bottom: 1cm; }
+    .parties { display: flex; justify-content: space-between; margin-bottom: 1cm; }
+    .party { width: 45%; }
+    .party h2 { font-size: 10pt; text-transform: uppercase; color: #888; margin-bottom: 0.2cm; }
+    table { width: 100%; border-collapse: collapse; margin-bottom: 0.8cm; }
+    th, td { text-align: left; padding: 0.25cm 0.3cm; border-bottom: 1px solid #ddd; font-size: 10pt; }
+    th { background: #f4f6f5; }
+    .num { text-align: right; }
+    .totals { width: 50%; margin-left: auto; }
+    .totals td { border: none; padding: 0.15cm 0.3cm; }
+    .totals .grand-total td { font-weight: bold; border-top: 1px solid #1a1a1a; padding-top: 0.3cm; }
+    .footer { margin-top: 1.5cm; font-size: 9pt; color: #888; }
+</style>
+</head>
+<body>
+    <h1>Faktura VAT {{ invoice.invoice_number }}</h1>
+    <div class="meta">
+        Data wystawienia: {{ invoice.issued_at|date:"d.m.Y" }} &middot;
+        Data sprzedaży: {{ order.paid_at|date:"d.m.Y" }} &middot;
+        Zamówienie: {{ order.order_number }}
+    </div>
+
+    <div class="parties">
+        <div class="party">
+            <h2>Sprzedawca</h2>
+            {{ store_legal_name }}<br>
+            {{ store_address_line }}<br>
+            {{ store_city_line }}<br>
+            NIP: {{ store_vat_id }}
+        </div>
+        <div class="party">
+            <h2>Nabywca</h2>
+            {{ order.shipping_full_name }}<br>
+            {{ order.shipping_street }}<br>
+            {{ order.shipping_postal_code }} {{ order.shipping_city }}<br>
+            {{ order.shipping_country }}
+        </div>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Produkt</th>
+                <th class="num">Ilość</th>
+                <th class="num">Cena jedn. brutto</th>
+                <th class="num">Wartość brutto</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in order.items.all %}
+                <tr>
+                    <td>{{ item.product_name }}</td>
+                    <td class="num">{{ item.quantity }}</td>
+                    <td class="num">{{ item.unit_price }} {{ order.currency }}</td>
+                    <td class="num">{{ item.line_total }} {{ order.currency }}</td>
+                </tr>
+            {% endfor %}
+            <tr>
+                <td colspan="3">Wysyłka ({{ order.shipping_method.name }})</td>
+                <td class="num">{{ order.shipping_cost }} {{ order.currency }}</td>
+            </tr>
+            {% if order.discount_amount %}
+                <tr>
+                    <td colspan="3">Rabat</td>
+                    <td class="num">-{{ order.discount_amount }} {{ order.currency }}</td>
+                </tr>
+            {% endif %}
+        </tbody>
+    </table>
+
+    <table class="totals">
+        <tr><td>Wartość netto</td><td class="num">{{ net_total }} {{ order.currency }}</td></tr>
+        <tr><td>VAT ({{ vat_rate_percent }}%)</td><td class="num">{{ vat_amount }} {{ order.currency }}</td></tr>
+        <tr class="grand-total"><td>Do zapłaty</td><td class="num">{{ order.total }} {{ order.currency }}</td></tr>
+    </table>
+
+    <div class="footer">
+        Płatność: {{ order.get_payment_provider_display }} &middot; Status: opłacone {{ order.paid_at|date:"d.m.Y H:i" }}
+    </div>
+</body>
+</html>

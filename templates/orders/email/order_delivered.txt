@@ -1,0 +1,7 @@
+Hi{% if order.user %} {{ order.user.first_name }}{% endif %},
+
+Your order {{ order.order_number }} has been delivered. We hope you enjoy it!
+
+If anything isn't right, you can request a return from your order history.
+
+Racket Sports Shop

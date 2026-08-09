@@ -35,5 +35,21 @@
         {% trans "Shipping to" %}: {{ order.shipping_full_name }}, {{ order.shipping_street }},
         {{ order.shipping_postal_code }} {{ order.shipping_city }}, {{ order.shipping_country }}
     </p>
+    {% if order.tracking_number %}
+        <p>{% trans "Tracking number" %}: {{ order.tracking_number }} ({{ order.get_carrier_display }})</p>
+    {% endif %}
+
+    <div class="order-actions">
+        {% if order.payment_status == "paid" %}
+            <a class="button button--secondary" href="{% url 'orders:download_invoice' order.order_number %}">
+                {% trans "Download invoice" %}
+            </a>
+        {% endif %}
+        {% if user.is_authenticated and order.status in status_eligible_for_return %}
+            <a class="button button--secondary" href="{% url 'orders:request_return' order.order_number %}">
+                {% trans "Request a return" %}
+            </a>
+        {% endif %}
+    </div>
 </div>
 {% endblock %}

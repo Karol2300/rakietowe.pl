@@ -12,4 +12,6 @@ urlpatterns = [
     path("<str:order_number>/mock/", views.mock_payment, name="mock_payment"),
     path("<str:order_number>/mock/confirm/", views.mock_confirm, name="mock_confirm"),
     path("<str:order_number>/mock/cancel/", views.mock_cancel, name="mock_cancel"),
+    path("<str:order_number>/request-return/", views.request_return, name="request_return"),
+    path("<str:order_number>/invoice/", views.download_invoice, name="download_invoice"),
 ]

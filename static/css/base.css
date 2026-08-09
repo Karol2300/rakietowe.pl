@@ -857,6 +857,12 @@ button, input, select {
     max-width: 32rem;
 }
 
+.order-actions {
+    display: flex;
+    gap: 0.75rem;
+    margin-top: 1.5rem;
+}
+
 /* Mobile */
 
 @media (max-width: 860px) {

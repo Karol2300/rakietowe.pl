@@ -1,7 +1,8 @@
 from decimal import Decimal
 
 from django.contrib import messages
-from django.http import HttpResponse, HttpResponseBadRequest
+from django.contrib.auth.decorators import login_required
+from django.http import Http404, HttpResponse, HttpResponseBadRequest
 from django.shortcuts import get_object_or_404, redirect, render
 from django.utils import timezone
 from django.utils.translation import gettext as _
@@ -13,7 +14,7 @@ from apps.cart import services as cart_services
 from apps.coupons.models import Coupon
 from apps.shipping.models import ShippingMethod
 
-from .forms import CheckoutForm
+from .forms import CheckoutForm, ReturnRequestForm
 from .models import Order, OrderItem
 from .payments import PaymentError, get_provider
 from .services import fulfill_paid_order
@@ -69,7 +70,7 @@ def checkout(request):
             if coupon_code:
                 coupon = Coupon.objects.filter(code__iexact=coupon_code).first()
                 if not coupon or not coupon.is_valid():
-                    form.add_error("coupon_code", "This coupon code is invalid or has expired.")
+                    form.add_error("coupon_code", _("This coupon code is invalid or has expired."))
                     coupon = None
 
         if form.is_valid():
@@ -141,7 +142,11 @@ def payment_start(request, order_number, provider):
 
 def payment_return(request, order_number):
     order = get_object_or_404(Order, order_number=order_number)
-    return render(request, "orders/order_confirmation.html", {"order": order})
+    context = {
+        "order": order,
+        "status_eligible_for_return": [Order.Status.PAID, Order.Status.SHIPPED, Order.Status.DELIVERED],
+    }
+    return render(request, "orders/order_confirmation.html", context)
 
 
 def mock_payment(request, order_number):
@@ -191,3 +196,35 @@ def stripe_webhook(request):
     if order:
         fulfill_paid_order(order)
     return HttpResponse(status=200)
+
+
+@login_required
+def request_return(request, order_number):
+    order = get_object_or_404(Order, order_number=order_number, user=request.user)
+    if order.status not in (Order.Status.PAID, Order.Status.SHIPPED, Order.Status.DELIVERED):
+        messages.error(request, _("This order isn't eligible for a return yet."))
+        return redirect("orders:payment_return", order_number=order.order_number)
+
+    if request.method == "POST":
+        form = ReturnRequestForm(request.POST, order=order)
+        if form.is_valid():
+            return_request = form.save(commit=False)
+            return_request.order = order
+            return_request.user = request.user
+            return_request.save()
+            messages.success(request, _("Your return request has been submitted."))
+            return redirect("orders:payment_return", order_number=order.order_number)
+    else:
+        form = ReturnRequestForm(order=order)
+
+    return render(request, "orders/request_return.html", {"form": form, "order": order})
+
+
+def download_invoice(request, order_number):
+    order = get_object_or_404(Order, order_number=order_number)
+    is_owner = request.user.is_authenticated and order.user_id == request.user.id
+    if not (is_owner or request.user.is_staff):
+        raise Http404
+    if not hasattr(order, "invoice") or not order.invoice.pdf_file:
+        raise Http404
+    return redirect(order.invoice.pdf_file.url)

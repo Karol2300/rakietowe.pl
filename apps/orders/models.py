@@ -98,6 +98,9 @@ class OrderItem(models.Model):
     def line_total(self):
         return self.unit_price * self.quantity
 
+    def __str__(self):
+        return f"{self.product_name} x{self.quantity}"
+
 
 class Invoice(models.Model):
     order = models.OneToOneField(Order, on_delete=models.CASCADE, related_name="invoice")

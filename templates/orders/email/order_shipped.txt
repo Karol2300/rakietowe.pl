@@ -1,0 +1,15 @@
+Hi{% if order.user %} {{ order.user.first_name }}{% endif %},
+
+Your order {{ order.order_number }} is on its way!
+
+Carrier: {{ order.get_carrier_display }}
+{% if order.tracking_number %}Tracking number: {{ order.tracking_number }}
+{% endif %}{% if order.inpost_locker_point_id %}InPost locker: {{ order.inpost_locker_point_id }}
+{% endif %}
+Shipping to:
+{{ order.shipping_full_name }}
+{{ order.shipping_street }}
+{{ order.shipping_postal_code }} {{ order.shipping_city }}
+{{ order.shipping_country }}
+
+Racket Sports Shop

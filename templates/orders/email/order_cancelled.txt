@@ -1,0 +1,9 @@
+Hi{% if order.user %} {{ order.user.first_name }}{% endif %},
+
+Your order {{ order.order_number }} has been cancelled.
+{% if refunded %}
+A refund of {{ order.total }} {{ order.currency }} has been issued back to your original payment method.
+{% endif %}
+If you have any questions, just reply to this email.
+
+Racket Sports Shop

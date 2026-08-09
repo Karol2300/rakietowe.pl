@@ -3,6 +3,8 @@ from django.utils.translation import gettext_lazy as _
 
 from apps.shipping.models import ShippingMethod
 
+from .models import OrderItem, ReturnRequest
+
 
 class ShippingMethodChoiceField(forms.ModelChoiceField):
     def label_from_instance(self, method):
@@ -44,3 +46,20 @@ class CheckoutForm(forms.Form):
         if method and method.requires_locker_selection and not cleaned.get("inpost_locker_point_id"):
             self.add_error("inpost_locker_point_id", _("Please choose a parcel locker for InPost delivery."))
         return cleaned
+
+
+class ReturnRequestForm(forms.ModelForm):
+    class Meta:
+        model = ReturnRequest
+        fields = ["item", "quantity", "reason"]
+        widgets = {"reason": forms.Textarea(attrs={"rows": 3})}
+        labels = {
+            "item": _("Item"),
+            "quantity": _("Quantity"),
+            "reason": _("Reason for return"),
+        }
+
+    def __init__(self, *args, order=None, **kwargs):
+        super().__init__(*args, **kwargs)
+        if order is not None:
+            self.fields["item"].queryset = OrderItem.objects.filter(order=order)

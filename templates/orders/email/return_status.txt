@@ -1,0 +1,10 @@
+Hi{% if order.user %} {{ order.user.first_name }}{% endif %},
+
+There's an update on your return request for order {{ order.order_number }} ({{ return_request.item.product_name }} x{{ return_request.quantity }}).
+
+{% if return_request.status == "approved" %}Your return has been approved. We'll process your refund once the item is back with us.
+{% elif return_request.status == "rejected" %}Your return request was not approved.{% if return_request.staff_notes %} Note from our team: {{ return_request.staff_notes }}{% endif %}
+{% elif return_request.status == "refunded" %}Your refund of {{ return_request.refund_amount }} {{ order.currency }} has been issued back to your original payment method.
+{% else %}Status: {{ return_request.get_status_display }}
+{% endif %}
+Racket Sports Shop
