@@ -13,15 +13,17 @@
     var priceCurrent = document.getElementById("price-current");
     var stockDisplay = document.getElementById("stock-display");
     var addToCartButton = document.getElementById("add-to-cart-button");
+    var notifyForm = document.getElementById("notify-form");
+    var notifyFormAction = document.getElementById("notify-me-form");
     var radios = document.querySelectorAll('input[name="variant"]');
 
     function applyVariant(variant) {
         if (!variant) return;
+        var inStock = variant.stock > 0;
         if (priceCurrent) {
             priceCurrent.textContent = variant.price + " zł";
         }
         if (stockDisplay) {
-            var inStock = variant.stock > 0;
             var label = inStock ? stockDisplay.dataset.inStockLabel : stockDisplay.dataset.outOfStockLabel;
             stockDisplay.innerHTML = "";
             var span = document.createElement("span");
@@ -30,7 +32,14 @@
             stockDisplay.appendChild(span);
         }
         if (addToCartButton) {
-            addToCartButton.disabled = variant.stock <= 0;
+            addToCartButton.disabled = !inStock;
+        }
+        if (notifyForm) {
+            notifyForm.hidden = inStock;
+            if (!inStock && notifyFormAction) {
+                var template = notifyForm.getAttribute("data-notify-url-template");
+                notifyFormAction.setAttribute("action", template.replace("/0/", "/" + variant.id + "/"));
+            }
         }
     }
 

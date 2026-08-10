@@ -69,6 +69,7 @@ TEMPLATES = [
                 "django.contrib.messages.context_processors.messages",
                 "django.template.context_processors.i18n",
                 "apps.catalog.context_processors.sport_navigation",
+                "apps.catalog.context_processors.compare_summary",
                 "apps.cart.context_processors.cart_summary",
             ],
         },

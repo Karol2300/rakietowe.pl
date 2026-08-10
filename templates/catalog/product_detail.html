@@ -63,7 +63,7 @@
                                 id="variant-{{ variant.id }}"
                                 value="{{ variant.id }}"
                                 {% if variant == default_variant %}checked{% endif %}
-                                {% if not variant.in_stock %}disabled{% endif %}
+                                {% if not variant.in_stock %}data-out-of-stock{% endif %}
                             >
                             <label for="variant-{{ variant.id }}">{{ variant.attributes|get_item:variant_dimension }}</label>
                         {% endfor %}
@@ -81,12 +81,36 @@
             </div>
         </form>
 
-        <form method="post" action="{% url 'cart:toggle_wishlist' product.slug %}" class="product-actions">
-            {% csrf_token %}
-            <button type="submit" class="button button--secondary">
-                {% trans "Add to wishlist" %}
-            </button>
-        </form>
+        <div
+            class="notify-form"
+            id="notify-form"
+            data-notify-url-template="{% url 'catalog:request_stock_notification' 0 %}"
+            {% if default_variant and default_variant.in_stock %}hidden{% endif %}
+        >
+            {% if user.is_authenticated %}
+                <form method="post" action="{% url 'catalog:request_stock_notification' default_variant.id %}" id="notify-me-form" data-notify-form>
+                    {% csrf_token %}
+                    <button type="submit" class="button button--secondary">{% trans "Notify me when back in stock" %}</button>
+                </form>
+            {% else %}
+                <p><a href="{% url 'accounts:login' %}?next={{ request.path }}">{% trans "Log in to get notified when this is back in stock" %}</a></p>
+            {% endif %}
+        </div>
+
+        <div class="product-actions">
+            <form method="post" action="{% url 'cart:toggle_wishlist' product.slug %}">
+                {% csrf_token %}
+                <button type="submit" class="button button--secondary">
+                    {% trans "Add to wishlist" %}
+                </button>
+            </form>
+            <form method="post" action="{% url 'catalog:toggle_compare' product.slug %}">
+                {% csrf_token %}
+                <button type="submit" class="button button--secondary">
+                    {% if product.id in compare_ids %}{% trans "Remove from compare" %}{% else %}{% trans "Add to compare" %}{% endif %}
+                </button>
+            </form>
+        </div>
 
         {% if product.description %}
             <p>{{ product.description }}</p>

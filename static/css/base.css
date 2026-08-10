@@ -323,6 +323,31 @@ button, input, select {
     color: var(--color-sale);
 }
 
+.product-card__link {
+    display: block;
+}
+
+.product-card__compare {
+    margin-top: 0.5rem;
+}
+
+.compare-toggle {
+    width: 100%;
+    padding: 0.35rem 0.5rem;
+    font-size: 0.78rem;
+    border: 1px solid var(--color-border);
+    border-radius: 4px;
+    background: var(--color-bg);
+    color: var(--color-muted);
+    cursor: pointer;
+}
+
+.compare-toggle.is-active {
+    border-color: var(--color-accent);
+    color: var(--color-accent);
+    font-weight: 600;
+}
+
 /* Listing layout */
 
 .listing {
@@ -596,10 +621,18 @@ button, input, select {
     color: #fff;
 }
 
-.variant-options input:disabled + label {
+.variant-options input[data-out-of-stock] + label {
     color: var(--color-muted);
     text-decoration: line-through;
-    cursor: not-allowed;
+}
+
+.variant-options input[data-out-of-stock]:checked + label {
+    background: var(--color-muted);
+    text-decoration: line-through;
+}
+
+.notify-form {
+    margin-bottom: 1.5rem;
 }
 
 .product-actions {
@@ -912,6 +945,44 @@ button, input, select {
     font-size: 2rem;
     font-weight: 700;
     margin-bottom: 1.5rem;
+}
+
+/* Compare table */
+
+.compare-table-wrap {
+    overflow-x: auto;
+}
+
+.compare-table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.compare-table th,
+.compare-table td {
+    border: 1px solid var(--color-border);
+    padding: 0.75rem;
+    text-align: left;
+    font-size: 0.85rem;
+    vertical-align: top;
+    white-space: nowrap;
+}
+
+.compare-table thead th {
+    min-width: 180px;
+    white-space: normal;
+}
+
+.compare-table tbody th {
+    background: #f9faf9;
+    text-transform: capitalize;
+    white-space: normal;
+}
+
+.compare-table__image {
+    width: 100px;
+    height: 100px;
+    margin-bottom: 0.5rem;
 }
 
 /* Mobile */

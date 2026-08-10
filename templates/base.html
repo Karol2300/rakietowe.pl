@@ -54,6 +54,13 @@
             </select>
         </form>
 
+        {% if compare_count %}
+            <a class="cart-link" href="{% url 'catalog:compare' %}">
+                {% trans "Compare" %}
+                <span class="cart-link__count">{{ compare_count }}</span>
+            </a>
+        {% endif %}
+
         <a class="cart-link" href="{% url 'cart:cart_detail' %}">
             {% trans "Cart" %}
             {% if cart_item_count %}<span class="cart-link__count">{{ cart_item_count }}</span>{% endif %}

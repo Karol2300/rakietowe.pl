@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Compare products" %} — {% trans "Racket Sports Shop" %}{% endblock %}
+
+{% block content %}
+<h1>{% trans "Compare products" %}</h1>
+
+{% if products %}
+    <div class="compare-table-wrap">
+        <table class="compare-table">
+            <thead>
+                <tr>
+                    <th></th>
+                    {% for product in products %}
+                        <th>
+                            <div class="product-card__image sport-tint-{{ product.sport }} compare-table__image">
+                                {% trans "Photo coming soon" %}
+                            </div>
+                            <a href="{% url 'catalog:product_detail' product.slug %}">{{ product.name }}</a>
+                            <div class="product-card__brand">{{ product.brand.name|default:"" }}</div>
+                            <div class="product-card__price">{{ product.effective_price|default:product.price_pln }} zł</div>
+                            <form method="post" action="{% url 'catalog:toggle_compare' product.slug %}">
+                                {% csrf_token %}
+                                <button type="submit" class="link-button">{% trans "Remove" %}</button>
+                            </form>
+                        </th>
+                    {% endfor %}
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th>{% trans "Rating" %}</th>
+                    {% for product in products %}
+                        <td>{% if product.review_count %}★ {{ product.average_rating }} ({{ product.review_count }}){% else %}—{% endif %}</td>
+                    {% endfor %}
+                </tr>
+                <tr>
+                    <th>{% trans "In stock" %}</th>
+                    {% for product in products %}
+                        <td>{% if product.total_stock %}{% trans "Yes" %}{% else %}{% trans "No" %}{% endif %}</td>
+                    {% endfor %}
+                </tr>
+                {% for key, values in rows %}
+                    <tr>
+                        <th>{{ key }}</th>
+                        {% for value in values %}
+                            <td>{{ value }}</td>
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% else %}
+    <p class="empty-state">
+        {% trans "You haven't added any products to compare yet." %}
+        <a href="{% url 'core:home' %}">{% trans "Continue shopping" %}</a>
+    </p>
+{% endif %}
+{% endblock %}

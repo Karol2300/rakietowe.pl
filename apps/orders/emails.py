@@ -1,6 +1,10 @@
+import logging
+
 from django.conf import settings
 from django.core.mail import send_mail
 from django.template.loader import render_to_string
+
+logger = logging.getLogger(__name__)
 
 
 def _order_recipient(order):
@@ -13,7 +17,13 @@ def _send(order_or_return, template, subject, context):
     if not to_email:
         return
     message = render_to_string(template, context)
-    send_mail(subject, message, settings.DEFAULT_FROM_EMAIL, [to_email])
+    try:
+        send_mail(subject, message, settings.DEFAULT_FROM_EMAIL, [to_email])
+    except Exception:
+        # A transactional email failing (SMTP down, encoding issue, etc.)
+        # must never roll back the order state change it's reporting on -
+        # callers run inside @transaction.atomic blocks in services.py.
+        logger.exception("Failed to send email %r to %s for order %s", subject, to_email, order.order_number)
 
 
 def send_order_confirmation_email(order):

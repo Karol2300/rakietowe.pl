@@ -3,6 +3,14 @@
 import os
 import sys
 
+# Windows consoles default stdout/stderr to the system codepage (e.g. cp1252),
+# which can't encode characters like "ł" - fatal for runserver, since the
+# console email backend (and general logging) writes non-ASCII PL content.
+if sys.platform == "win32":
+    for _stream in (sys.stdout, sys.stderr):
+        if hasattr(_stream, "reconfigure"):
+            _stream.reconfigure(encoding="utf-8", errors="replace")
+
 
 def main():
     """Run administrative tasks."""

@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: racket-shop 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-09 21:36+0200\n"
+"POT-Creation-Date: 2026-08-10 10:24+0200\n"
 "PO-Revision-Date: 2026-08-09 18:34+0200\n"
 "Last-Translator: \n"
 "Language-Team: Polish\n"
@@ -71,6 +71,27 @@ msgstr "Cena regularna"
 
 msgid "Sale price"
 msgstr "Cena promocyjna"
+
+msgid "That item is already in stock."
+msgstr "Ten produkt jest już dostępny."
+
+msgid "We'll email you when this is back in stock."
+msgstr "Wyślemy Ci e-mail, gdy produkt znów będzie dostępny."
+
+msgid "You're already on the list for this item."
+msgstr "Jesteś już na liście oczekujących na ten produkt."
+
+#, python-format
+msgid "You can compare up to %(max)s products at a time."
+msgstr "Możesz porównać maksymalnie %(max)s produktów jednocześnie."
+
+#, python-format
+msgid "Added %(name)s to comparison."
+msgstr "Dodano %(name)s do porównania."
+
+#, python-format
+msgid "Removed %(name)s from comparison."
+msgstr "Usunięto %(name)s z porównania."
 
 msgid "Percentage"
 msgstr "Procentowy"
@@ -371,6 +392,9 @@ msgstr "Szukaj"
 msgid "Language"
 msgstr "Język"
 
+msgid "Compare"
+msgstr "Porównaj"
+
 msgid "Cart"
 msgstr "Koszyk"
 
@@ -410,6 +434,9 @@ msgstr "Zdjęcie wkrótce"
 msgid "Out of stock"
 msgstr "Brak w magazynie"
 
+msgid "Comparing"
+msgstr "Porównywane"
+
 msgid "Home"
 msgstr "Strona główna"
 
@@ -448,17 +475,44 @@ msgstr "Następna"
 msgid "No products match your filters."
 msgstr "Żadne produkty nie pasują do wybranych filtrów."
 
-msgid "No reviews yet"
-msgstr "Brak recenzji"
+msgid "Compare products"
+msgstr "Porównaj produkty"
+
+msgid "Rating"
+msgstr "Ocena"
 
 msgid "In stock"
 msgstr "Dostępny"
 
+msgid "Yes"
+msgstr "Tak"
+
+msgid "No"
+msgstr "Nie"
+
+msgid "You haven't added any products to compare yet."
+msgstr "Nie dodałeś jeszcze żadnych produktów do porównania."
+
+msgid "No reviews yet"
+msgstr "Brak recenzji"
+
 msgid "Add to cart"
 msgstr "Dodaj do koszyka"
 
+msgid "Notify me when back in stock"
+msgstr "Powiadom mnie, gdy będzie dostępny"
+
+msgid "Log in to get notified when this is back in stock"
+msgstr "Zaloguj się, aby otrzymać powiadomienie o dostępności"
+
 msgid "Add to wishlist"
 msgstr "Dodaj do listy życzeń"
+
+msgid "Remove from compare"
+msgstr "Usuń z porównania"
+
+msgid "Add to compare"
+msgstr "Dodaj do porównania"
 
 msgid "You might also like"
 msgstr "Może Ci się spodobać"

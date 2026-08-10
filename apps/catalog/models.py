@@ -180,7 +180,18 @@ class ProductVariant(models.Model):
     def save(self, *args, **kwargs):
         if not self.sku:
             self.sku = generate_sku(self.product, self.attributes)
+
+        was_out_of_stock = False
+        if self.pk:
+            previous = ProductVariant.objects.filter(pk=self.pk).values_list("stock_quantity", flat=True).first()
+            was_out_of_stock = previous == 0
+
         super().save(*args, **kwargs)
+
+        if was_out_of_stock and self.stock_quantity > 0:
+            from apps.catalog.services import notify_back_in_stock
+
+            notify_back_in_stock(self)
 
     def current_price(self, currency="PLN"):
         currency = currency.upper()

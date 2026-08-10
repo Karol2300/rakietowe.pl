@@ -1,22 +1,30 @@
 {% load i18n %}
-<a class="product-card" href="{% url 'catalog:product_detail' product.slug %}">
-    <div class="product-card__image sport-tint-{{ product.sport }}">
-        {% trans "Photo coming soon" %}
-    </div>
-    <div class="product-card__brand">{{ product.brand.name|default:"" }}</div>
-    <h3 class="product-card__name">{{ product.name }}</h3>
-    <div class="product-card__price">
-        {% if product.on_sale %}
-            <span class="product-card__price-original">{{ product.price_pln }} zł</span>
-            <span class="product-card__price--sale">{{ product.effective_price|default:product.sale_price_pln }} zł</span>
-        {% else %}
-            <span>{{ product.effective_price|default:product.price_pln }} zł</span>
+<div class="product-card">
+    <a class="product-card__link" href="{% url 'catalog:product_detail' product.slug %}">
+        <div class="product-card__image sport-tint-{{ product.sport }}">
+            {% trans "Photo coming soon" %}
+        </div>
+        <div class="product-card__brand">{{ product.brand.name|default:"" }}</div>
+        <h3 class="product-card__name">{{ product.name }}</h3>
+        <div class="product-card__price">
+            {% if product.on_sale %}
+                <span class="product-card__price-original">{{ product.price_pln }} zł</span>
+                <span class="product-card__price--sale">{{ product.effective_price|default:product.sale_price_pln }} zł</span>
+            {% else %}
+                <span>{{ product.effective_price|default:product.price_pln }} zł</span>
+            {% endif %}
+        </div>
+        {% if product.review_count %}
+            <div class="product-card__rating">★ {{ product.average_rating }} ({{ product.review_count }})</div>
         {% endif %}
-    </div>
-    {% if product.review_count %}
-        <div class="product-card__rating">★ {{ product.average_rating }} ({{ product.review_count }})</div>
-    {% endif %}
-    {% if product.total_stock == 0 %}
-        <div class="product-card__stock product-card__stock--out">{% trans "Out of stock" %}</div>
-    {% endif %}
-</a>
+        {% if product.total_stock == 0 %}
+            <div class="product-card__stock product-card__stock--out">{% trans "Out of stock" %}</div>
+        {% endif %}
+    </a>
+    <form method="post" action="{% url 'catalog:toggle_compare' product.slug %}" class="product-card__compare">
+        {% csrf_token %}
+        <button type="submit" class="compare-toggle{% if product.id in compare_ids %} is-active{% endif %}">
+            {% if product.id in compare_ids %}✓ {% trans "Comparing" %}{% else %}{% trans "Compare" %}{% endif %}
+        </button>
+    </form>
+</div>

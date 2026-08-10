@@ -1,13 +1,24 @@
 import json
 
+from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 from django.db.models import Q
 from django.http import JsonResponse
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
+from django.utils.translation import gettext as _
+from django.views.decorators.http import require_POST
 
-from apps.catalog.models import Brand, Category, Product
-from apps.catalog.services import SORT_OPTIONS, annotate_effective_price, collect_facets
+from apps.catalog.models import Brand, Category, Product, ProductVariant, StockNotification
+from apps.catalog.services import (
+    COMPARE_MAX_ITEMS,
+    SORT_OPTIONS,
+    annotate_effective_price,
+    collect_facets,
+    get_compare_ids,
+)
+from apps.catalog.services import toggle_compare as toggle_compare_service
 from apps.reviews.forms import ReviewForm
 from apps.reviews.models import Review
 
@@ -152,6 +163,54 @@ def product_detail(request, slug):
         "rating_choices": [5, 4, 3, 2, 1],
     }
     return render(request, "catalog/product_detail.html", context)
+
+
+@login_required
+@require_POST
+def request_stock_notification(request, variant_id):
+    variant = get_object_or_404(ProductVariant, id=variant_id, is_active=True)
+    if variant.in_stock:
+        messages.info(request, _("That item is already in stock."))
+    else:
+        _notification, created = StockNotification.objects.get_or_create(user=request.user, variant=variant)
+        if created:
+            messages.success(request, _("We'll email you when this is back in stock."))
+        else:
+            messages.info(request, _("You're already on the list for this item."))
+    return redirect("catalog:product_detail", slug=variant.product.slug)
+
+
+@require_POST
+def toggle_compare(request, slug):
+    product = get_object_or_404(Product, slug=slug, is_active=True)
+    added, capped = toggle_compare_service(request, product.id)
+    if capped:
+        messages.error(request, _("You can compare up to %(max)s products at a time.") % {"max": COMPARE_MAX_ITEMS})
+    elif added:
+        messages.success(request, _("Added %(name)s to comparison.") % {"name": product.name})
+    else:
+        messages.success(request, _("Removed %(name)s from comparison.") % {"name": product.name})
+    return redirect(request.META.get("HTTP_REFERER") or reverse("catalog:product_detail", args=[slug]))
+
+
+def compare_view(request):
+    ids = get_compare_ids(request)
+    products = list(
+        annotate_effective_price(Product.objects.filter(id__in=ids))
+        .select_related("brand")
+        .prefetch_related("variants")
+    )
+    products.sort(key=lambda p: ids.index(p.id))
+
+    spec_keys = []
+    for product in products:
+        for key in product.specs:
+            if key not in spec_keys:
+                spec_keys.append(key)
+
+    rows = [(key, [product.specs.get(key, "—") for product in products]) for key in spec_keys]
+
+    return render(request, "catalog/compare.html", {"products": products, "rows": rows})
 
 
 def search_suggestions(request):
