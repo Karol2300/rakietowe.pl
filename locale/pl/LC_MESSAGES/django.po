@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: racket-shop 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-10 10:24+0200\n"
+"POT-Creation-Date: 2026-08-10 11:18+0200\n"
 "PO-Revision-Date: 2026-08-09 18:34+0200\n"
 "Last-Translator: \n"
 "Language-Team: Polish\n"
@@ -65,6 +65,12 @@ msgstr "Badminton"
 
 msgid "Table Tennis"
 msgstr "Tenis stołowy"
+
+msgid "23% (standard)"
+msgstr "23% (podstawowa)"
+
+msgid "8% (reduced)"
+msgstr "8% (obniżona)"
 
 msgid "Regular price"
 msgstr "Cena regularna"

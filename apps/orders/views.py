@@ -123,6 +123,7 @@ def checkout(request):
                     variant_attributes=item.variant.attributes,
                     unit_price=item.variant.current_price(),
                     quantity=item.quantity,
+                    vat_rate=item.variant.product.vat_rate,
                 )
             cart.items.all().delete()
             return redirect("orders:payment_select", order_number=order.order_number)

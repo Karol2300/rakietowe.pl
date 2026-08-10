@@ -15,6 +15,8 @@
     th, td { text-align: left; padding: 0.25cm 0.3cm; border-bottom: 1px solid #ddd; font-size: 10pt; }
     th { background: #f4f6f5; }
     .num { text-align: right; }
+    .vat-breakdown { width: 60%; margin-left: auto; margin-bottom: 0.5cm; }
+    .vat-breakdown th, .vat-breakdown td { font-size: 9.5pt; }
     .totals { width: 50%; margin-left: auto; }
     .totals td { border: none; padding: 0.15cm 0.3cm; }
     .totals .grand-total td { font-weight: bold; border-top: 1px solid #1a1a1a; padding-top: 0.3cm; }
@@ -52,6 +54,7 @@
                 <th>Produkt</th>
                 <th class="num">Ilość</th>
                 <th class="num">Cena jedn. brutto</th>
+                <th class="num">Stawka VAT</th>
                 <th class="num">Wartość brutto</th>
             </tr>
         </thead>
@@ -61,25 +64,48 @@
                     <td>{{ item.product_name }}</td>
                     <td class="num">{{ item.quantity }}</td>
                     <td class="num">{{ item.unit_price }} {{ order.currency }}</td>
+                    <td class="num">{{ item.vat_rate }}%</td>
                     <td class="num">{{ item.line_total }} {{ order.currency }}</td>
                 </tr>
             {% endfor %}
             <tr>
                 <td colspan="3">Wysyłka ({{ order.shipping_method.name }})</td>
+                <td class="num">23%</td>
                 <td class="num">{{ order.shipping_cost }} {{ order.currency }}</td>
             </tr>
             {% if order.discount_amount %}
                 <tr>
-                    <td colspan="3">Rabat</td>
+                    <td colspan="4">Rabat</td>
                     <td class="num">-{{ order.discount_amount }} {{ order.currency }}</td>
                 </tr>
             {% endif %}
         </tbody>
     </table>
 
+    <table class="vat-breakdown">
+        <thead>
+            <tr>
+                <th>Stawka VAT</th>
+                <th class="num">Netto</th>
+                <th class="num">VAT</th>
+                <th class="num">Brutto</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in vat_rows %}
+                <tr>
+                    <td>{{ row.rate }}%</td>
+                    <td class="num">{{ row.net }} {{ order.currency }}</td>
+                    <td class="num">{{ row.vat }} {{ order.currency }}</td>
+                    <td class="num">{{ row.gross }} {{ order.currency }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
     <table class="totals">
         <tr><td>Wartość netto</td><td class="num">{{ net_total }} {{ order.currency }}</td></tr>
-        <tr><td>VAT ({{ vat_rate_percent }}%)</td><td class="num">{{ vat_amount }} {{ order.currency }}</td></tr>
+        <tr><td>VAT razem</td><td class="num">{{ vat_amount }} {{ order.currency }}</td></tr>
         <tr class="grand-total"><td>Do zapłaty</td><td class="num">{{ order.total }} {{ order.currency }}</td></tr>
     </table>
 

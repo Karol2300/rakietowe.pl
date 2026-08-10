@@ -2,7 +2,7 @@ from django.conf import settings
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
-from apps.catalog.models import ProductVariant
+from apps.catalog.models import ProductVariant, VatRate
 from apps.coupons.models import Coupon
 from apps.shipping.models import Carrier, ShippingMethod
 
@@ -93,6 +93,11 @@ class OrderItem(models.Model):
     variant_attributes = models.JSONField(default=dict, blank=True)
     unit_price = models.DecimalField(max_digits=10, decimal_places=2)
     quantity = models.PositiveIntegerField(default=1)
+    vat_rate = models.PositiveSmallIntegerField(
+        choices=VatRate.choices,
+        default=VatRate.STANDARD,
+        help_text="Snapshot of the product's VAT rate at the time of purchase.",
+    )
 
     @property
     def line_total(self):

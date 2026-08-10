@@ -55,10 +55,21 @@ class Brand(models.Model):
         super().save(*args, **kwargs)
 
 
+class VatRate(models.IntegerChoices):
+    STANDARD = 23, _("23% (standard)")
+    REDUCED = 8, _("8% (reduced)")
+
+
 class Product(models.Model):
     name = models.CharField(max_length=255)
     slug = models.SlugField(max_length=280, unique=True)
     description = models.TextField(blank=True)
+
+    vat_rate = models.PositiveSmallIntegerField(
+        choices=VatRate.choices,
+        default=VatRate.STANDARD,
+        help_text="VAT rate applied to this product on invoices.",
+    )
 
     sport = models.CharField(max_length=20, choices=Sport.choices)
     category = models.ForeignKey(

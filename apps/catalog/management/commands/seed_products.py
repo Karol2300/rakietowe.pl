@@ -389,6 +389,7 @@ class Command(BaseCommand):
                     sport=sport,
                     category=category,
                     brand=brand,
+                    vat_rate=random.choices([23, 8], weights=[85, 15])[0],
                     price_pln=price_pln,
                     price_eur=to_currency(price_pln, EUR_RATE),
                     price_usd=to_currency(price_pln, USD_RATE),
