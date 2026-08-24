@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: racket-shop 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-10 11:18+0200\n"
+"POT-Creation-Date: 2026-08-10 15:45+0200\n"
 "PO-Revision-Date: 2026-08-09 18:34+0200\n"
 "Last-Translator: \n"
 "Language-Team: Polish\n"
@@ -38,6 +38,9 @@ msgstr "Adres zapisany."
 
 msgid "Address removed."
 msgstr "Adres usunięty."
+
+msgid "Your account has been deleted."
+msgstr "Twoje konto zostało usunięte."
 
 msgid "Sorry, that item is out of stock."
 msgstr "Niestety, ten produkt jest niedostępny."
@@ -77,6 +80,9 @@ msgstr "Cena regularna"
 
 msgid "Sale price"
 msgstr "Cena promocyjna"
+
+msgid "Home"
+msgstr "Strona główna"
 
 msgid "That item is already in stock."
 msgstr "Ten produkt jest już dostępny."
@@ -269,6 +275,9 @@ msgstr "Profil"
 msgid "Change password"
 msgstr "Zmień hasło"
 
+msgid "Privacy & data"
+msgstr "Prywatność i dane"
+
 msgid "Delete address"
 msgstr "Usuń adres"
 
@@ -337,11 +346,59 @@ msgstr "Zobacz wszystkie zamówienia"
 msgid "You haven't placed any orders yet."
 msgstr "Nie złożyłeś jeszcze żadnego zamówienia."
 
+msgid "Delete my account"
+msgstr "Usuń moje konto"
+
+msgid ""
+"This will remove your name, email, and saved addresses from our systems and "
+"log you out. This cannot be undone."
+msgstr ""
+"Spowoduje to usunięcie Twojego imienia i nazwiska, adresu e-mail oraz "
+"zapisanych adresów z naszych systemów i wyloguje Cię. Tej operacji nie można "
+"cofnąć."
+
+msgid ""
+"Your past paid orders and invoices will be kept, as required by tax law, but "
+"will no longer be linked to an active account."
+msgstr ""
+"Twoje dotychczasowe opłacone zamówienia i faktury zostaną zachowane, zgodnie "
+"z wymogami prawa podatkowego, ale nie będą już powiązane z aktywnym kontem."
+
+msgid "Any unused loyalty points will be forfeited."
+msgstr "Niewykorzystane punkty lojalnościowe przepadną."
+
+msgid "Yes, permanently delete my account"
+msgstr "Tak, trwale usuń moje konto"
+
+#, python-format
+msgid ""
+"We received a request to reset the password for your Racket Sports Shop "
+"account (%(email)s)."
+msgstr ""
+"Otrzymaliśmy prośbę o zresetowanie hasła do Twojego konta w Racket Sports "
+"Shop (%(email)s)."
+
+msgid "Reset your password:"
+msgstr "Zresetuj hasło:"
+
+msgid ""
+"This link expires in 1 hour. If you didn't request this, you can safely "
+"ignore this email - your password won't be changed."
+msgstr ""
+"Ten link wygasa za 1 godzinę. Jeśli to nie Ty złożyłeś tę prośbę, zignoruj "
+"tę wiadomość - Twoje hasło nie zostanie zmienione."
+
+msgid "Reset your password - Racket Sports Shop"
+msgstr "Zresetuj hasło - Racket Sports Shop"
+
 msgid "Log in"
 msgstr "Zaloguj się"
 
 msgid "Please enter a correct email and password."
 msgstr "Podaj poprawny adres e-mail i hasło."
+
+msgid "Forgot your password?"
+msgstr "Nie pamiętasz hasła?"
 
 msgid "New here? Create an account"
 msgstr "Nie masz konta? Załóż je"
@@ -370,6 +427,55 @@ msgstr "Hasło zmienione"
 msgid "Your password has been updated."
 msgstr "Twoje hasło zostało zaktualizowane."
 
+msgid "Password reset"
+msgstr "Resetowanie hasła"
+
+msgid "Password reset complete"
+msgstr "Hasło zresetowane"
+
+msgid "Your password has been set. You can now log in."
+msgstr "Twoje hasło zostało ustawione. Możesz się teraz zalogować."
+
+msgid "Set new password"
+msgstr "Ustaw nowe hasło"
+
+msgid "Set password"
+msgstr "Ustaw hasło"
+
+msgid "Link expired"
+msgstr "Link wygasł"
+
+msgid ""
+"This password reset link is invalid or has expired. Please request a new one."
+msgstr ""
+"Ten link do resetowania hasła jest nieprawidłowy lub wygasł. Poproś o nowy."
+
+msgid "Request a new link"
+msgstr "Poproś o nowy link"
+
+msgid "Check your email"
+msgstr "Sprawdź swoją skrzynkę e-mail"
+
+msgid ""
+"If an account exists for that email address, we've sent a link to reset your "
+"password. It expires in 1 hour."
+msgstr ""
+"Jeśli konto z tym adresem e-mail istnieje, wysłaliśmy link do zresetowania "
+"hasła. Wygasa on za 1 godzinę."
+
+msgid "Back to log in"
+msgstr "Powrót do logowania"
+
+msgid "Reset password"
+msgstr "Zresetuj hasło"
+
+msgid ""
+"Enter your email address and we'll send you a link to reset your password."
+msgstr "Podaj swój adres e-mail, a wyślemy Ci link do zresetowania hasła."
+
+msgid "Send reset link"
+msgstr "Wyślij link resetujący"
+
 msgid ""
 "We never store your card details - only a reference to the payment provider "
 "you used, kept securely by PayU or Stripe themselves."
@@ -380,6 +486,37 @@ msgstr ""
 msgid "You haven't completed a payment yet."
 msgstr "Nie dokonałeś jeszcze żadnej płatności."
 
+msgid "Export your data"
+msgstr "Eksportuj swoje dane"
+
+msgid ""
+"Download a copy of your account, addresses, orders, reviews, and loyalty "
+"history in a portable JSON file."
+msgstr ""
+"Pobierz kopię swojego konta, adresów, zamówień, recenzji i historii punktów "
+"lojalnościowych w przenośnym pliku JSON."
+
+msgid "Download my data"
+msgstr "Pobierz moje dane"
+
+msgid "Delete your account"
+msgstr "Usuń swoje konto"
+
+msgid ""
+"Permanently remove your personal details and saved addresses from our "
+"systems. This cannot be undone."
+msgstr ""
+"Trwale usuń swoje dane osobowe i zapisane adresy z naszych systemów. Tej "
+"operacji nie można cofnąć."
+
+#, python-format
+msgid ""
+"For more detail on how we use your data, see our <a href=\"%(url)s\">Privacy "
+"Policy</a>."
+msgstr ""
+"Więcej informacji o tym, jak wykorzystujemy Twoje dane, znajdziesz w naszej "
+"<a href=\"%(url)s\">Polityce prywatności</a>."
+
 msgid "Save changes"
 msgstr "Zapisz zmiany"
 
@@ -388,6 +525,13 @@ msgstr "Utwórz konto"
 
 msgid "Already have an account? Log in"
 msgstr "Masz już konto? Zaloguj się"
+
+msgid ""
+"Tennis, squash, badminton, and table tennis equipment — rackets, paddles, "
+"shoes, and more from the brands players trust."
+msgstr ""
+"Sprzęt do tenisa, squasha, badmintona i tenisa stołowego — rakiety, paletki, "
+"buty i wiele więcej od marek, którym ufają zawodnicy."
 
 msgid "Search products…"
 msgstr "Szukaj produktów…"
@@ -406,6 +550,27 @@ msgstr "Koszyk"
 
 msgid "Log out"
 msgstr "Wyloguj się"
+
+msgid "Privacy Policy"
+msgstr "Polityka prywatności"
+
+msgid "Terms & Conditions"
+msgstr "Regulamin"
+
+#, python-format
+msgid ""
+"We only use cookies that are strictly necessary to run this site (login "
+"sessions, your cart, and your language preference) - no tracking or "
+"advertising cookies. See our <a href=\"%(url)s#cookies\">Privacy Policy</a> "
+"for details."
+msgstr ""
+"Używamy wyłącznie plików cookie niezbędnych do działania strony (sesja "
+"logowania, koszyk i preferencje językowe) - żadnych plików śledzących ani "
+"reklamowych. Szczegóły znajdziesz w naszej <a href=\"%(url)s#cookies"
+"\">Polityce prywatności</a>."
+
+msgid "OK, got it"
+msgstr "OK, rozumiem"
 
 msgid "Your cart"
 msgstr "Twój koszyk"
@@ -437,14 +602,15 @@ msgstr "Twoja lista życzeń jest pusta."
 msgid "Photo coming soon"
 msgstr "Zdjęcie wkrótce"
 
+#, python-format
+msgid "Lowest price in last 30 days: %(price)s zł"
+msgstr "Najniższa cena z ostatnich 30 dni: %(price)s zł"
+
 msgid "Out of stock"
 msgstr "Brak w magazynie"
 
 msgid "Comparing"
 msgstr "Porównywane"
-
-msgid "Home"
-msgstr "Strona główna"
 
 msgid "Brand"
 msgstr "Marka"
@@ -569,18 +735,455 @@ msgstr "Nie znaleziono produktów pasujących do wyszukiwania."
 msgid "Everything you need, on every court."
 msgstr "Wszystko, czego potrzebujesz, na każdym korcie."
 
-msgid ""
-"Tennis, squash, badminton, and table tennis equipment — rackets, paddles, "
-"shoes, and more from the brands players trust."
-msgstr ""
-"Sprzęt do tenisa, squasha, badmintona i tenisa stołowego — rakiety, paletki, "
-"buty i wiele więcej od marek, którym ufają zawodnicy."
-
 msgid "Shop now"
 msgstr "Kupuj teraz"
 
 msgid "Featured products"
 msgstr "Polecane produkty"
+
+msgid "Last updated:"
+msgstr "Ostatnia aktualizacja:"
+
+msgid "1. Who controls your data"
+msgstr "1. Kto administruje Twoimi danymi"
+
+#, python-format
+msgid ""
+"The data controller is %(store_legal_name)s, %(store_address_line)s, "
+"%(store_city_line)s, VAT ID (NIP) %(store_vat_id)s. For any question about "
+"this policy or your personal data, contact us at %(contact_email)s."
+msgstr ""
+"Administratorem danych jest %(store_legal_name)s, %(store_address_line)s, "
+"%(store_city_line)s, NIP %(store_vat_id)s. W razie pytań dotyczących "
+"niniejszej polityki lub Twoich danych osobowych skontaktuj się z nami pod "
+"adresem %(contact_email)s."
+
+msgid "2. What data we collect"
+msgstr "2. Jakie dane zbieramy"
+
+msgid ""
+"Account data: email address, name, password (stored as an irreversible hash, "
+"never in plain text)."
+msgstr ""
+"Dane konta: adres e-mail, imię i nazwisko, hasło (przechowywane wyłącznie "
+"jako nieodwracalny skrót, nigdy w postaci jawnej)."
+
+msgid ""
+"Order data: shipping address, phone number, items purchased, order value, "
+"and payment status."
+msgstr ""
+"Dane zamówienia: adres dostawy, numer telefonu, zakupione produkty, wartość "
+"zamówienia i status płatności."
+
+msgid "Saved addresses you add to your address book."
+msgstr "Adresy zapisane w Twojej książce adresowej."
+
+msgid "Product reviews and ratings you submit."
+msgstr "Recenzje i oceny produktów, które publikujesz."
+
+msgid "Customer support and returns correspondence."
+msgstr "Korespondencja z obsługą klienta i dotycząca zwrotów."
+
+msgid ""
+"Technical data needed to operate the site: session identifiers, your chosen "
+"language and currency, and your shopping cart contents."
+msgstr ""
+"Dane techniczne niezbędne do działania strony: identyfikatory sesji, wybrany "
+"język i waluta oraz zawartość koszyka."
+
+msgid ""
+"We never see or store your full card number - card payments are handled "
+"entirely by our payment providers (see section 5)."
+msgstr ""
+"Nigdy nie widzimy ani nie przechowujemy pełnego numeru Twojej karty - "
+"płatności kartą są obsługiwane wyłącznie przez naszych operatorów płatności "
+"(patrz punkt 5)."
+
+msgid "3. Why we process it, and on what legal basis"
+msgstr "3. Dlaczego przetwarzamy dane i na jakiej podstawie prawnej"
+
+msgid ""
+"To create your account and fulfil orders you place - necessary to perform "
+"our contract with you."
+msgstr ""
+"Aby założyć Twoje konto i zrealizować składane przez Ciebie zamówienia - "
+"niezbędne do wykonania umowy z Tobą."
+
+msgid ""
+"To issue VAT invoices and keep accounting records - necessary to comply with "
+"our legal obligations under Polish tax law."
+msgstr ""
+"Aby wystawiać faktury VAT i prowadzić dokumentację księgową - niezbędne do "
+"wypełnienia naszych obowiązków prawnych wynikających z polskiego prawa "
+"podatkowego."
+
+msgid ""
+"To prevent fraud and keep the site secure - our legitimate interest, "
+"balanced against your rights."
+msgstr ""
+"Aby zapobiegać nadużyciom i dbać o bezpieczeństwo strony - nasz prawnie "
+"uzasadniony interes, wyważony względem Twoich praw."
+
+msgid ""
+"To send you service emails about your orders, password resets, and back-in-"
+"stock alerts you requested - necessary to perform our contract or your "
+"explicit request."
+msgstr ""
+"Aby wysyłać wiadomości serwisowe o Twoich zamówieniach, resetowaniu hasła "
+"oraz zamówionych przez Ciebie powiadomieniach o dostępności produktu - "
+"niezbędne do wykonania umowy lub Twojego wyraźnego żądania."
+
+msgid ""
+"We do not use your data for automated profiling or send marketing "
+"communications without your separate, explicit consent."
+msgstr ""
+"Nie wykorzystujemy Twoich danych do zautomatyzowanego profilowania ani nie "
+"wysyłamy komunikacji marketingowej bez Twojej odrębnej, wyraźnej zgody."
+
+msgid "4. Who we share your data with"
+msgstr "4. Komu udostępniamy Twoje dane"
+
+msgid "We share the minimum data necessary with:"
+msgstr "Udostępniamy minimalny niezbędny zakres danych następującym podmiotom:"
+
+msgid "Payment providers PayU and Stripe, to process your payment."
+msgstr "Operatorom płatności PayU i Stripe - w celu obsługi Twojej płatności."
+
+msgid "Our carriers - InPost, DHL, DPD, and UPS - to deliver your order."
+msgstr ""
+"Naszym przewoźnikom - InPost, DHL, DPD i UPS - w celu dostarczenia "
+"zamówienia."
+
+msgid ""
+"IT hosting and email delivery providers who process data on our behalf under "
+"contract."
+msgstr ""
+"Dostawcom hostingu IT i poczty e-mail, którzy przetwarzają dane w naszym "
+"imieniu na podstawie umowy."
+
+msgid "Tax and law enforcement authorities, where we are legally required to."
+msgstr "Organom podatkowym i ścigania, gdy wymaga tego prawo."
+
+msgid ""
+"Stripe may process data outside the European Economic Area (e.g. in the "
+"United States). Where this happens, it is covered by the European "
+"Commission's Standard Contractual Clauses or an equivalent safeguard."
+msgstr ""
+"Stripe może przetwarzać dane poza Europejskim Obszarem Gospodarczym (np. w "
+"Stanach Zjednoczonych). W takim przypadku stosowane są standardowe klauzule "
+"umowne Komisji Europejskiej lub równoważne zabezpieczenie."
+
+msgid "5. How long we keep your data"
+msgstr "5. Jak długo przechowujemy Twoje dane"
+
+msgid ""
+"Account data: for as long as your account is active, or until you ask us to "
+"delete it."
+msgstr ""
+"Dane konta: tak długo, jak Twoje konto jest aktywne, lub do momentu, gdy "
+"poprosisz o jego usunięcie."
+
+msgid ""
+"Order and invoice records: for 5 years after the end of the calendar year of "
+"the transaction, as required by Polish tax law - even if you delete your "
+"account."
+msgstr ""
+"Dane zamówień i faktur: przez 5 lat od zakończenia roku kalendarzowego, w "
+"którym miała miejsce transakcja, zgodnie z polskim prawem podatkowym - nawet "
+"jeśli usuniesz konto."
+
+msgid ""
+"Session and cart cookies: cleared when your session ends or after a short "
+"expiry, as described in section 7."
+msgstr ""
+"Pliki cookie sesji i koszyka: usuwane po zakończeniu sesji lub po krótkim "
+"czasie wygaśnięcia, zgodnie z opisem w punkcie 7."
+
+msgid "6. Your rights"
+msgstr "6. Twoje prawa"
+
+msgid "Under the GDPR, you have the right to:"
+msgstr "Zgodnie z RODO masz prawo do:"
+
+msgid "Access the personal data we hold about you."
+msgstr "Dostępu do danych osobowych, które o Tobie przechowujemy."
+
+msgid ""
+"Correct inaccurate data (update your profile and addresses at any time)."
+msgstr ""
+"Sprostowania nieprawidłowych danych (możesz zaktualizować swój profil i "
+"adresy w dowolnym momencie)."
+
+msgid ""
+"Erase your data, subject to our legal obligation to retain invoice records "
+"(see section 5)."
+msgstr ""
+"Usunięcia swoich danych, z zastrzeżeniem naszego obowiązku prawnego "
+"zachowania dokumentacji fakturowej (patrz punkt 5)."
+
+msgid "Restrict or object to certain processing."
+msgstr "Ograniczenia lub sprzeciwu wobec niektórych form przetwarzania."
+
+msgid "Receive a copy of your data in a portable, machine-readable format."
+msgstr "Otrzymania kopii swoich danych w przenośnym, odczytywalnym formacie."
+
+msgid ""
+"Lodge a complaint with the Polish Data Protection Authority (UODO), uodo.gov."
+"pl."
+msgstr ""
+"Wniesienia skargi do Prezesa Urzędu Ochrony Danych Osobowych (UODO), uodo."
+"gov.pl."
+
+#, python-format
+msgid ""
+"You can exercise your access, erasure, and data-portability rights yourself "
+"at any time from <a href=\"%(url)s\">your account's privacy page</a>, or by "
+"emailing %(email)s."
+msgstr ""
+"Możesz samodzielnie skorzystać z prawa dostępu, usunięcia i przenoszenia "
+"danych w dowolnym momencie na <a href=\"%(url)s\">stronie prywatności "
+"swojego konta</a> lub pisząc na adres %(email)s."
+
+msgid "7. Cookies"
+msgstr "7. Pliki cookie"
+
+msgid "We only use cookies that are strictly necessary for the site to work:"
+msgstr "Używamy wyłącznie plików cookie niezbędnych do działania strony:"
+
+msgid ""
+"A session cookie, to keep you logged in and remember your shopping cart."
+msgstr ""
+"Plik cookie sesji - aby utrzymać Twoje logowanie i pamiętać zawartość "
+"koszyka."
+
+msgid ""
+"A CSRF-protection cookie, to protect your account from cross-site request "
+"forgery."
+msgstr ""
+"Plik cookie ochrony CSRF - aby chronić Twoje konto przed atakami typu cross-"
+"site request forgery."
+
+msgid ""
+"A language-preference cookie, to remember whether you chose Polish or "
+"English."
+msgstr ""
+"Plik cookie preferencji językowych - aby zapamiętać, czy wybrałeś/aś język "
+"polski czy angielski."
+
+msgid "A cookie-notice cookie, so we don't show you the cookie banner again."
+msgstr ""
+"Plik cookie powiadomienia o cookies - abyśmy nie pokazywali Ci ponownie tego "
+"komunikatu."
+
+msgid ""
+"We do not use analytics, advertising, or tracking cookies. Because we only "
+"use strictly necessary cookies, no consent banner opt-out is required under "
+"applicable law - we still show a short notice for transparency."
+msgstr ""
+"Nie używamy plików cookie analitycznych, reklamowych ani śledzących. "
+"Ponieważ korzystamy wyłącznie z niezbędnych plików cookie, obowiązujące "
+"prawo nie wymaga banera z możliwością rezygnacji - mimo to pokazujemy krótki "
+"komunikat dla przejrzystości."
+
+msgid "8. Children"
+msgstr "8. Dzieci"
+
+msgid ""
+"Our store is not directed at children, and we do not knowingly collect data "
+"from anyone under 16."
+msgstr ""
+"Nasz sklep nie jest skierowany do dzieci i świadomie nie zbieramy danych od "
+"osób poniżej 16. roku życia."
+
+msgid "9. Changes to this policy"
+msgstr "9. Zmiany niniejszej polityki"
+
+msgid ""
+"We may update this policy from time to time. Material changes will be "
+"announced on this page."
+msgstr ""
+"Możemy od czasu do czasu aktualizować niniejszą politykę. Istotne zmiany "
+"będą ogłaszane na tej stronie."
+
+msgid ""
+"This page is a template and should be reviewed by a qualified lawyer before "
+"commercial use."
+msgstr ""
+"Ta strona jest szablonem i przed wykorzystaniem komercyjnym powinna zostać "
+"zweryfikowana przez wykwalifikowanego prawnika."
+
+msgid "1. Who you're buying from"
+msgstr "1. Od kogo kupujesz"
+
+#, python-format
+msgid ""
+"This store is operated by %(store_legal_name)s, %(store_address_line)s, "
+"%(store_city_line)s, VAT ID (NIP) %(store_vat_id)s. Contact us at "
+"%(contact_email)s."
+msgstr ""
+"Ten sklep jest prowadzony przez %(store_legal_name)s, "
+"%(store_address_line)s, %(store_city_line)s, NIP %(store_vat_id)s. "
+"Skontaktuj się z nami pod adresem %(contact_email)s."
+
+msgid "2. Acceptance of these terms"
+msgstr "2. Akceptacja regulaminu"
+
+msgid ""
+"By placing an order on this site, you agree to these terms. If you are a "
+"consumer within the European Union, nothing here limits the statutory rights "
+"described in section 7 (right of withdrawal) and section 8 (statutory "
+"warranty)."
+msgstr ""
+"Składając zamówienie w tym sklepie, akceptujesz niniejszy regulamin. Jeśli "
+"jesteś konsumentem w Unii Europejskiej, żadne z poniższych postanowień nie "
+"ogranicza ustawowych praw opisanych w punkcie 7 (prawo odstąpienia od umowy) "
+"i punkcie 8 (rękojmia)."
+
+msgid "3. Products and pricing"
+msgstr "3. Produkty i ceny"
+
+msgid ""
+"Prices are shown in Polish złoty (PLN) and include VAT at the rate stated on "
+"the product page. We reserve the right to correct pricing errors before an "
+"order is confirmed. Prices may change at any time, but changes never affect "
+"orders you have already placed."
+msgstr ""
+"Ceny są podane w polskich złotych (PLN) i zawierają VAT w stawce wskazanej "
+"na stronie produktu. Zastrzegamy sobie prawo do poprawienia błędów w cenach "
+"przed potwierdzeniem zamówienia. Ceny mogą się zmieniać w dowolnym momencie, "
+"ale zmiany nigdy nie dotyczą zamówień już złożonych."
+
+msgid "4. Placing an order"
+msgstr "4. Składanie zamówienia"
+
+msgid ""
+"Add items to your cart and complete checkout to place an order. A contract "
+"is formed once we confirm your payment; you will receive an order "
+"confirmation and, once paid, a VAT invoice by email."
+msgstr ""
+"Dodaj produkty do koszyka i sfinalizuj zamówienie, aby je złożyć. Umowa "
+"zostaje zawarta z chwilą potwierdzenia Twojej płatności; otrzymasz "
+"potwierdzenie zamówienia, a po opłaceniu - fakturę VAT na e-mail."
+
+msgid "5. Payment"
+msgstr "5. Płatność"
+
+msgid ""
+"We accept payment via PayU and Stripe. Card details are entered directly "
+"with these providers and are never stored on our servers."
+msgstr ""
+"Akceptujemy płatności za pośrednictwem PayU i Stripe. Dane karty są "
+"wprowadzane bezpośrednio u tych operatorów i nigdy nie są przechowywane na "
+"naszych serwerach."
+
+msgid "6. Shipping and delivery"
+msgstr "6. Wysyłka i dostawa"
+
+msgid ""
+"We ship via InPost Parcel Lockers, DHL, DPD, and UPS. Estimated delivery "
+"times are shown at checkout for each method; these are estimates, not "
+"guarantees. Risk in the goods passes to you on delivery."
+msgstr ""
+"Wysyłamy za pośrednictwem Paczkomatów InPost, DHL, DPD i UPS. Szacowany czas "
+"dostawy dla każdej metody jest widoczny przy kasie; są to szacunki, a nie "
+"gwarancje. Ryzyko utraty towaru przechodzi na Ciebie w momencie dostawy."
+
+msgid "7. Your right of withdrawal (returns)"
+msgstr "7. Twoje prawo odstąpienia od umowy (zwroty)"
+
+msgid ""
+"If you are a consumer in the European Union, you have the right to withdraw "
+"from your purchase within 14 days of receiving your order, without giving "
+"any reason."
+msgstr ""
+"Jeśli jesteś konsumentem w Unii Europejskiej, masz prawo odstąpić od umowy w "
+"ciągu 14 dni od otrzymania zamówienia, bez podawania przyczyny."
+
+msgid ""
+"To exercise this right, request a return from your order history and send "
+"the item back in its original condition. We will refund your payment, "
+"including standard delivery cost, within 14 days of receiving the returned "
+"item or proof that you have sent it back, using the same payment method you "
+"used for the order."
+msgstr ""
+"Aby skorzystać z tego prawa, zgłoś zwrot z poziomu historii zamówień i "
+"odeślij produkt w stanie nienaruszonym. Zwrócimy Twoją płatność, wraz ze "
+"standardowym kosztem dostawy, w ciągu 14 dni od otrzymania zwróconego "
+"produktu lub dowodu jego odesłania, tą samą metodą płatności, której użyto "
+"przy zamówieniu."
+
+msgid ""
+"The right of withdrawal does not apply to goods made to your specification, "
+"or to items that are unsealed and cannot be returned for hygiene reasons "
+"once unsealed (e.g. grips, mouthguards)."
+msgstr ""
+"Prawo odstąpienia nie ma zastosowania do towarów wykonanych według Twojej "
+"specyfikacji ani do produktów rozpieczętowanych, których ze względów "
+"higienicznych nie można zwrócić po otwarciu (np. owijki, ochraniacze na "
+"zęby)."
+
+msgid "8. Statutory warranty"
+msgstr "8. Rękojmia"
+
+msgid ""
+"Goods sold are covered by the statutory 2-year warranty (rekojmia) under "
+"Polish consumer law for defects present at the time of delivery. This is "
+"separate from, and in addition to, the right of withdrawal above and any "
+"manufacturer's warranty."
+msgstr ""
+"Sprzedawane towary są objęte ustawową 2-letnią rękojmią wynikającą z "
+"polskiego prawa konsumenckiego za wady istniejące w chwili dostawy. Jest to "
+"uprawnienie odrębne od opisanego wyżej prawa odstąpienia od umowy oraz od "
+"ewentualnej gwarancji producenta i przysługuje niezależnie od nich."
+
+msgid "9. Loyalty points and coupons"
+msgstr "9. Punkty lojalnościowe i kupony"
+
+msgid ""
+"Loyalty points have no cash value, are non-transferable, and are forfeited "
+"if your account is deleted. Coupon codes are subject to the validity period "
+"and conditions shown at the time they are issued, and cannot be combined "
+"unless stated otherwise."
+msgstr ""
+"Punkty lojalnościowe nie mają wartości pieniężnej, nie podlegają "
+"przeniesieniu i przepadają w przypadku usunięcia konta. Kody rabatowe "
+"podlegają okresowi ważności i warunkom wskazanym w chwili ich wydania i nie "
+"łączą się ze sobą, chyba że wskazano inaczej."
+
+msgid "10. Liability"
+msgstr "10. Odpowiedzialność"
+
+msgid ""
+"Nothing in these terms excludes or limits liability that cannot be excluded "
+"or limited under applicable law, including liability for defective products "
+"under Polish consumer protection law."
+msgstr ""
+"Żadne postanowienie niniejszego regulaminu nie wyłącza ani nie ogranicza "
+"odpowiedzialności, której nie można wyłączyć ani ograniczyć na mocy "
+"obowiązującego prawa, w tym odpowiedzialności za wadliwe produkty "
+"wynikającej z polskiego prawa ochrony konsumentów."
+
+msgid "11. Governing law and disputes"
+msgstr "11. Prawo właściwe i rozstrzyganie sporów"
+
+msgid ""
+"These terms are governed by Polish law. If you are a consumer, you may also "
+"use the EU Online Dispute Resolution platform at ec.europa.eu/consumers/odr "
+"to resolve a dispute with us."
+msgstr ""
+"Niniejszy regulamin podlega prawu polskiemu. Jeśli jesteś konsumentem, "
+"możesz również skorzystać z unijnej platformy internetowego rozstrzygania "
+"sporów pod adresem ec.europa.eu/consumers/odr."
+
+msgid "12. Changes to these terms"
+msgstr "12. Zmiany regulaminu"
+
+msgid ""
+"We may update these terms from time to time. Changes do not apply "
+"retroactively to orders already placed."
+msgstr ""
+"Możemy od czasu do czasu aktualizować niniejszy regulamin. Zmiany nie mają "
+"zastosowania wstecz do zamówień już złożonych."
 
 msgid "Checkout"
 msgstr "Kasa"

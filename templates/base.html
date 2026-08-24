@@ -5,7 +5,28 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{% block title %}{% trans "Racket Sports Shop" %}{% endblock %}</title>
+    <meta name="description" content="{% block meta_description %}{% trans "Tennis, squash, badminton, and table tennis equipment — rackets, paddles, shoes, and more from the brands players trust." %}{% endblock %}">
+    <link rel="canonical" href="{% block canonical_url %}{{ request.scheme }}://{{ request.get_host }}{{ request.path }}{% endblock %}">
+    {% block robots_meta %}{% endblock %}
+
+    <meta property="og:site_name" content="{% trans "Racket Sports Shop" %}">
+    <meta property="og:type" content="{% block og_type %}website{% endblock %}">
+    <meta property="og:title" content="{% block og_title %}{% trans "Racket Sports Shop" %}{% endblock %}">
+    <meta property="og:description" content="{% block og_description %}{% trans "Tennis, squash, badminton, and table tennis equipment — rackets, paddles, shoes, and more from the brands players trust." %}{% endblock %}">
+    <meta property="og:url" content="{{ request.scheme }}://{{ request.get_host }}{{ request.path }}">
+
     <link rel="stylesheet" href="{% static 'css/base.css' %}">
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "{{ store_legal_name|escapejs }}",
+        "url": "{{ site_url|escapejs }}"
+    }
+    </script>
+    {% block structured_data %}{% endblock %}
+
     {% block extra_head %}{% endblock %}
 </head>
 <body>
@@ -94,11 +115,24 @@
 <footer class="site-footer">
     <div class="site-footer__inner">
         <p>&copy; {% now "Y" %} {% trans "Racket Sports Shop" %}</p>
+        <nav class="site-footer__links">
+            <a href="{% url 'core:privacy_policy' %}">{% trans "Privacy Policy" %}</a>
+            <a href="{% url 'core:terms' %}">{% trans "Terms & Conditions" %}</a>
+        </nav>
     </div>
 </footer>
 
+<div class="cookie-banner" id="cookie-banner" hidden>
+    <p>
+        {% url 'core:privacy_policy' as privacy_policy_url %}
+        {% blocktrans with url=privacy_policy_url %}We only use cookies that are strictly necessary to run this site (login sessions, your cart, and your language preference) - no tracking or advertising cookies. See our <a href="{{ url }}#cookies">Privacy Policy</a> for details.{% endblocktrans %}
+    </p>
+    <button type="button" id="cookie-banner-accept" class="button">{% trans "OK, got it" %}</button>
+</div>
+
 <script src="{% static 'js/search.js' %}" defer></script>
 <script src="{% static 'js/filters.js' %}" defer></script>
+<script src="{% static 'js/cookie-consent.js' %}" defer></script>
 {% block extra_scripts %}{% endblock %}
 </body>
 </html>

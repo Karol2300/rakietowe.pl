@@ -1,0 +1,25 @@
+{% extends "accounts/account_base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Privacy & data" %} — {% trans "Racket Sports Shop" %}{% endblock %}
+
+{% block account_content %}
+<h1>{% trans "Privacy & data" %}</h1>
+
+<section class="privacy-data__section">
+    <h2>{% trans "Export your data" %}</h2>
+    <p>{% trans "Download a copy of your account, addresses, orders, reviews, and loyalty history in a portable JSON file." %}</p>
+    <a class="button" href="{% url 'accounts:export_data' %}">{% trans "Download my data" %}</a>
+</section>
+
+<section class="privacy-data__section">
+    <h2>{% trans "Delete your account" %}</h2>
+    <p>{% trans "Permanently remove your personal details and saved addresses from our systems. This cannot be undone." %}</p>
+    <a class="button button--danger" href="{% url 'accounts:delete_account' %}">{% trans "Delete my account" %}</a>
+</section>
+
+{% url 'core:privacy_policy' as privacy_policy_url %}
+<p>
+    {% blocktrans with url=privacy_policy_url %}For more detail on how we use your data, see our <a href="{{ url }}">Privacy Policy</a>.{% endblocktrans %}
+</p>
+{% endblock %}

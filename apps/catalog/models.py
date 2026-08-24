@@ -18,7 +18,7 @@ class Category(MPTTModel):
     """Sport -> product type -> sub-type tree, drives nav + listing filters."""
 
     name = models.CharField(max_length=100)
-    slug = models.SlugField(max_length=140, unique=True)
+    slug = models.SlugField(max_length=140, unique=True, blank=True, help_text="Leave blank to auto-generate from the name.")
     parent = TreeForeignKey(
         "self", on_delete=models.CASCADE, null=True, blank=True, related_name="children"
     )
@@ -43,7 +43,7 @@ class Category(MPTTModel):
 
 class Brand(models.Model):
     name = models.CharField(max_length=100, unique=True)
-    slug = models.SlugField(max_length=120, unique=True)
+    slug = models.SlugField(max_length=120, unique=True, blank=True, help_text="Leave blank to auto-generate from the name.")
     logo = models.ImageField(upload_to="brands/", blank=True)
 
     def __str__(self):
@@ -62,7 +62,7 @@ class VatRate(models.IntegerChoices):
 
 class Product(models.Model):
     name = models.CharField(max_length=255)
-    slug = models.SlugField(max_length=280, unique=True)
+    slug = models.SlugField(max_length=280, unique=True, blank=True, help_text="Leave blank to auto-generate from the name.")
     description = models.TextField(blank=True)
 
     vat_rate = models.PositiveSmallIntegerField(
@@ -118,7 +118,60 @@ class Product(models.Model):
     def save(self, *args, **kwargs):
         if not self.slug:
             self.slug = slugify(self.name)
+
+        previous = None
+        if self.pk:
+            previous = (
+                Product.objects.filter(pk=self.pk)
+                .values("price_pln", "sale_price_pln", "sale_start", "sale_end")
+                .first()
+            )
+
         super().save(*args, **kwargs)
+
+        if previous is not None:
+            self._log_price_changes(previous)
+
+    def _log_price_changes(self, previous):
+        """Record PriceHistory entries for regular/sale price edits so the
+        Omnibus-directive 'lowest price in the last 30 days' figure can be
+        reconstructed later. See services.bulk_lowest_price_30d."""
+        changed_by = getattr(self, "_price_change_user", None)
+        entries = []
+
+        if previous["price_pln"] != self.price_pln:
+            entries.append(
+                PriceHistory(
+                    product=self,
+                    price_type=PriceHistory.PriceType.REGULAR,
+                    currency="PLN",
+                    old_price=previous["price_pln"],
+                    new_price=self.price_pln,
+                    changed_by=changed_by,
+                )
+            )
+
+        sale_changed = (
+            previous["sale_price_pln"] != self.sale_price_pln
+            or previous["sale_start"] != self.sale_start
+            or previous["sale_end"] != self.sale_end
+        )
+        if sale_changed and (previous["sale_price_pln"] is not None or self.sale_price_pln is not None):
+            entries.append(
+                PriceHistory(
+                    product=self,
+                    price_type=PriceHistory.PriceType.SALE,
+                    currency="PLN",
+                    old_price=previous["sale_price_pln"],
+                    new_price=self.sale_price_pln,
+                    sale_start=self.sale_start,
+                    sale_end=self.sale_end,
+                    changed_by=changed_by,
+                )
+            )
+
+        if entries:
+            PriceHistory.objects.bulk_create(entries)
 
     def is_on_sale(self, now=None):
         from django.utils import timezone
@@ -229,6 +282,12 @@ class PriceHistory(models.Model):
     currency = models.CharField(max_length=3, default="PLN")
     old_price = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
     new_price = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
+    # Only populated for SALE entries: the promo window the new_price applied
+    # to. Needed to work out whether that price was actually being charged
+    # at any point in a given lookback window, since sale_start/sale_end get
+    # overwritten on Product once the next promo is scheduled.
+    sale_start = models.DateTimeField(null=True, blank=True)
+    sale_end = models.DateTimeField(null=True, blank=True)
     changed_by = models.ForeignKey(
         settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, blank=True
     )

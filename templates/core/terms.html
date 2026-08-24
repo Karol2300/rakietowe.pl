@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Terms & Conditions" %} — {% trans "Racket Sports Shop" %}{% endblock %}
+
+{% block content %}
+<div class="legal-page">
+    <h1>{% trans "Terms & Conditions" %}</h1>
+    <p class="legal-page__updated">{% trans "Last updated:" %} 2026-08-10</p>
+
+    <section id="seller">
+        <h2>{% trans "1. Who you're buying from" %}</h2>
+        <p>
+            {% blocktrans %}This store is operated by {{ store_legal_name }}, {{ store_address_line }}, {{ store_city_line }}, VAT ID (NIP) {{ store_vat_id }}. Contact us at {{ contact_email }}.{% endblocktrans %}
+        </p>
+    </section>
+
+    <section id="scope">
+        <h2>{% trans "2. Acceptance of these terms" %}</h2>
+        <p>{% trans "By placing an order on this site, you agree to these terms. If you are a consumer within the European Union, nothing here limits the statutory rights described in section 7 (right of withdrawal) and section 8 (statutory warranty)." %}</p>
+    </section>
+
+    <section id="pricing">
+        <h2>{% trans "3. Products and pricing" %}</h2>
+        <p>{% trans "Prices are shown in Polish złoty (PLN) and include VAT at the rate stated on the product page. We reserve the right to correct pricing errors before an order is confirmed. Prices may change at any time, but changes never affect orders you have already placed." %}</p>
+    </section>
+
+    <section id="ordering">
+        <h2>{% trans "4. Placing an order" %}</h2>
+        <p>{% trans "Add items to your cart and complete checkout to place an order. A contract is formed once we confirm your payment; you will receive an order confirmation and, once paid, a VAT invoice by email." %}</p>
+    </section>
+
+    <section id="payment">
+        <h2>{% trans "5. Payment" %}</h2>
+        <p>{% trans "We accept payment via PayU and Stripe. Card details are entered directly with these providers and are never stored on our servers." %}</p>
+    </section>
+
+    <section id="delivery">
+        <h2>{% trans "6. Shipping and delivery" %}</h2>
+        <p>{% trans "We ship via InPost Parcel Lockers, DHL, DPD, and UPS. Estimated delivery times are shown at checkout for each method; these are estimates, not guarantees. Risk in the goods passes to you on delivery." %}</p>
+    </section>
+
+    <section id="withdrawal">
+        <h2>{% trans "7. Your right of withdrawal (returns)" %}</h2>
+        <p>{% trans "If you are a consumer in the European Union, you have the right to withdraw from your purchase within 14 days of receiving your order, without giving any reason." %}</p>
+        <p>{% trans "To exercise this right, request a return from your order history and send the item back in its original condition. We will refund your payment, including standard delivery cost, within 14 days of receiving the returned item or proof that you have sent it back, using the same payment method you used for the order." %}</p>
+        <p>{% trans "The right of withdrawal does not apply to goods made to your specification, or to items that are unsealed and cannot be returned for hygiene reasons once unsealed (e.g. grips, mouthguards)." %}</p>
+    </section>
+
+    <section id="warranty">
+        <h2>{% trans "8. Statutory warranty" %}</h2>
+        <p>{% trans "Goods sold are covered by the statutory 2-year warranty (rekojmia) under Polish consumer law for defects present at the time of delivery. This is separate from, and in addition to, the right of withdrawal above and any manufacturer's warranty." %}</p>
+    </section>
+
+    <section id="loyalty">
+        <h2>{% trans "9. Loyalty points and coupons" %}</h2>
+        <p>{% trans "Loyalty points have no cash value, are non-transferable, and are forfeited if your account is deleted. Coupon codes are subject to the validity period and conditions shown at the time they are issued, and cannot be combined unless stated otherwise." %}</p>
+    </section>
+
+    <section id="liability">
+        <h2>{% trans "10. Liability" %}</h2>
+        <p>{% trans "Nothing in these terms excludes or limits liability that cannot be excluded or limited under applicable law, including liability for defective products under Polish consumer protection law." %}</p>
+    </section>
+
+    <section id="disputes">
+        <h2>{% trans "11. Governing law and disputes" %}</h2>
+        <p>{% trans "These terms are governed by Polish law. If you are a consumer, you may also use the EU Online Dispute Resolution platform at ec.europa.eu/consumers/odr to resolve a dispute with us." %}</p>
+    </section>
+
+    <section id="changes">
+        <h2>{% trans "12. Changes to these terms" %}</h2>
+        <p>{% trans "We may update these terms from time to time. Changes do not apply retroactively to orders already placed." %}</p>
+    </section>
+
+    <p class="legal-page__disclaimer">
+        {% trans "This page is a template and should be reviewed by a qualified lawyer before commercial use." %}
+    </p>
+</div>
+{% endblock %}

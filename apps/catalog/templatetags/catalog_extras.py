@@ -23,6 +23,13 @@ def get_item(dictionary, key):
     return dictionary.get(key)
 
 
+@register.filter
+def spec_label(key):
+    """Turn a spec/attribute key like 'string_pattern' into 'string pattern'
+    for display - CSS text-transform: capitalize handles the casing."""
+    return str(key).replace("_", " ")
+
+
 @register.simple_tag
 def is_selected(selected_facets, key, value):
     values = selected_facets.get(key) or []

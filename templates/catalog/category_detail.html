@@ -2,6 +2,13 @@
 {% load i18n l10n catalog_extras %}
 
 {% block title %}{{ category.name }} — {% trans "Racket Sports Shop" %}{% endblock %}
+{% block meta_description %}{{ category.description|default:category.name|truncatewords:30 }}{% endblock %}
+{% block og_title %}{{ category.name }}{% endblock %}
+{% block og_description %}{{ category.description|default:category.name|truncatewords:30 }}{% endblock %}
+
+{% block structured_data %}
+<script type="application/ld+json">{{ breadcrumb_json_ld|safe }}</script>
+{% endblock %}
 
 {% block content %}
 <div class="listing">
@@ -16,7 +23,15 @@
         <h1>{{ category.name }}</h1>
     </div>
 
-    <aside class="filters">
+    <button
+        type="button"
+        class="filters-toggle"
+        data-filters-toggle="category-filters"
+        aria-expanded="false"
+        aria-controls="category-filters"
+    >{% trans "Filters" %}</button>
+
+    <aside class="filters" id="category-filters">
         <form method="get" data-auto-submit>
             <fieldset>
                 <legend>{% trans "Brand" %}</legend>
@@ -40,7 +55,7 @@
             {% localize off %}
             {% for key, values in spec_facets.items %}
                 <fieldset>
-                    <legend>{{ key }}</legend>
+                    <legend>{{ key|spec_label }}</legend>
                     {% for value in values %}
                         {% is_selected selected_facets key value as checked %}
                         <label>
@@ -53,7 +68,7 @@
 
             {% for key, values in variant_facets.items %}
                 <fieldset>
-                    <legend>{{ key }}</legend>
+                    <legend>{{ key|spec_label }}</legend>
                     {% for value in values %}
                         {% is_selected selected_facets key value as checked %}
                         <label>

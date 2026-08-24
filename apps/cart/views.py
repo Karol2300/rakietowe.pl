@@ -6,7 +6,7 @@ from django.utils.translation import gettext as _
 from django.views.decorators.http import require_POST
 
 from apps.catalog.models import Product, ProductVariant
-from apps.catalog.services import annotate_effective_price
+from apps.catalog.services import annotate_effective_price, attach_lowest_price_30d
 
 from . import services
 from .models import CartItem, Wishlist, WishlistItem
@@ -93,4 +93,5 @@ def wishlist_detail(request):
     products = annotate_effective_price(
         Product.objects.filter(id__in=product_ids).select_related("brand").prefetch_related("variants")
     )
+    products = attach_lowest_price_30d(products)
     return render(request, "cart/wishlist.html", {"products": products})

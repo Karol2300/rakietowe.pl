@@ -1,0 +1,23 @@
+.specs-widget__rows {
+    border-collapse: collapse;
+    margin-bottom: 8px;
+}
+
+.specs-widget__rows td {
+    padding: 2px 6px 2px 0;
+}
+
+.specs-widget__row select {
+    min-width: 220px;
+}
+
+.specs-widget__row input[type="text"] {
+    min-width: 220px;
+}
+
+.specs-widget__remove {
+    cursor: pointer;
+    font-size: 1rem;
+    line-height: 1;
+    padding: 2px 8px;
+}

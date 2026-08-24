@@ -1,0 +1,16 @@
+{% extends "accounts/account_base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Delete my account" %} — {% trans "Racket Sports Shop" %}{% endblock %}
+
+{% block account_content %}
+<h1>{% trans "Delete my account" %}</h1>
+<p>{% trans "This will remove your name, email, and saved addresses from our systems and log you out. This cannot be undone." %}</p>
+<p>{% trans "Your past paid orders and invoices will be kept, as required by tax law, but will no longer be linked to an active account." %}</p>
+<p>{% trans "Any unused loyalty points will be forfeited." %}</p>
+<form method="post">
+    {% csrf_token %}
+    <button type="submit" class="button button--danger">{% trans "Yes, permanently delete my account" %}</button>
+    <a href="{% url 'accounts:privacy_data' %}" class="button">{% trans "Cancel" %}</a>
+</form>
+{% endblock %}

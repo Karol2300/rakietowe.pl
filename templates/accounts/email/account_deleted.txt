@@ -1,0 +1,9 @@
+Hi,
+
+Your {{ store_name }} account has been deleted, as you requested. Your name, email address, and saved addresses have been removed from our systems.
+
+Records of any paid orders and their invoices are kept for 5 years, as required by Polish tax law, but are no longer linked to an active account.
+
+If you didn't request this, please contact us immediately.
+
+{{ store_name }}

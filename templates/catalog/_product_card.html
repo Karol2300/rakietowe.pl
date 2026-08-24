@@ -14,12 +14,17 @@
                 <span>{{ product.effective_price|default:product.price_pln }} zł</span>
             {% endif %}
         </div>
-        {% if product.review_count %}
-            <div class="product-card__rating">★ {{ product.average_rating }} ({{ product.review_count }})</div>
-        {% endif %}
-        {% if product.total_stock == 0 %}
-            <div class="product-card__stock product-card__stock--out">{% trans "Out of stock" %}</div>
-        {% endif %}
+        <div class="product-card__lowest-price">
+            {% if product.on_sale and product.lowest_price_30d is not None %}
+                {% blocktrans with price=product.lowest_price_30d %}Lowest price in last 30 days: {{ price }} zł{% endblocktrans %}
+            {% endif %}
+        </div>
+        <div class="product-card__rating">
+            {% if product.review_count %}★ {{ product.average_rating }} ({{ product.review_count }}){% endif %}
+        </div>
+        <div class="product-card__stock{% if product.total_stock == 0 %} product-card__stock--out{% endif %}">
+            {% if product.total_stock == 0 %}{% trans "Out of stock" %}{% endif %}
+        </div>
     </a>
     <form method="post" action="{% url 'catalog:toggle_compare' product.slug %}" class="product-card__compare">
         {% csrf_token %}

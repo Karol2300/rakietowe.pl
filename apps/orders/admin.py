@@ -79,4 +79,13 @@ class ReturnRequestAdmin(admin.ModelAdmin):
     actions = [action_approve_returns, action_reject_returns, action_refund_returns]
 
 
-admin.site.register(Invoice)
+@admin.register(Invoice)
+class InvoiceAdmin(admin.ModelAdmin):
+    list_display = ("invoice_number", "order", "issued_at")
+    search_fields = ("invoice_number", "order__order_number")
+
+    def has_add_permission(self, request):
+        return False
+
+    def has_change_permission(self, request, obj=None):
+        return False

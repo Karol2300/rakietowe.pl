@@ -1,7 +1,16 @@
 {% extends "base.html" %}
 {% load i18n static catalog_extras %}
 
-{% block title %}{{ product.name }} — {% trans "Racket Sports Shop" %}{% endblock %}
+{% block title %}{{ product.meta_title|default:product.name }} — {% trans "Racket Sports Shop" %}{% endblock %}
+{% block meta_description %}{{ product.meta_description|default:product.description|truncatewords:30 }}{% endblock %}
+{% block og_type %}product{% endblock %}
+{% block og_title %}{{ product.meta_title|default:product.name }}{% endblock %}
+{% block og_description %}{{ product.meta_description|default:product.description|truncatewords:30 }}{% endblock %}
+
+{% block structured_data %}
+<script type="application/ld+json">{{ product_json_ld|safe }}</script>
+<script type="application/ld+json">{{ breadcrumb_json_ld|safe }}</script>
+{% endblock %}
 
 {% block content %}
 <div class="breadcrumbs">
@@ -36,6 +45,11 @@
             {% endif %}
             <span class="{% if product.is_on_sale %}product-card__price--sale{% endif %}" id="price-current">{{ default_variant.current_price|default:product.price_pln }} zł</span>
         </div>
+        {% if product.is_on_sale and product.lowest_price_30d is not None %}
+            <div class="product-card__lowest-price">
+                {% blocktrans with price=product.lowest_price_30d %}Lowest price in last 30 days: {{ price }} zł{% endblocktrans %}
+            </div>
+        {% endif %}
 
         <div
             class="product-info__stock"
@@ -54,7 +68,7 @@
             {% csrf_token %}
             {% if variant_dimension %}
                 <div class="variant-selector" data-variant-selector>
-                    <div class="variant-selector__label">{{ variant_dimension }}</div>
+                    <div class="variant-selector__label">{{ variant_dimension|spec_label }}</div>
                     <div class="variant-options">
                         {% for variant in variants %}
                             <input
@@ -121,7 +135,7 @@
                 <tbody>
                     {% for key, value in product.specs.items %}
                         <tr>
-                            <th>{{ key }}</th>
+                            <th>{{ key|spec_label }}</th>
                             <td>{{ value }}</td>
                         </tr>
                     {% endfor %}

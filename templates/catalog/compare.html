@@ -1,7 +1,8 @@
 {% extends "base.html" %}
-{% load i18n %}
+{% load i18n catalog_extras %}
 
 {% block title %}{% trans "Compare products" %} — {% trans "Racket Sports Shop" %}{% endblock %}
+{% block robots_meta %}<meta name="robots" content="noindex, nofollow">{% endblock %}
 
 {% block content %}
 <h1>{% trans "Compare products" %}</h1>
@@ -43,7 +44,7 @@
                 </tr>
                 {% for key, values in rows %}
                     <tr>
-                        <th>{{ key }}</th>
+                        <th>{{ key|spec_label }}</th>
                         {% for value in values %}
                             <td>{{ value }}</td>
                         {% endfor %}

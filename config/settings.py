@@ -71,6 +71,7 @@ TEMPLATES = [
                 "apps.catalog.context_processors.sport_navigation",
                 "apps.catalog.context_processors.compare_summary",
                 "apps.cart.context_processors.cart_summary",
+                "apps.core.context_processors.store_info",
             ],
         },
     },
@@ -140,6 +141,31 @@ EMAIL_BACKEND = env(
 )
 DEFAULT_FROM_EMAIL = env("DEFAULT_FROM_EMAIL", default="no-reply@racket-shop.example")
 
+# Password reset links expire after 1 hour.
+PASSWORD_RESET_TIMEOUT = 3600
+
+
+# Caching - uses Redis when REDIS_URL is configured (production), otherwise
+# falls back to Django's in-process local-memory cache so local dev works
+# without a Redis server installed, same pattern as the payment providers
+# and email backend defaulting to safe local stand-ins.
+REDIS_URL = env("REDIS_URL", default="")
+
+if REDIS_URL:
+    CACHES = {
+        "default": {
+            "BACKEND": "django_redis.cache.RedisCache",
+            "LOCATION": REDIS_URL,
+            "OPTIONS": {"CLIENT_CLASS": "django_redis.client.DefaultClient"},
+        }
+    }
+else:
+    CACHES = {
+        "default": {
+            "BACKEND": "django.core.cache.backends.locmem.LocMemCache",
+        }
+    }
+
 
 # Store-wide constants
 
@@ -169,3 +195,7 @@ STORE_LEGAL_NAME = env("STORE_LEGAL_NAME", default="Racket Sports Shop Sp. z o.o
 STORE_VAT_ID = env("STORE_VAT_ID", default="PL0000000000")
 STORE_ADDRESS_LINE = env("STORE_ADDRESS_LINE", default="ul. Sportowa 1")
 STORE_CITY_LINE = env("STORE_CITY_LINE", default="00-001 Warszawa, Poland")
+
+# A real, monitored inbox for GDPR/data-subject requests - deliberately not
+# DEFAULT_FROM_EMAIL, which is a no-reply sending address.
+PRIVACY_CONTACT_EMAIL = env("PRIVACY_CONTACT_EMAIL", default="privacy@racket-shop.example")

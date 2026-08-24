@@ -1,0 +1,108 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Privacy Policy" %} — {% trans "Racket Sports Shop" %}{% endblock %}
+
+{% block content %}
+<div class="legal-page">
+    <h1>{% trans "Privacy Policy" %}</h1>
+    <p class="legal-page__updated">{% trans "Last updated:" %} 2026-08-10</p>
+
+    <section id="controller">
+        <h2>{% trans "1. Who controls your data" %}</h2>
+        <p>
+            {% blocktrans %}The data controller is {{ store_legal_name }}, {{ store_address_line }}, {{ store_city_line }}, VAT ID (NIP) {{ store_vat_id }}. For any question about this policy or your personal data, contact us at {{ contact_email }}.{% endblocktrans %}
+        </p>
+    </section>
+
+    <section id="data-we-collect">
+        <h2>{% trans "2. What data we collect" %}</h2>
+        <ul>
+            <li>{% trans "Account data: email address, name, password (stored as an irreversible hash, never in plain text)." %}</li>
+            <li>{% trans "Order data: shipping address, phone number, items purchased, order value, and payment status." %}</li>
+            <li>{% trans "Saved addresses you add to your address book." %}</li>
+            <li>{% trans "Product reviews and ratings you submit." %}</li>
+            <li>{% trans "Customer support and returns correspondence." %}</li>
+            <li>{% trans "Technical data needed to operate the site: session identifiers, your chosen language and currency, and your shopping cart contents." %}</li>
+        </ul>
+        <p>{% trans "We never see or store your full card number - card payments are handled entirely by our payment providers (see section 5)." %}</p>
+    </section>
+
+    <section id="why">
+        <h2>{% trans "3. Why we process it, and on what legal basis" %}</h2>
+        <ul>
+            <li>{% trans "To create your account and fulfil orders you place - necessary to perform our contract with you." %}</li>
+            <li>{% trans "To issue VAT invoices and keep accounting records - necessary to comply with our legal obligations under Polish tax law." %}</li>
+            <li>{% trans "To prevent fraud and keep the site secure - our legitimate interest, balanced against your rights." %}</li>
+            <li>{% trans "To send you service emails about your orders, password resets, and back-in-stock alerts you requested - necessary to perform our contract or your explicit request." %}</li>
+        </ul>
+        <p>{% trans "We do not use your data for automated profiling or send marketing communications without your separate, explicit consent." %}</p>
+    </section>
+
+    <section id="sharing">
+        <h2>{% trans "4. Who we share your data with" %}</h2>
+        <p>{% trans "We share the minimum data necessary with:" %}</p>
+        <ul>
+            <li>{% trans "Payment providers PayU and Stripe, to process your payment." %}</li>
+            <li>{% trans "Our carriers - InPost, DHL, DPD, and UPS - to deliver your order." %}</li>
+            <li>{% trans "IT hosting and email delivery providers who process data on our behalf under contract." %}</li>
+            <li>{% trans "Tax and law enforcement authorities, where we are legally required to." %}</li>
+        </ul>
+        <p>
+            {% trans "Stripe may process data outside the European Economic Area (e.g. in the United States). Where this happens, it is covered by the European Commission's Standard Contractual Clauses or an equivalent safeguard." %}
+        </p>
+    </section>
+
+    <section id="retention">
+        <h2>{% trans "5. How long we keep your data" %}</h2>
+        <ul>
+            <li>{% trans "Account data: for as long as your account is active, or until you ask us to delete it." %}</li>
+            <li>{% trans "Order and invoice records: for 5 years after the end of the calendar year of the transaction, as required by Polish tax law - even if you delete your account." %}</li>
+            <li>{% trans "Session and cart cookies: cleared when your session ends or after a short expiry, as described in section 7." %}</li>
+        </ul>
+    </section>
+
+    <section id="rights">
+        <h2>{% trans "6. Your rights" %}</h2>
+        <p>{% trans "Under the GDPR, you have the right to:" %}</p>
+        <ul>
+            <li>{% trans "Access the personal data we hold about you." %}</li>
+            <li>{% trans "Correct inaccurate data (update your profile and addresses at any time)." %}</li>
+            <li>{% trans "Erase your data, subject to our legal obligation to retain invoice records (see section 5)." %}</li>
+            <li>{% trans "Restrict or object to certain processing." %}</li>
+            <li>{% trans "Receive a copy of your data in a portable, machine-readable format." %}</li>
+            <li>{% trans "Lodge a complaint with the Polish Data Protection Authority (UODO), uodo.gov.pl." %}</li>
+        </ul>
+        <p>
+            {% url 'accounts:privacy_data' as privacy_data_url %}
+            {% blocktrans with url=privacy_data_url email=contact_email %}You can exercise your access, erasure, and data-portability rights yourself at any time from <a href="{{ url }}">your account's privacy page</a>, or by emailing {{ email }}.{% endblocktrans %}
+        </p>
+    </section>
+
+    <section id="cookies">
+        <h2>{% trans "7. Cookies" %}</h2>
+        <p>{% trans "We only use cookies that are strictly necessary for the site to work:" %}</p>
+        <ul>
+            <li>{% trans "A session cookie, to keep you logged in and remember your shopping cart." %}</li>
+            <li>{% trans "A CSRF-protection cookie, to protect your account from cross-site request forgery." %}</li>
+            <li>{% trans "A language-preference cookie, to remember whether you chose Polish or English." %}</li>
+            <li>{% trans "A cookie-notice cookie, so we don't show you the cookie banner again." %}</li>
+        </ul>
+        <p>{% trans "We do not use analytics, advertising, or tracking cookies. Because we only use strictly necessary cookies, no consent banner opt-out is required under applicable law - we still show a short notice for transparency." %}</p>
+    </section>
+
+    <section id="children">
+        <h2>{% trans "8. Children" %}</h2>
+        <p>{% trans "Our store is not directed at children, and we do not knowingly collect data from anyone under 16." %}</p>
+    </section>
+
+    <section id="changes">
+        <h2>{% trans "9. Changes to this policy" %}</h2>
+        <p>{% trans "We may update this policy from time to time. Material changes will be announced on this page." %}</p>
+    </section>
+
+    <p class="legal-page__disclaimer">
+        {% trans "This page is a template and should be reviewed by a qualified lawyer before commercial use." %}
+    </p>
+</div>
+{% endblock %}

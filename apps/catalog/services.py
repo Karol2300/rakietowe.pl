@@ -1,4 +1,5 @@
 import logging
+from datetime import timedelta
 
 from django.conf import settings
 from django.core.mail import send_mail
@@ -31,6 +32,72 @@ def annotate_effective_price(queryset):
     )
 
 
+OMNIBUS_LOOKBACK_DAYS = 30
+
+
+def bulk_lowest_price_30d(products):
+    """Polish/EU Omnibus directive: whenever a reduced price is shown, the
+    lowest price charged in the 30 days before the reduction must be shown
+    alongside it. Returns {product_id: Decimal} for products currently on
+    sale, using PriceHistory (regular-price edits + logged sale windows) as
+    the source of truth. Batched into two queries regardless of page size,
+    so it's safe to call from listing views with many products.
+    """
+    from .models import PriceHistory
+
+    products = list(products)
+    ids = [p.id for p in products if p.is_on_sale()]
+    if not ids:
+        return {}
+
+    now = timezone.now()
+    window_start = now - timedelta(days=OMNIBUS_LOOKBACK_DAYS)
+    lowest = {p.id: p.price_pln for p in products if p.id in ids}
+
+    regular_entries = PriceHistory.objects.filter(
+        product_id__in=ids, price_type=PriceHistory.PriceType.REGULAR, changed_at__gte=window_start
+    ).values_list("product_id", "old_price", "new_price")
+    for product_id, old_price, new_price in regular_entries:
+        for price in (old_price, new_price):
+            if price is not None and price < lowest[product_id]:
+                lowest[product_id] = price
+
+    # Only *past, already-ended* promos count as reference prices here - the
+    # currently active sale (sale_end null-or-future) must never be counted
+    # against itself, or the "lowest price" would just echo the sale price.
+    # This assumes past promos were logged with a real sale_end; an
+    # open-ended promo that got silently replaced by a new one without ever
+    # setting an end date won't be picked up - an acceptable gap for how
+    # promotions are actually configured here.
+    sale_entries = (
+        PriceHistory.objects.filter(
+            product_id__in=ids,
+            price_type=PriceHistory.PriceType.SALE,
+            new_price__isnull=False,
+            sale_end__isnull=False,
+            sale_end__gte=window_start,
+            sale_end__lt=now,
+        )
+        .values_list("product_id", "new_price")
+    )
+    for product_id, new_price in sale_entries:
+        if new_price < lowest[product_id]:
+            lowest[product_id] = new_price
+
+    return lowest
+
+
+def attach_lowest_price_30d(products):
+    """Set `.lowest_price_30d` on each on-sale product in `products` (a list
+    or already-evaluated iterable). Call this after pagination/slicing so
+    it only runs against the products actually being rendered."""
+    products = list(products)
+    lowest_by_id = bulk_lowest_price_30d(products)
+    for product in products:
+        product.lowest_price_30d = lowest_by_id.get(product.id)
+    return products
+
+
 SORT_OPTIONS = {
     "newest": ("-created_at", "Newest"),
     "price_asc": ("effective_price", "Price: low to high"),
@@ -38,6 +105,19 @@ SORT_OPTIONS = {
     "rating": ("-average_rating", "Top rated"),
     "popularity": ("-review_count", "Most popular"),
 }
+
+
+def _spec_value_text(value):
+    """Match PostgreSQL's JSONB ->> ("get as text") representation, since
+    category_detail() filters specs via KeyTextTransform against this same
+    text form. Values in Product.specs can be ints, floats, or bools (the
+    admin's specs widget and the seed script both store typed JSON, not
+    just strings) - str() alone would render True as "True" instead of
+    the "true" Postgres/JSON produces, so a boolean facet checkbox would
+    never actually match its own filter."""
+    if isinstance(value, bool):
+        return "true" if value else "false"
+    return str(value)
 
 
 def collect_facets(products_queryset):
@@ -48,7 +128,7 @@ def collect_facets(products_queryset):
     spec_facets = {}
     for specs in products_queryset.values_list("specs", flat=True):
         for key, value in (specs or {}).items():
-            spec_facets.setdefault(key, set()).add(value)
+            spec_facets.setdefault(key, set()).add(_spec_value_text(value))
 
     variant_facets = {}
     variants = ProductVariant.objects.filter(product__in=products_queryset, is_active=True)
@@ -86,8 +166,6 @@ def notify_back_in_stock(variant):
         notification.notified = True
         notification.notified_at = timezone.now()
         notification.save(update_fields=["notified", "notified_at"])
-
-    pending.update(notified=True, notified_at=timezone.now())
 
 
 COMPARE_SESSION_KEY = "compare_product_ids"

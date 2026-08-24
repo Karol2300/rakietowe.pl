@@ -1,0 +1,35 @@
+<div class="specs-widget" data-specs-widget>
+    <table class="specs-widget__rows">
+        <tbody data-specs-rows>
+            {% for key, value in widget.rows %}
+            <tr class="specs-widget__row">
+                <td>
+                    <select name="{{ widget.name }}_key">
+                        <option value="">---------</option>
+                        {% for k, label in widget.key_choices %}
+                            <option value="{{ k }}" {% if k == key %}selected{% endif %}>{{ label }}</option>
+                        {% endfor %}
+                    </select>
+                </td>
+                <td><input type="text" name="{{ widget.name }}_value" value="{{ value }}" placeholder="Value"></td>
+                <td><button type="button" class="specs-widget__remove" aria-label="Remove">&times;</button></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <button type="button" class="specs-widget__add button">+ Add spec</button>
+    <template data-specs-row-template>
+        <tr class="specs-widget__row">
+            <td>
+                <select name="{{ widget.name }}_key">
+                    <option value="">---------</option>
+                    {% for k, label in widget.key_choices %}
+                        <option value="{{ k }}">{{ label }}</option>
+                    {% endfor %}
+                </select>
+            </td>
+            <td><input type="text" name="{{ widget.name }}_value" value="" placeholder="Value"></td>
+            <td><button type="button" class="specs-widget__remove" aria-label="Remove">&times;</button></td>
+        </tr>
+    </template>
+</div>

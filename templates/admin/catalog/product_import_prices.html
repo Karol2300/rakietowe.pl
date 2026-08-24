@@ -1,0 +1,27 @@
+{% extends "admin/base_site.html" %}
+
+{% block content %}
+<h1>{{ title }}</h1>
+<p>
+    Upload a CSV with a <code>slug</code> column (matched against each product's slug) plus
+    any of: <code>price_pln</code>, <code>price_eur</code>, <code>price_usd</code>,
+    <code>sale_price_pln</code>, <code>sale_price_eur</code>, <code>sale_price_usd</code>,
+    <code>sale_start</code>, <code>sale_end</code> (ISO datetime, e.g. 2026-08-15T00:00:00Z).
+    Blank cells leave that field unchanged. Only existing products are updated - no new
+    products are created.
+</p>
+<p>
+    Every change is written to Price history exactly as if it had been edited directly in the
+    admin, so the Omnibus-directive "lowest price in 30 days" figure stays accurate. To see the
+    expected column layout, select some products on the product list and use the
+    "Export selected products' prices to CSV" action first.
+</p>
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <p>
+        <label for="id_csv_file">CSV file:</label>
+        <input type="file" name="csv_file" id="id_csv_file" accept=".csv" required>
+    </p>
+    <input type="submit" class="default" value="Import">
+</form>
+{% endblock %}

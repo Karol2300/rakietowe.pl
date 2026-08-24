@@ -2,8 +2,10 @@ import json
 
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.core.cache import cache
 from django.core.paginator import Paginator
 from django.db.models import Q
+from django.db.models.fields.json import KeyTextTransform
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
@@ -15,10 +17,12 @@ from apps.catalog.services import (
     COMPARE_MAX_ITEMS,
     SORT_OPTIONS,
     annotate_effective_price,
+    attach_lowest_price_30d,
     collect_facets,
     get_compare_ids,
 )
 from apps.catalog.services import toggle_compare as toggle_compare_service
+from apps.core.seo import json_ld
 from apps.reviews.forms import ReviewForm
 from apps.reviews.models import Review
 
@@ -37,7 +41,12 @@ def category_detail(request, slug):
     base_products = Product.objects.filter(
         category__in=descendant_categories, is_active=True
     )
-    spec_facets, variant_facets = collect_facets(base_products)
+    # collect_facets() walks every matching product's specs/variant attributes
+    # in Python, which gets expensive as the catalog grows - cache it per
+    # category rather than recomputing on every listing request.
+    spec_facets, variant_facets = cache.get_or_set(
+        f"category_facets:{category.id}", lambda: collect_facets(base_products), 300
+    )
 
     products = annotate_effective_price(base_products).select_related("brand", "category").prefetch_related("variants")
 
@@ -56,7 +65,15 @@ def category_detail(request, slug):
     for key in spec_facets:
         values = request.GET.getlist(key)
         if values:
-            products = products.filter(**{f"specs__{key}__in": values})
+            # Product.specs stores typed JSON (ints/floats/bools, not just
+            # strings), but a query-string value from a facet checkbox is
+            # always plain text - specs__key__in would only ever match
+            # string-valued specs. KeyTextTransform compares against
+            # PostgreSQL's own JSON-to-text form instead, which is what
+            # collect_facets' checkbox values are normalized to as well.
+            products = products.annotate(
+                **{f"_spec_{key}": KeyTextTransform(key, "specs")}
+            ).filter(**{f"_spec_{key}__in": values})
             selected_facets[key] = values
     for key in variant_facets:
         values = request.GET.getlist(key)
@@ -69,6 +86,10 @@ def category_detail(request, slug):
         sort = "newest"
     products = products.order_by(SORT_OPTIONS[sort][0], "-id")
 
+    result_count = products.count()
+    page_obj = _paginate(request, products)
+    page_obj.object_list = attach_lowest_price_30d(page_obj.object_list)
+
     context = {
         "category": category,
         "brands": Brand.objects.filter(products__in=base_products).distinct().order_by("name"),
@@ -80,10 +101,32 @@ def category_detail(request, slug):
         "max_price": max_price,
         "sort": sort,
         "sort_options": SORT_OPTIONS,
-        "page_obj": _paginate(request, products),
-        "result_count": products.count(),
+        "page_obj": page_obj,
+        "result_count": result_count,
+        "breadcrumb_json_ld": _category_breadcrumb_schema(request, category),
     }
     return render(request, "catalog/category_detail.html", context)
+
+
+def _category_breadcrumb_schema(request, category):
+    crumbs = [(_("Home"), reverse("core:home"))]
+    for ancestor in category.get_ancestors():
+        crumbs.append((ancestor.name, reverse("catalog:category_detail", args=[ancestor.slug])))
+    crumbs.append((category.name, reverse("catalog:category_detail", args=[category.slug])))
+
+    return json_ld({
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {
+                "@type": "ListItem",
+                "position": position,
+                "name": name,
+                "item": request.build_absolute_uri(url),
+            }
+            for position, (name, url) in enumerate(crumbs, start=1)
+        ],
+    })
 
 
 def search(request):
@@ -100,10 +143,14 @@ def search(request):
         .order_by("-created_at")
     )
 
+    result_count = products.count()
+    page_obj = _paginate(request, products)
+    page_obj.object_list = attach_lowest_price_30d(page_obj.object_list)
+
     context = {
         "query": query,
-        "page_obj": _paginate(request, products),
-        "result_count": products.count(),
+        "page_obj": page_obj,
+        "result_count": result_count,
     }
     return render(request, "catalog/search_results.html", context)
 
@@ -136,11 +183,13 @@ def product_detail(request, slug):
 
     related_products = annotate_effective_price(
         Product.objects.filter(category=product.category, is_active=True).exclude(id=product.id)
-    ).select_related("brand")[:4]
+    ).select_related("brand").prefetch_related("variants")[:4]
     if len(related_products) < 4:
         related_products = annotate_effective_price(
             Product.objects.filter(sport=product.sport, is_active=True).exclude(id=product.id)
-        ).select_related("brand")[:4]
+        ).select_related("brand").prefetch_related("variants")[:4]
+    related_products = attach_lowest_price_30d(related_products)
+    attach_lowest_price_30d([product])
 
     reviews = product.reviews.filter(is_visible=True).select_related("user").order_by("-created_at")
 
@@ -161,8 +210,63 @@ def product_detail(request, slug):
         "user_review": user_review,
         "review_form": review_form,
         "rating_choices": [5, 4, 3, 2, 1],
+        "product_json_ld": _product_schema(request, product, default_variant),
+        "breadcrumb_json_ld": _breadcrumb_schema(request, product),
     }
     return render(request, "catalog/product_detail.html", context)
+
+
+def _product_schema(request, product, default_variant):
+    price = default_variant.current_price() if default_variant else product.current_price()
+    schema = {
+        "@context": "https://schema.org",
+        "@type": "Product",
+        "name": product.name,
+        "description": product.meta_description or product.description,
+        "url": request.build_absolute_uri(),
+        "offers": {
+            "@type": "Offer",
+            "priceCurrency": "PLN",
+            "price": str(price),
+            "availability": (
+                "https://schema.org/InStock"
+                if default_variant and default_variant.in_stock
+                else "https://schema.org/OutOfStock"
+            ),
+            "url": request.build_absolute_uri(),
+        },
+    }
+    if product.brand:
+        schema["brand"] = {"@type": "Brand", "name": product.brand.name}
+    if product.review_count:
+        schema["aggregateRating"] = {
+            "@type": "AggregateRating",
+            "ratingValue": str(product.average_rating),
+            "reviewCount": product.review_count,
+        }
+    return json_ld(schema)
+
+
+def _breadcrumb_schema(request, product):
+    crumbs = [(_("Home"), reverse("core:home"))]
+    for ancestor in product.category.get_ancestors():
+        crumbs.append((ancestor.name, reverse("catalog:category_detail", args=[ancestor.slug])))
+    crumbs.append((product.category.name, reverse("catalog:category_detail", args=[product.category.slug])))
+    crumbs.append((product.name, reverse("catalog:product_detail", args=[product.slug])))
+
+    return json_ld({
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {
+                "@type": "ListItem",
+                "position": position,
+                "name": name,
+                "item": request.build_absolute_uri(url),
+            }
+            for position, (name, url) in enumerate(crumbs, start=1)
+        ],
+    })
 
 
 @login_required
@@ -201,6 +305,7 @@ def compare_view(request):
         .prefetch_related("variants")
     )
     products.sort(key=lambda p: ids.index(p.id))
+    attach_lowest_price_30d(products)
 
     spec_keys = []
     for product in products:

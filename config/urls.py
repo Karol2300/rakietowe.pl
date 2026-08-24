@@ -18,12 +18,25 @@ from django.conf import settings
 from django.conf.urls.i18n import i18n_patterns
 from django.conf.urls.static import static
 from django.contrib import admin
+from django.contrib.sitemaps.views import sitemap
 from django.urls import include, path
+
+from apps.catalog.sitemaps import CategorySitemap, ProductSitemap
+from apps.core.sitemaps import StaticViewSitemap
+from apps.core.views import robots_txt
+
+sitemaps = {
+    "products": ProductSitemap,
+    "categories": CategorySitemap,
+    "static": StaticViewSitemap,
+}
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('i18n/', include('django.conf.urls.i18n')),
     path('webhooks/', include('apps.orders.webhook_urls')),
+    path('sitemap.xml', sitemap, {'sitemaps': sitemaps}, name='sitemap'),
+    path('robots.txt', robots_txt, name='robots_txt'),
 ]
 
 urlpatterns += i18n_patterns(
