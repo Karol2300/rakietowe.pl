@@ -21,6 +21,20 @@
             › {{ category.name|translate_name }}
         </div>
         <h1>{{ category.name|translate_name }}</h1>
+        {% if subcategory_nav %}
+            <nav class="subcategory-nav" aria-label="{% trans 'Subcategories' %}">
+                {% if not subcategory_nav.is_parent_page %}
+                    <a class="subcategory-nav__item" href="{% url 'catalog:category_detail' subcategory_nav.parent.slug %}">{% trans "All" %}</a>
+                {% endif %}
+                {% for sub in subcategory_nav.items %}
+                    <a class="subcategory-nav__item{% if sub.id == subcategory_nav.current_id %} is-current{% endif %}"
+                       href="{% url 'catalog:category_detail' sub.slug %}"
+                       {% if sub.id == subcategory_nav.current_id %}aria-current="page"{% endif %}>
+                        {{ sub.name|translate_name }} <span class="subcategory-nav__count">{{ sub.count }}</span>
+                    </a>
+                {% endfor %}
+            </nav>
+        {% endif %}
     </div>
 
     <button
@@ -79,6 +93,10 @@
                 </fieldset>
             {% endfor %}
             {% endlocalize %}
+
+            {% if category.is_root_node and subcategory_nav %}
+                <p class="filters__hint">{% trans "Pick a subcategory above for more filters." %}</p>
+            {% endif %}
 
             <input type="hidden" name="sort" value="{{ sort }}">
             <button type="submit">{% trans "Apply filters" %}</button>

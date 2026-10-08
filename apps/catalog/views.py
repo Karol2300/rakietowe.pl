@@ -4,7 +4,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.core.cache import cache
 from django.core.paginator import Paginator
-from django.db.models import Q
+from django.db.models import Count, Q
 from django.db.models.fields.json import KeyTextTransform
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
@@ -41,12 +41,18 @@ def category_detail(request, slug):
     base_products = Product.objects.filter(
         category__in=descendant_categories, is_active=True
     )
-    # collect_facets() walks every matching product's specs/variant attributes
-    # in Python, which gets expensive as the catalog grows - cache it per
-    # category rather than recomputing on every listing request.
-    spec_facets, variant_facets = cache.get_or_set(
-        f"category_facets:{category.id}", lambda: collect_facets(base_products), 300
-    )
+    # A sport-level page mixes every kind of product (racket weights next to
+    # shoe soles next to bag capacity), so detailed spec filters only make
+    # sense once a subcategory narrows things down - there it's just brand
+    # and price. Skipping collect_facets() also saves its per-product walk.
+    # collect_facets() is otherwise cached per category since it walks every
+    # matching product's specs/variant attributes in Python.
+    if category.is_root_node():
+        spec_facets, variant_facets = {}, {}
+    else:
+        spec_facets, variant_facets = cache.get_or_set(
+            f"category_facets:{category.id}", lambda: collect_facets(base_products), 300
+        )
 
     products = annotate_effective_price(base_products).select_related("brand", "category").prefetch_related("variants")
 
@@ -104,8 +110,53 @@ def category_detail(request, slug):
         "page_obj": page_obj,
         "result_count": result_count,
         "breadcrumb_json_ld": _category_breadcrumb_schema(request, category),
+        "subcategory_nav": _subcategory_nav(category),
     }
     return render(request, "catalog/category_detail.html", context)
+
+
+def _subcategory_nav(category):
+    """Links for drilling into (or switching between) subcategories.
+
+    A category with children shows its children. A leaf shows its siblings
+    (with the current one highlighted) plus an "All" link back to the
+    parent, so you can switch sections without going back up. Each entry
+    carries the number of active products in its whole subtree; empty
+    branches are dropped. Returns None for a root-level leaf.
+    """
+    if category.is_leaf_node():
+        if category.parent_id is None:
+            return None
+        parent = category.parent
+    else:
+        parent = category
+
+    def build():
+        siblings = list(parent.get_children().filter(is_active=True))
+        descendants = list(parent.get_descendants())
+        per_category = dict(
+            Product.objects.filter(is_active=True, category__in=descendants)
+            .values_list("category_id")
+            .annotate(n=Count("id"))
+        )
+        items = []
+        for sub in siblings:
+            count = sum(
+                per_category.get(d.id, 0)
+                for d in descendants
+                if sub.lft <= d.lft and d.rght <= sub.rght
+            )
+            if count:
+                items.append({"id": sub.id, "name": sub.name, "slug": sub.slug, "count": count})
+        # Biggest sections first; sorted() is stable, so ties keep the
+        # alphabetical order the tree already comes back in.
+        items.sort(key=lambda item: -item["count"])
+        return {"parent": {"name": parent.name, "slug": parent.slug}, "items": items}
+
+    nav = cache.get_or_set(f"subcategory_nav:{parent.id}", build, 300)
+    if not nav["items"]:
+        return None
+    return {**nav, "current_id": category.id, "is_parent_page": parent.id == category.id}
 
 
 def _category_breadcrumb_schema(request, category):

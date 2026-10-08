@@ -1336,3 +1336,12 @@ msgstr "Zapłać przez Stripe"
 
 msgid "Submit return request"
 msgstr "Wyślij zgłoszenie zwrotu"
+
+msgid "Subcategories"
+msgstr "Podkategorie"
+
+msgid "All"
+msgstr "Wszystkie"
+
+msgid "Pick a subcategory above for more filters."
+msgstr "Wybierz podkategorię powyżej, aby zobaczyć więcej filtrów."
