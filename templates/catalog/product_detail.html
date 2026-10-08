@@ -79,7 +79,7 @@
                                 {% if variant == default_variant %}checked{% endif %}
                                 {% if not variant.in_stock %}data-out-of-stock{% endif %}
                             >
-                            <label for="variant-{{ variant.id }}">{{ variant.attributes|get_item:variant_dimension }}</label>
+                            <label for="variant-{{ variant.id }}">{{ variant.attributes|get_item:variant_dimension|spec_value }}</label>
                         {% endfor %}
                     </div>
                 </div>
@@ -136,7 +136,7 @@
                     {% for key, value in product.specs.items %}
                         <tr>
                             <th>{{ key|spec_label }}</th>
-                            <td>{{ value }}</td>
+                            <td>{{ value|spec_value }}</td>
                         </tr>
                     {% endfor %}
                 </tbody>

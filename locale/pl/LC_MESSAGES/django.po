@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: racket-shop 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-10 15:45+0200\n"
+"POT-Creation-Date: 2026-10-08 19:12+0200\n"
 "PO-Revision-Date: 2026-08-09 18:34+0200\n"
 "Last-Translator: \n"
 "Language-Team: Polish\n"
@@ -57,18 +57,6 @@ msgstr "Usunięto %(name)s z listy życzeń."
 msgid "Added %(name)s to your wishlist."
 msgstr "Dodano %(name)s do listy życzeń."
 
-msgid "Tennis"
-msgstr "Tenis"
-
-msgid "Squash"
-msgstr "Squash"
-
-msgid "Badminton"
-msgstr "Badminton"
-
-msgid "Table Tennis"
-msgstr "Tenis stołowy"
-
 msgid "Rackets"
 msgstr "Rakiety"
 
@@ -111,6 +99,18 @@ msgstr "Okładziny"
 msgid "Tables"
 msgstr "Stoły"
 
+msgid "Tennis"
+msgstr "Tenis"
+
+msgid "Squash"
+msgstr "Squash"
+
+msgid "Badminton"
+msgstr "Badminton"
+
+msgid "Table Tennis"
+msgstr "Tenis stołowy"
+
 msgid "23% (standard)"
 msgstr "23% (podstawowa)"
 
@@ -122,6 +122,270 @@ msgstr "Cena regularna"
 
 msgid "Sale price"
 msgstr "Cena promocyjna"
+
+msgid "Newest"
+msgstr "Najnowsze"
+
+msgid "Price: low to high"
+msgstr "Cena: od najniższej"
+
+msgid "Price: high to low"
+msgstr "Cena: od najwyższej"
+
+msgid "Top rated"
+msgstr "Najlepiej oceniane"
+
+msgid "Most popular"
+msgstr "Najpopularniejsze"
+
+msgid "Weight (g)"
+msgstr "Waga (g)"
+
+msgid "Balance point (mm)"
+msgstr "Punkt równowagi (mm)"
+
+msgid "Stiffness (RA)"
+msgstr "Sztywność (RA)"
+
+msgid "Head size (sq in)"
+msgstr "Rozmiar główki (cale kw.)"
+
+msgid "String pattern"
+msgstr "Układ strun"
+
+msgid "Flex"
+msgstr "Elastyczność"
+
+msgid "Balance"
+msgstr "Wyważenie"
+
+msgid "Blade material"
+msgstr "Materiał drewna"
+
+msgid "Speed rating"
+msgstr "Ocena szybkości"
+
+msgid "Spin rating"
+msgstr "Ocena rotacji"
+
+msgid "Control rating"
+msgstr "Ocena kontroli"
+
+msgid "Handle type"
+msgstr "Rodzaj rączki"
+
+msgid "Sponge thickness (mm)"
+msgstr "Grubość gąbki (mm)"
+
+msgid "Speed"
+msgstr "Szybkość"
+
+msgid "Spin"
+msgstr "Rotacja"
+
+msgid "Control"
+msgstr "Kontrola"
+
+msgid "Gauge (mm)"
+msgstr "Grubość struny (mm)"
+
+msgid "Material"
+msgstr "Materiał"
+
+msgid "Recommended tension (lbs)"
+msgstr "Zalecane naprężenie (funty)"
+
+msgid "Pack size"
+msgstr "Liczba w opakowaniu"
+
+msgid "Capacity (L)"
+msgstr "Pojemność (l)"
+
+msgid "Compartments"
+msgstr "Liczba komór"
+
+msgid "Upper material"
+msgstr "Materiał cholewki"
+
+msgid "Sole type"
+msgstr "Rodzaj podeszwy"
+
+msgid "Fit"
+msgstr "Krój"
+
+msgid "Lens type"
+msgstr "Rodzaj soczewek"
+
+msgid "UV protection"
+msgstr "Ochrona UV"
+
+msgid "Thickness (mm)"
+msgstr "Grubość (mm)"
+
+msgid "Foldable"
+msgstr "Składany"
+
+msgid "Indoor/outdoor"
+msgstr "Wewnątrz / na zewnątrz"
+
+msgid "Grip size"
+msgstr "Rozmiar rączki"
+
+msgid "Weight class"
+msgstr "Klasa wagowa"
+
+msgid "Color"
+msgstr "Kolor"
+
+msgid "Shoe size"
+msgstr "Rozmiar buta"
+
+msgid "Size"
+msgstr "Rozmiar"
+
+msgid "Polyester"
+msgstr "Poliester"
+
+msgid "Natural gut"
+msgstr "Naturalne jelito"
+
+msgid "Synthetic gut"
+msgstr "Syntetyczne jelito"
+
+msgid "Multifilament"
+msgstr "Multifilament"
+
+msgid "Nylon"
+msgstr "Nylon"
+
+msgid "Nylon ripstop"
+msgstr "Nylon ripstop"
+
+msgid "Thermal-lined polyester"
+msgstr "Poliester z podszewką termiczną"
+
+msgid "Cotton blend"
+msgstr "Mieszanka bawełny"
+
+msgid "Recycled polyester"
+msgstr "Poliester z recyklingu"
+
+msgid "Rubber/felt composite"
+msgstr "Kompozyt guma/filc"
+
+msgid "ABS plastic"
+msgstr "Tworzywo ABS"
+
+msgid "Goose feather"
+msgstr "Pióro gęsie"
+
+msgid "Mesh"
+msgstr "Siatka"
+
+msgid "Synthetic leather"
+msgstr "Skóra syntetyczna"
+
+msgid "Knit"
+msgstr "Dzianina"
+
+msgid "Herringbone"
+msgstr "Jodełka"
+
+msgid "Gum rubber"
+msgstr "Guma kauczukowa"
+
+msgid "Multi-court"
+msgstr "Uniwersalna"
+
+msgid "Regular"
+msgstr "Standardowy"
+
+msgid "Slim"
+msgstr "Dopasowany"
+
+msgid "Athletic"
+msgstr "Sportowy"
+
+msgid "Clear"
+msgstr "Przezroczyste"
+
+msgid "Anti-fog"
+msgstr "Antyparowe"
+
+msgid "Polarized"
+msgstr "Polaryzacyjne"
+
+msgid "Indoor"
+msgstr "Do hal"
+
+msgid "Outdoor"
+msgstr "Na zewnątrz"
+
+msgid "Flexible"
+msgstr "Elastyczny"
+
+msgid "Medium"
+msgstr "Średni"
+
+msgid "Stiff"
+msgstr "Sztywny"
+
+msgid "Head Heavy"
+msgstr "Ciężka główka"
+
+msgid "Even Balance"
+msgstr "Wyważona"
+
+msgid "Head Light"
+msgstr "Lekka główka"
+
+msgid "All-wood"
+msgstr "Drewno"
+
+msgid "Carbon composite"
+msgstr "Kompozyt węglowy"
+
+msgid "Ayous/Carbon"
+msgstr "Ayous/karbon"
+
+msgid "Max"
+msgstr "Maks"
+
+msgid "Flared (FL)"
+msgstr "Rozszerzana (FL)"
+
+msgid "Straight (ST)"
+msgstr "Prosta (ST)"
+
+msgid "Concave (CS)"
+msgstr "Wklęsła (CS)"
+
+msgid "Black"
+msgstr "Czarny"
+
+msgid "Red"
+msgstr "Czerwony"
+
+msgid "Navy"
+msgstr "Granatowy"
+
+msgid "Grey"
+msgstr "Szary"
+
+msgid "Natural"
+msgstr "Naturalny"
+
+msgid "Yellow"
+msgstr "Żółty"
+
+msgid "Blue"
+msgstr "Niebieski"
+
+msgid "Yes"
+msgstr "Tak"
+
+msgid "No"
+msgstr "Nie"
 
 msgid "Home"
 msgstr "Strona główna"
@@ -654,6 +918,15 @@ msgstr "Brak w magazynie"
 msgid "Comparing"
 msgstr "Porównywane"
 
+msgid "Subcategories"
+msgstr "Podkategorie"
+
+msgid "All"
+msgstr "Wszystkie"
+
+msgid "Filters"
+msgstr "Filtry"
+
 msgid "Brand"
 msgstr "Marka"
 
@@ -663,8 +936,8 @@ msgstr "Cena (PLN)"
 msgid "Min"
 msgstr "Min"
 
-msgid "Max"
-msgstr "Maks"
+msgid "Pick a subcategory above for more filters."
+msgstr "Wybierz podkategorię powyżej, aby zobaczyć więcej filtrów."
 
 msgid "Apply filters"
 msgstr "Zastosuj filtry"
@@ -697,12 +970,6 @@ msgstr "Ocena"
 
 msgid "In stock"
 msgstr "Dostępny"
-
-msgid "Yes"
-msgstr "Tak"
-
-msgid "No"
-msgstr "Nie"
 
 msgid "You haven't added any products to compare yet."
 msgstr "Nie dodałeś jeszcze żadnych produktów do porównania."
@@ -1336,12 +1603,3 @@ msgstr "Zapłać przez Stripe"
 
 msgid "Submit return request"
 msgstr "Wyślij zgłoszenie zwrotu"
-
-msgid "Subcategories"
-msgstr "Podkategorie"
-
-msgid "All"
-msgstr "Wszystkie"
-
-msgid "Pick a subcategory above for more filters."
-msgstr "Wybierz podkategorię powyżej, aby zobaczyć więcej filtrów."

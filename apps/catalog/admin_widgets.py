@@ -2,42 +2,44 @@ import json
 
 from django import forms
 
+from .specs import SPEC_LABELS
+
 # The fixed vocabulary of spec keys used across the catalog (see
 # seed_products.specs_for for the full per-product-kind picture). Keeping
 # this as a flat dropdown - rather than one list per product kind - avoids
 # needing a "kind" concept on Product itself, which doesn't otherwise exist.
-SPEC_KEY_CHOICES = [
-    ("weight_g", "Weight (g)"),
-    ("balance_point_mm", "Balance point (mm)"),
-    ("stiffness_ra", "Stiffness (RA)"),
-    ("head_size_sq_in", "Head size (sq in)"),
-    ("string_pattern", "String pattern"),
-    ("flex", "Flex"),
-    ("balance", "Balance"),
-    ("blade_material", "Blade material"),
-    ("speed_rating", "Speed rating"),
-    ("spin_rating", "Spin rating"),
-    ("control_rating", "Control rating"),
-    ("handle_type", "Handle type"),
-    ("sponge_thickness_mm", "Sponge thickness (mm)"),
-    ("speed", "Speed"),
-    ("spin", "Spin"),
-    ("control", "Control"),
-    ("gauge_mm", "Gauge (mm)"),
-    ("material", "Material"),
-    ("recommended_tension_lbs", "Recommended tension (lbs)"),
-    ("pack_size", "Pack size"),
-    ("capacity_l", "Capacity (L)"),
-    ("compartments", "Compartments"),
-    ("upper_material", "Upper material"),
-    ("sole_type", "Sole type"),
-    ("fit", "Fit"),
-    ("lens_type", "Lens type"),
-    ("uv_protection", "UV protection"),
-    ("thickness_mm", "Thickness (mm)"),
-    ("foldable", "Foldable"),
-    ("indoor_outdoor", "Indoor/outdoor"),
-]
+SPEC_KEY_CHOICES = [(key, SPEC_LABELS[key]) for key in (
+    "weight_g",
+    "balance_point_mm",
+    "stiffness_ra",
+    "head_size_sq_in",
+    "string_pattern",
+    "flex",
+    "balance",
+    "blade_material",
+    "speed_rating",
+    "spin_rating",
+    "control_rating",
+    "handle_type",
+    "sponge_thickness_mm",
+    "speed",
+    "spin",
+    "control",
+    "gauge_mm",
+    "material",
+    "recommended_tension_lbs",
+    "pack_size",
+    "capacity_l",
+    "compartments",
+    "upper_material",
+    "sole_type",
+    "fit",
+    "lens_type",
+    "uv_protection",
+    "thickness_mm",
+    "foldable",
+    "indoor_outdoor",
+)]
 
 
 def _coerce_value(raw):

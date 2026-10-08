@@ -1,6 +1,8 @@
 from django import template
 from django.utils.translation import gettext as _
 
+from apps.catalog.specs import SPEC_LABELS
+
 register = template.Library()
 
 
@@ -26,9 +28,24 @@ def get_item(dictionary, key):
 
 @register.filter
 def spec_label(key):
-    """Turn a spec/attribute key like 'string_pattern' into 'string pattern'
-    for display - CSS text-transform: capitalize handles the casing."""
-    return str(key).replace("_", " ")
+    """Display name for a spec/variant key: the translated label from
+    SPEC_LABELS, or - for a key nobody has labelled yet - the key itself
+    with underscores turned into spaces."""
+    label = SPEC_LABELS.get(str(key))
+    return str(label) if label is not None else str(key).replace("_", " ")
+
+
+@register.filter
+def spec_value(value):
+    """Display text for a spec/variant value. Booleans (and the 'true' /
+    'false' text the facet checkboxes use) become Yes/No; other text is
+    looked up in the translation catalog and falls back to itself, so
+    numbers, sizes and anything untranslated pass through unchanged."""
+    if value is True or value == "true":
+        return _("Yes")
+    if value is False or value == "false":
+        return _("No")
+    return _(str(value))
 
 
 @register.filter

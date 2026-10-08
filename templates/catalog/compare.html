@@ -46,7 +46,7 @@
                     <tr>
                         <th>{{ key|spec_label }}</th>
                         {% for value in values %}
-                            <td>{{ value }}</td>
+                            <td>{{ value|spec_value }}</td>
                         {% endfor %}
                     </tr>
                 {% endfor %}

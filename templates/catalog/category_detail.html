@@ -74,7 +74,7 @@
                         {% is_selected selected_facets key value as checked %}
                         <label>
                             <input type="checkbox" name="{{ key }}" value="{{ value }}" {% if checked %}checked{% endif %}>
-                            {{ value }}
+                            {{ value|spec_value }}
                         </label>
                     {% endfor %}
                 </fieldset>
@@ -87,7 +87,7 @@
                         {% is_selected selected_facets key value as checked %}
                         <label>
                             <input type="checkbox" name="{{ key }}" value="{{ value }}" {% if checked %}checked{% endif %}>
-                            {{ value }}
+                            {{ value|spec_value }}
                         </label>
                     {% endfor %}
                 </fieldset>

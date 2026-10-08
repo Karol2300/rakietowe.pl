@@ -63,7 +63,7 @@
 
         <form action="{% url 'set_language' %}" method="post" class="lang-switcher">
             {% csrf_token %}
-            <input type="hidden" name="next" value="{{ request.path }}">
+            <input type="hidden" name="next" value="{{ request.get_full_path }}">
             <select name="language" onchange="this.form.submit()" aria-label="{% trans 'Language' %}">
                 {% get_current_language as CURRENT_LANGUAGE %}
                 {% get_available_languages as AVAILABLE_LANGUAGES %}

@@ -1,6 +1,6 @@
 {% load catalog_extras %}Hi{% if notification.user.first_name %} {{ notification.user.first_name }}{% endif %},
 
-Good news! {{ product.name }}{% if variant.attributes %} ({% for key, value in variant.attributes.items %}{{ key|spec_label }}: {{ value }}{% endfor %}){% endif %} is back in stock.
+Good news! {{ product.name }}{% if variant.attributes %} ({% for key, value in variant.attributes.items %}{{ key|spec_label }}: {{ value|spec_value }}{% endfor %}){% endif %} is back in stock.
 
 {{ product.name }}: {{ variant.current_price }} zł
 

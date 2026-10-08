@@ -25,7 +25,7 @@
                         <a href="{% url 'catalog:product_detail' item.variant.product.slug %}">{{ item.variant.product.name }}</a>
                         {% if item.variant.attributes %}
                             <div class="cart-table__variant">
-                                {% for key, value in item.variant.attributes.items %}{{ key|spec_label }}: {{ value }}{% endfor %}
+                                {% for key, value in item.variant.attributes.items %}{{ key|spec_label }}: {{ value|spec_value }}{% endfor %}
                             </div>
                         {% endif %}
                     </td>

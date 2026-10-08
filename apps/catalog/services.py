@@ -6,6 +6,7 @@ from django.core.mail import send_mail
 from django.db.models import Case, DecimalField, F, Q, Value, When
 from django.template.loader import render_to_string
 from django.utils import timezone
+from django.utils.translation import gettext_lazy as _
 
 logger = logging.getLogger(__name__)
 
@@ -99,11 +100,11 @@ def attach_lowest_price_30d(products):
 
 
 SORT_OPTIONS = {
-    "newest": ("-created_at", "Newest"),
-    "price_asc": ("effective_price", "Price: low to high"),
-    "price_desc": ("-effective_price", "Price: high to low"),
-    "rating": ("-average_rating", "Top rated"),
-    "popularity": ("-review_count", "Most popular"),
+    "newest": ("-created_at", _("Newest")),
+    "price_asc": ("effective_price", _("Price: low to high")),
+    "price_desc": ("-effective_price", _("Price: high to low")),
+    "rating": ("-average_rating", _("Top rated")),
+    "popularity": ("-review_count", _("Most popular")),
 }
 
 
