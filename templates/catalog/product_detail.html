@@ -15,7 +15,7 @@
 {% block content %}
 <div class="breadcrumbs">
     <a href="{% url 'core:home' %}">{% trans "Home" %}</a>
-    › <a href="{% url 'catalog:category_detail' product.category.slug %}">{{ product.category.name }}</a>
+    › <a href="{% url 'catalog:category_detail' product.category.slug %}">{{ product.category.name|translate_name }}</a>
     › {{ product.name }}
 </div>
 

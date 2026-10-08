@@ -1,4 +1,5 @@
 from django import template
+from django.utils.translation import gettext as _
 
 register = template.Library()
 
@@ -28,6 +29,18 @@ def spec_label(key):
     """Turn a spec/attribute key like 'string_pattern' into 'string pattern'
     for display - CSS text-transform: capitalize handles the casing."""
     return str(key).replace("_", " ")
+
+
+@register.filter
+def translate_name(name):
+    """Category.name is plain DB content, not a marked-up template string,
+    so {% trans %} can't touch it and switching language never re-renders
+    it. Root categories are named directly after Sport.choices labels
+    (see seed_products.create_categories), which already have real PL
+    translations - this runs the stored name through the same gettext
+    catalog those labels use, so it picks up a translation when one
+    exists and falls back to the original (English) name otherwise."""
+    return _(name)
 
 
 @register.simple_tag

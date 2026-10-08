@@ -1,10 +1,10 @@
 {% extends "base.html" %}
 {% load i18n l10n catalog_extras %}
 
-{% block title %}{{ category.name }} — {% trans "Racket Sports Shop" %}{% endblock %}
-{% block meta_description %}{{ category.description|default:category.name|truncatewords:30 }}{% endblock %}
-{% block og_title %}{{ category.name }}{% endblock %}
-{% block og_description %}{{ category.description|default:category.name|truncatewords:30 }}{% endblock %}
+{% block title %}{{ category.name|translate_name }} — {% trans "Racket Sports Shop" %}{% endblock %}
+{% block meta_description %}{{ category.description|default:category.name|translate_name|truncatewords:30 }}{% endblock %}
+{% block og_title %}{{ category.name|translate_name }}{% endblock %}
+{% block og_description %}{{ category.description|default:category.name|translate_name|truncatewords:30 }}{% endblock %}
 
 {% block structured_data %}
 <script type="application/ld+json">{{ breadcrumb_json_ld|safe }}</script>
@@ -16,11 +16,11 @@
         <div class="breadcrumbs">
             <a href="{% url 'core:home' %}">{% trans "Home" %}</a>
             {% for ancestor in category.get_ancestors %}
-                › <a href="{% url 'catalog:category_detail' ancestor.slug %}">{{ ancestor.name }}</a>
+                › <a href="{% url 'catalog:category_detail' ancestor.slug %}">{{ ancestor.name|translate_name }}</a>
             {% endfor %}
-            › {{ category.name }}
+            › {{ category.name|translate_name }}
         </div>
-        <h1>{{ category.name }}</h1>
+        <h1>{{ category.name|translate_name }}</h1>
     </div>
 
     <button

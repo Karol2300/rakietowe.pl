@@ -111,8 +111,8 @@ def category_detail(request, slug):
 def _category_breadcrumb_schema(request, category):
     crumbs = [(_("Home"), reverse("core:home"))]
     for ancestor in category.get_ancestors():
-        crumbs.append((ancestor.name, reverse("catalog:category_detail", args=[ancestor.slug])))
-    crumbs.append((category.name, reverse("catalog:category_detail", args=[category.slug])))
+        crumbs.append((_(ancestor.name), reverse("catalog:category_detail", args=[ancestor.slug])))
+    crumbs.append((_(category.name), reverse("catalog:category_detail", args=[category.slug])))
 
     return json_ld({
         "@context": "https://schema.org",
@@ -250,8 +250,8 @@ def _product_schema(request, product, default_variant):
 def _breadcrumb_schema(request, product):
     crumbs = [(_("Home"), reverse("core:home"))]
     for ancestor in product.category.get_ancestors():
-        crumbs.append((ancestor.name, reverse("catalog:category_detail", args=[ancestor.slug])))
-    crumbs.append((product.category.name, reverse("catalog:category_detail", args=[product.category.slug])))
+        crumbs.append((_(ancestor.name), reverse("catalog:category_detail", args=[ancestor.slug])))
+    crumbs.append((_(product.category.name), reverse("catalog:category_detail", args=[product.category.slug])))
     crumbs.append((product.name, reverse("catalog:product_detail", args=[product.slug])))
 
     return json_ld({

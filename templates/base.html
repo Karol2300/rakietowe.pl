@@ -1,4 +1,4 @@
-{% load i18n static %}
+{% load i18n static catalog_extras %}
 <!DOCTYPE html>
 <html lang="{{ LANGUAGE_CODE }}">
 <head>
@@ -37,7 +37,7 @@
         <nav class="site-header__nav">
             <ul class="sport-nav">
                 {% for sport in sport_nav_categories %}
-                    <li><a href="{% url 'catalog:category_detail' sport.slug %}">{{ sport.name }}</a></li>
+                    <li><a href="{% url 'catalog:category_detail' sport.slug %}">{{ sport.name|translate_name }}</a></li>
                 {% endfor %}
             </ul>
         </nav>

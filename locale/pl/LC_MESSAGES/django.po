@@ -69,6 +69,48 @@ msgstr "Badminton"
 msgid "Table Tennis"
 msgstr "Tenis stołowy"
 
+msgid "Rackets"
+msgstr "Rakiety"
+
+msgid "Power Rackets"
+msgstr "Rakiety mocy"
+
+msgid "Control Rackets"
+msgstr "Rakiety kontrolne"
+
+msgid "Tweener Rackets"
+msgstr "Rakiety uniwersalne"
+
+msgid "Strings"
+msgstr "Naciągi"
+
+msgid "Balls"
+msgstr "Piłki"
+
+msgid "Bags"
+msgstr "Torby"
+
+msgid "Shoes"
+msgstr "Buty"
+
+msgid "Apparel"
+msgstr "Odzież"
+
+msgid "Eyewear"
+msgstr "Okulary ochronne"
+
+msgid "Shuttlecocks"
+msgstr "Lotki"
+
+msgid "Paddles"
+msgstr "Paletki"
+
+msgid "Rubbers"
+msgstr "Okładziny"
+
+msgid "Tables"
+msgstr "Stoły"
+
 msgid "23% (standard)"
 msgstr "23% (podstawowa)"
 

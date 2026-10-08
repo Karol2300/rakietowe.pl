@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load i18n %}
+{% load i18n catalog_extras %}
 
 {% block content %}
     <section class="hero">
@@ -12,7 +12,7 @@
 
     <section class="sport-grid">
         {% for sport in sport_nav_categories %}
-            <a class="sport-card" href="{% url 'catalog:category_detail' sport.slug %}">{{ sport.name }}</a>
+            <a class="sport-card" href="{% url 'catalog:category_detail' sport.slug %}">{{ sport.name|translate_name }}</a>
         {% endfor %}
     </section>
 
