@@ -196,6 +196,10 @@ def toggle_compare(request, product_id):
     return added, capped
 
 
+def clear_compare(request):
+    request.session.pop(COMPARE_SESSION_KEY, None)
+
+
 def remove_from_compare(request, product_id):
     ids = get_compare_ids(request)
     product_id = int(product_id)

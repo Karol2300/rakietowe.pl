@@ -12,7 +12,12 @@
         <table class="compare-table">
             <thead>
                 <tr>
-                    <th></th>
+                    <th class="compare-table__corner">
+                        <form method="post" action="{% url 'catalog:clear_compare' %}">
+                            {% csrf_token %}
+                            <button type="submit" class="button button--secondary compare-table__clear">{% trans "Clear comparison" %}</button>
+                        </form>
+                    </th>
                     {% for product in products %}
                         <th>
                             <div class="product-card__image sport-tint-{{ product.sport }} compare-table__image">

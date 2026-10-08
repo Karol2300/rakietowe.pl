@@ -18,6 +18,7 @@ from apps.catalog.services import (
     SORT_OPTIONS,
     annotate_effective_price,
     attach_lowest_price_30d,
+    clear_compare as clear_compare_service,
     collect_facets,
     get_compare_ids,
 )
@@ -346,6 +347,13 @@ def toggle_compare(request, slug):
     else:
         messages.success(request, _("Removed %(name)s from comparison.") % {"name": product.name})
     return redirect(request.META.get("HTTP_REFERER") or reverse("catalog:product_detail", args=[slug]))
+
+
+@require_POST
+def clear_compare(request):
+    clear_compare_service(request)
+    messages.success(request, _("Comparison cleared."))
+    return redirect("catalog:compare")
 
 
 def compare_view(request):

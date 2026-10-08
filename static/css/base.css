@@ -1085,6 +1085,25 @@ button, input, select {
 
 /* Compare table */
 
+.compare-table__corner {
+    vertical-align: bottom;
+}
+
+.compare-table__clear {
+    padding: 0.4rem 0.75rem;
+    font-size: 0.8rem;
+    font-weight: 500;
+    white-space: nowrap;
+    background: #fde8cf;
+    border-color: #f2b673;
+    color: #6b3a00;
+}
+
+.compare-table__clear:hover {
+    background: #fbd6ab;
+    border-color: #e9a04d;
+}
+
 .compare-table-wrap {
     overflow-x: auto;
 }

@@ -12,4 +12,5 @@ urlpatterns = [
     path("variant/<int:variant_id>/notify/", views.request_stock_notification, name="request_stock_notification"),
     path("p/<slug:slug>/toggle-compare/", views.toggle_compare, name="toggle_compare"),
     path("compare/", views.compare_view, name="compare"),
+    path("compare/clear/", views.clear_compare, name="clear_compare"),
 ]

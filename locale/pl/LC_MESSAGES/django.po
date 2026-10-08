@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: racket-shop 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-08 19:12+0200\n"
+"POT-Creation-Date: 2026-10-08 19:18+0200\n"
 "PO-Revision-Date: 2026-08-09 18:34+0200\n"
 "Last-Translator: \n"
 "Language-Team: Polish\n"
@@ -410,6 +410,9 @@ msgstr "Dodano %(name)s do porównania."
 #, python-format
 msgid "Removed %(name)s from comparison."
 msgstr "Usunięto %(name)s z porównania."
+
+msgid "Comparison cleared."
+msgstr "Porównanie zostało wyczyszczone."
 
 msgid "Percentage"
 msgstr "Procentowy"
@@ -964,6 +967,9 @@ msgstr "Żadne produkty nie pasują do wybranych filtrów."
 
 msgid "Compare products"
 msgstr "Porównaj produkty"
+
+msgid "Clear comparison"
+msgstr "Wyczyść porównanie"
 
 msgid "Rating"
 msgstr "Ocena"
